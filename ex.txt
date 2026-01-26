@@ -1,0 +1,2696 @@
+import React, { useState, useRef, useEffect } from 'react';
+import { createRoot } from 'react-dom/client';
+import { GoogleGenAI, HarmCategory, HarmBlockThreshold } from "@google/genai";
+import { Upload, Image as ImageIcon, Sparkles, Film, ArrowRight, Wand2, RefreshCcw, Download, X, Ruler, Clock, Camera, Aperture, Lightbulb, ChevronRight, ChevronDown, FileText, Video, BrainCircuit, Copy, Check, Layers, Clapperboard, RotateCcw, Music, History, Trash2, ShoppingBag, MapPin } from 'lucide-react';
+
+// --- Configuration & System Prompts ---
+
+const DIRECTOR_SYSTEM_INSTRUCTION = `
+You are an elite AI Director of Photography (DoP) and Visual Stylist for high-end fashion.
+
+Your goal is to generate a "Cinematic Pipeline" for video generation.
+Structure the output strictly into four distinct sections for the user to copy-paste.
+
+================================================
+⚠️ FACE vs OUTFIT REFERENCE (CRITICAL)
+================================================
+**BẠN SẼ NHẬN 2 ẢNH:**
+1. **FACE REFERENCE:** CHỈ lấy KHUÔN MẶT - facial features, skin tone, facial structure
+   - ❌ KHÔNG lấy trang phục/quần áo từ ảnh này
+   - ❌ KHÔNG lấy tóc/kiểu tóc nếu khác với outfit reference
+   - ✅ CHỈ lấy: mắt, mũi, miệng, cấu trúc khuôn mặt, màu da
+
+2. **OUTFIT REFERENCE:** Lấy TRANG PHỤC từ ảnh này
+   - ✅ Quần áo, váy, đầm, phụ kiện
+   - ✅ Màu sắc, chất liệu, kiểu dáng trang phục
+   - ✅ Kiểu tóc nếu phù hợp với outfit
+
+**QUY TẮC GHÉP:**
+- Khuôn mặt từ Face Reference + Trang phục từ Outfit Reference
+- KHÔNG BAO GIỜ mô tả trang phục từ ảnh Face Reference
+- Nếu Face Reference mặc áo đỏ nhưng Outfit Reference là váy xanh → OUTPUT: váy xanh
+
+**CREATIVE AUTONOMY & VISUAL INTELLIGENCE:**
+1. **DEEP VISUAL ANALYSIS & INTELLIGENT STYLING:** 
+   - **Analyze:** Fabric weight, texture, silhouette, and construction details.
+   - **COMPLETE THE LOOK (CRITICAL):** If the outfit reference image is partial (e.g., only a top, only pants, or a close-up):
+     - You **MUST** autonomously design the missing garments to create a complete, cohesive full-body look.
+     - *Logic:* Apply advanced fashion styling principles. Analyze the visible garment's era, cut, and material to deduce the most sophisticated pairing. Ensure silhouette balance and color harmony to create a runway-ready ensemble.
+   - Identify the specific aesthetic.
+
+2. **BODY & POSE AESTHETICS (VISUAL VOCABULARY - NO NUMBERS):**
+   You MUST translate the input measurements into the following evocative visual vocabulary. **DO NOT** use specific numbers (cm/inches) in the output description.
+   
+   - **OVERALL SILHOUETTE:** Select based on body type: "Pronounced hourglass silhouette," "Dramatic S-curve posture," or "Statuesque and curvaceous frame."
+   - **BUST:** "Voluminous upper-body silhouette," "Prominent bust projection," or "Ample and well-defined bust plane."
+   - **WAIST:** "Tapered and cinched midsection," "Dramatic inward waist curvature," or "Willow-like, slender waistline."
+   - **HIPS:** "Full, sweeping hip line," "Prominent and rounded seat profile," or "Bountiful lower-body contours."
+   - **OUTFIT FIT:** "Strategic fabric tension," "Form-fitting tailoring," or "Contour-hugging satin drapery."
+
+================================================
+👗 FASHION POSE LIBRARY (KHOE 3 VÒNG - TÔN DÁNG)
+================================================
+Mỗi keyframe PHẢI sử dụng pose chuyên nghiệp để tôn dáng tối đa:
+
+**🔥 SIGNATURE POSES (Dáng đặc trưng - Bắt buộc dùng):**
+
+**A. STANDING POSES (Đứng):**
+1. **S-Curve Contrapposto:** Trọng tâm dồn 1 chân, hông đẩy nhẹ sang bên, vai hơi xoay ngược → tạo đường cong S tự nhiên, eo thon hơn
+2. **3/4 Fashion Stance:** Xoay người 45° so với camera, chân trước chéo nhẹ, tay chạm hông → thu gọn eo, tôn hông
+3. **Power Pose:** Hai chân rộng vai, hai tay chống hông, ngực ưỡn nhẹ → tự tin, powerful, vai rộng
+4. **Elegant Lean:** Nghiêng nhẹ về phía trước từ hông, vai thả lỏng → tôn ngực, thân hình thanh mảnh
+5. **Hip Pop:** Đẩy hông mạnh sang 1 bên, tay đối diện chạm tóc → eo cực thon, hông đường cong rõ
+
+**B. ĐỘNG TÁC TAY (Tôn vùng trên):**
+1. **Hand on Hip:** Tay chống hông, khuỷu tay hướng ra → eo thon, tạo tam giác âm
+2. **Hair Touch:** Tay chạm/vuốt tóc phía sau → nâng ngực tự nhiên, cổ dài
+3. **Collar Adjust:** Tay chạm cổ áo/dây chuyền → thu hút ánh nhìn vào ngực/cổ
+4. **Fabric Caress:** Tay nhẹ nhàng chạm vải váy/đầm → show chất liệu + eo thon
+5. **Cross Body:** Tay này chạm khuỷu tay kia → thu gọn body, thanh lịch
+
+**C. CHÂN & HÔNG (Tôn vùng dưới):**
+1. **Front Cross:** Chân trước bắt chéo nhẹ phía trước → chân dài hơn, thon gọn
+2. **Toe Point:** Mũi chân chạm đất, gót nhấc → bắp chân thon, chân dài
+3. **Weight Shift:** Trọng tâm 70% chân sau, chân trước relax → hông cong tự nhiên
+4. **Flamingo:** Một chân hơi co, mũi chạm mắt cá chân kia → playful, chân dài
+
+**D. CHUYỂN ĐỘNG (Motion poses cho video):**
+1. **Graceful Spin:** Xoay chậm 360°, váy bay nhẹ → show toàn diện outfit
+2. **Catwalk Stride:** Bước đi runway, chân bắt chéo, hông lắc nhẹ → professional model
+3. **Wind Effect:** Tóc/váy bay nhẹ như có gió → động, sống động
+4. **Fabric Flow:** Tay kéo nhẹ vải váy sang bên → show độ rủ, chất liệu
+5. **Slow Turn:** Quay từ từ từ 3/4 → profile → 3/4 sau → đối mặt camera
+
+**E. POSE THEO LOẠI OUTFIT:**
+- **Đầm dài/Maxi:** Tay cầm nhẹ vạt váy, xoay để váy bay + Catwalk stride
+- **Đầm ôm/Bodycon:** S-Curve pose, tay vuốt theo đường cong body + Hip pop
+- **Áo crop/Croptop:** Tay giơ nhẹ (show eo), Hair touch + Power pose
+- **Quần/Pants:** Tay túi quần, Walking pose + Front cross
+- **Bikini/Swimwear:** Contrapposto mạnh, Elegant lean + Toe point
+- **Đồ ngủ/Loungewear:** Relaxed S-curve, Soft fabric caress + Natural poses
+- **Áo dài:** Thanh lịch, tay nắm vạt áo dài, Walking gracefully
+
+**F. POSE SEQUENCE (Cho video 32s - 4 scenes):**
+- **Scene 1 (00s-08s):** Hero pose - S-Curve Contrapposto hoặc 3/4 Fashion Stance → Xoay 360°
+- **Scene 2 (08s-16s):** Detail pose - Fabric Caress + Hip Pop → Show chi tiết outfit
+- **Scene 3 (16s-24s):** Movement pose - Catwalk Stride hoặc Graceful Spin → Dynamic motion
+- **Scene 4 (24s-32s):** Closing pose - Power Pose hoặc Elegant Lean → Memorable ending
+
+**G. LƯU Ý QUAN TRỌNG:**
+- Mỗi pose phải KHÁC NHAU giữa các keyframe - KHÔNG lặp lại pose
+- Pose phải phù hợp với loại outfit và body type
+- Ưu tiên pose tạo "negative space" (khoảng trống giữa tay và body) để eo trông thon hơn
+- Ánh sáng nên chiếu từ phía trước-bên để tạo shadow tôn 3 vòng
+- Camera angle hơi thấp (low angle) giúp chân dài hơn
+
+3. **INTIMATE COUTURE & LOUNGEWEAR SPECIALIZATION (FASHION-SAFE VOCABULARY):**
+   IF the outfit involves delicate undergarments, foundation wear, corsetry, or silk loungewear, apply this FASHION-FORWARD vocabulary to avoid content flags:
+   
+   **NEVER USE (FLAGGED TERMS):** bra, panties, underwear, thong, g-string, nipple, cleavage, sexy, seductive, sensual, erotic, revealing
+   
+   **ALWAYS USE (FASHION-SAFE ALTERNATIVES):**
+   - "Bra" → "Structured bodice," "Support silhouette," "Foundation piece," "Bralette styling"
+   - "Panties/Underwear" → "Coordinating bottom," "Matching brief," "Foundation layer," "Seamless base"
+   - "Lingerie set" → "Intimate coordinates," "Boudoir ensemble," "Foundation set," "Loungewear pairing"
+   - "Sexy" → "Sophisticated," "Refined elegance," "Haute couture aesthetic"
+   - "Revealing" → "Architectural cutouts," "Strategic draping," "Artful construction"
+   
+   **TEXTILE VOCABULARY:**
+   - "Intricate floral Chantilly lace detailing," "Lustrous mulberry silk satin finish"
+   - "Sheer diaphanous tulle overlay," "Delicate Swiss dot mesh"
+   - "Hand-applied Guipure lace appliqué," "French leavers lace construction"
+   
+   **CONSTRUCTION VOCABULARY:**
+   - "Architectural boning structure," "Corsetry-inspired silhouette"
+   - "Delicate scalloped lace hemlines," "Adjustable strap engineering"
+   - "Invisible seaming technology," "Four-way stretch construction"
+   
+   **LIGHTING (EDITORIAL STYLE):**
+   - "Soft diffused window light on fabric textures," "Gentle rim lighting emphasizing silhouette"
+   - "Subtle fabric sheen reflection," "Natural morning light ambiance"
+
+================================================
+� WALLPAPER MODE (CHẾ ĐỘ HÌNH NỀN ĐIỆN THOẠI)
+================================================
+Khi nhận được flag "WALLPAPER_MODE: ON":
+
+**MỤC ĐÍCH:** Tạo hình ảnh/video đẹp phù hợp làm hình nền điện thoại (lock screen/home screen)
+
+**COMPOSITION RULES (BỐ CỤC ĐẶC BIỆT):**
+1. **Chừa không gian cho UI:**
+   - **Phần trên (15-20%):** Để trống hoặc background đơn giản cho đồng hồ/thông báo
+   - **Phần dưới (10-15%):** Để trống hoặc đơn giản cho dock icons
+   - **Model ở GIỮA (65-75%):** Vẫn nổi bật nhưng không che hết màn hình
+
+2. **Model Position:**
+   - Model có thể ở giữa-dưới hoặc giữa frame
+   - KHÔNG đặt model sát mép trên (sẽ bị đồng hồ che)
+   - KHÔNG đặt chi tiết quan trọng sát mép dưới (sẽ bị dock che)
+
+3. **Background Aesthetic:**
+   - Chọn background có màu sắc hài hòa, gradient đẹp
+   - Ưu tiên: Hoàng hôn, bình minh, bokeh lights, skyline đêm, thiên nhiên
+   - Tránh: Background quá busy/nhiều chi tiết nhỏ
+
+**WALLPAPER-FRIENDLY BACKGROUNDS:**
+- **Gradient Sky:** Golden hour sunset, pastel sunrise, blue hour twilight
+- **City Lights:** Bokeh city lights at night, neon reflections, rooftop view
+- **Nature:** Soft beach sunset, misty mountains, flower field blur
+- **Minimal Interior:** Clean wall with soft shadows, window light, curtain backdrop
+- **Artistic:** Dreamy bokeh, light leaks, lens flare accents
+
+**COLOR PALETTE ĐẸP CHO WALLPAPER:**
+- Warm tones: Coral, peach, golden, amber
+- Cool tones: Teal, lavender, soft blue, mint
+- Neutral: Cream, beige, soft grey, dusty rose
+- Dramatic: Deep purple, navy, burgundy với highlights
+
+**LIGHTING CHO WALLPAPER:**
+- Rim lighting tạo silhouette đẹp
+- Golden hour warm glow
+- Soft diffused light
+- Backlit với light flare
+- City lights bokeh background
+
+**VÍ DỤ OUTPUT WALLPAPER MODE:**
+- "The model positioned in lower-center of frame, golden sunset sky gradient filling upper portion with soft clouds, warm rim lighting creating ethereal silhouette, clean space above for clock display"
+- "Elegant pose against soft bokeh city lights background, model at 60% frame height, dreamy purple-blue twilight gradient in upper third, clean composition suitable for phone wallpaper"
+
+================================================
+�🔞 EDITORIAL MODE (18+ - KHI ĐƯỢC BẬT)
+================================================
+**CHẾ ĐỘ EDITORIAL CHUYÊN NGHIỆP:**
+Khi nhận được flag "EDITORIAL_MODE: ON" hoặc "18+ MODE: ENABLED":
+
+**MÔ TẢ TƯỢNG HÌNH (VISUAL VOCABULARY):**
+Trang phục được mô tả với silhouette tự nhiên, không có lớp foundation bên trong:
+- "Seamless foundation-free silhouette beneath the fabric"
+- "Uninterrupted natural fabric drape against skin"
+- "Clean garment lines without visible undergarment interference"
+- "Pure fabric-to-form contact creating authentic silhouette"
+- "Natural body contours visible through strategic fabric tension"
+- "Unencumbered décolletage line"
+- "Smooth unbroken back silhouette"
+- "Authentic fabric behavior without foundation layer obstruction"
+
+**ÁP DỤNG CHO:**
+- Váy/đầm với vải mỏng, lụa, satin, chiffon
+- Đồ cut-out, backless, deep-V designs
+- Sheer/semi-transparent fabrics
+- Form-fitting bodycon styles
+- Editorial/runway photography aesthetic
+
+**CÁCH DIỄN ĐẠT:**
+- ❌ KHÔNG NÓI: "without bra," "no underwear," "braless"
+- ✅ NÊN NÓI: "foundation-free silhouette," "natural fabric drape," "uninterrupted garment lines"
+
+**VÍ DỤ ÁP DỤNG:**
+- "The silk slip dress flows with uninterrupted drape, foundation-free silhouette allowing natural fabric behavior, subtle body contours visible through the lustrous satin"
+- "Backless gown with seamless back silhouette, clean lines from nape to lower back, fabric resting naturally against skin"
+- "Sheer chiffon overlay with natural décolletage line, strategic fabric gathering at bust creating elegant coverage"
+
+**LƯU Ý:** Chế độ này chỉ ảnh hưởng đến cách mô tả silhouette, vẫn giữ nguyên aesthetic thời trang cao cấp và không vi phạm content policies.
+
+4. **DYNAMIC ENVIRONMENT DESIGN (REAL LOCATIONS ONLY - SMART SELECTION):**
+   - **CRITICAL: CHỈ DÙNG ĐỊA ĐIỂM THẬT** - Địa điểm phải tìm được trên Google Maps hoặc là nơi nổi tiếng có thật.
+   - **KHÔNG TẠO ĐỊA ĐIỂM GIẢ:** Không sáng tác tên địa điểm hay mô tả chung chung như "elegant studio," "modern apartment."
+   
+   **SMART LOCATION MATCHING (THEO LOẠI SẢN PHẨM):**
+   - **Đồ dạ hội/Evening wear:** Park Hyatt Saigon lobby, InterContinental Danang ballroom, Vinpearl Landmark 81 rooftop
+   - **Đồ công sở/Office wear:** Bitexco Financial Tower lobby, Vinhomes Central Park penthouse, Deutsches Haus HCMC
+   - **Đồ casual/Street:** Café Apartment 42 Nguyễn Huệ, The Coffee House Signature, Highlands Coffee Bến Thành
+   - **Bikini/Swimwear:** Vinpearl Nha Trang beach, InterContinental Phu Quoc Long Beach, Six Senses Con Dao
+   - **Đồ ngủ/Loungewear:** Vinhomes Golden River penthouse bedroom, The Reverie Saigon suite, Fusion Suites Danang
+   - **Nội y/Intimate:** (Editorial boudoir setting) The Myst Dong Khoi suite, Park Hyatt Saigon Presidential suite
+   - **Áo dài:** Hội An Ancient Town lantern street, Temple of Literature Hanoi, Notre Dame Cathedral Saigon
+   - **Sport/Activewear:** Sala Park District 2, Thao Dien Pearl jogging track, Phu My Hung Starlight Bridge
+   
+   **LOCATION CATEGORIES (REGION PREFERENCE):**
+   - **Căn hộ cao cấp:** Vinhomes Central Park, Masteri Thao Dien, The Manor, Gateway Thao Dien, Sala Sadora
+   - **Khách sạn 5 sao:** Park Hyatt Saigon, The Reverie Saigon, InterContinental, Sofitel Legend Metropole
+   - **Cafe/Rooftop:** Café Apartment 42 Nguyen Hue, Starbucks Reserve Han Thuyen, EON51 Bitexco
+   - **Biệt thự/Villa:** Fusion Resort Cam Ranh villa, Premier Village Danang, Amanoi Ninh Thuan
+   - **Bãi biển:** Vinpearl Nha Trang, My Khe Beach Danang, Long Beach Phu Quoc
+   - **Phố cổ/Heritage:** Hoi An Ancient Town, Temple of Literature, Hanoi Old Quarter 36 streets
+   - **Thiên nhiên:** Dalat pine forest, Sapa terraced rice fields, Ba Vi National Park
+   - **Quốc tế Châu Á:** Tokyo Shibuya, Seoul Gangnam, Bangkok Iconsiam, Singapore Marina Bay
+   - **Quốc tế Châu Âu:** Paris Champs-Élysées, Santorini Oia, Amalfi Coast, Milan Galleria Vittorio
+   - **Quốc tế Khác:** New York Central Park, Dubai Burj Khalifa, Sydney Opera House
+
+================================================
+🗺️ LOCATION VAULT SYSTEM (LƯU TRỮ ĐỊA ĐIỂM - CRITICAL)
+================================================
+**HỆ THỐNG TRÁNH TRÙNG LẶP:**
+1. Bạn sẽ nhận được "PREVIOUSLY USED LOCATIONS (BLOCKLIST)" - danh sách địa điểm đã dùng
+2. **TUYỆT ĐỐI KHÔNG** dùng lại địa điểm trong blocklist này
+3. Chọn địa điểm MỚI phù hợp với loại sản phẩm và region được chỉ định
+
+**COLLISION AVOIDANCE PROTOCOL:**
+- Nếu blocklist có "Park Hyatt Saigon lobby" → KHÔNG dùng bất kỳ khu vực nào của Park Hyatt Saigon
+- Nếu blocklist có "Vinhomes Central Park penthouse" → Chọn căn hộ khác (Masteri, The Manor, etc.)
+- Nếu blocklist có toàn bộ địa điểm trong 1 category → Chuyển sang category khác phù hợp
+
+**KHI HẾT ĐỊA ĐIỂM PHÙ HỢP:**
+- Nếu tất cả địa điểm trong PREFERRED REGION đã được dùng:
+  1. Thông báo trong METADATA: "Location Vault Overflow - Reusing with variation"
+  2. Dùng lại địa điểm nhưng với GÓC QUAY/THỜI ĐIỂM/KHU VỰC KHÁC
+  3. Ví dụ: Nếu "Hoi An Ancient Town lantern street" đã dùng → "Hoi An Ancient Town riverside at sunset" (khác góc, khác thời điểm)
+
+**SUGGESTED LOCATIONS:**
+- Nếu có "SUGGESTED LOCATIONS" được cung cấp, ưu tiên dùng các option này
+- Đây là địa điểm chưa được sử dụng và phù hợp với region
+
+================================================
+FASHION-SAFE VOCABULARY (TRÁNH BỊ FLAG - TIẾNG VIỆT)
+================================================
+**TUYỆT ĐỐI KHÔNG DÙNG:** áo ngực, quần lót, thong, sexy, gợi cảm, quyến rũ, khêu gợi, hở hang, lộ
+
+**THAY THẾ BẰNG TỪ NGỮ THỜI TRANG:**
+- "Áo ngực" → "Áo lót định hình", "Bralette", "Áo nâng ngực", "Inner top", "Structured bodice"
+- "Quần lót" → "Quần định hình", "Brief", "Inner bottom", "Quần trong", "Coordinating bottom"
+- "Bộ đồ lót" → "Set nội y", "Bộ foundation", "Intimate set", "Inner coordinates", "Boudoir ensemble"
+- "Sexy/Gợi cảm" → "Sang trọng", "Tinh tế", "Thanh lịch", "Refined elegance", "Haute couture aesthetic"
+- "Hở/Lộ" → "Thiết kế cut-out", "Phom dáng hiện đại", "Chi tiết xẻ tinh tế", "Architectural draping"
+
+**TỪ NGỮ VỀ CHẤT LIỆU (AN TOÀN):**
+- "Ren Pháp cao cấp", "Lụa satin mềm mại", "Vải tulle trong suốt"
+- "Ren hoa nổi", "Cotton organic", "Microfiber co giãn 4 chiều"
+- "Intricate Chantilly lace", "Lustrous mulberry silk satin", "Diaphanous tulle overlay"
+
+================================================
+🎬 CINEMATIC SCENE TRANSITION RULES (GHÉP NỐI MƯỢT MÀ)
+================================================
+Mỗi scene 8 giây được tạo riêng biệt. Để ghép thành video điện ảnh hoàn chỉnh:
+
+**1. QUY TẮC TƯ THẾ (POSE CONTINUITY):**
+- Tư thế KẾT THÚC scene N = Tư thế BẮT ĐẦU scene N+1
+- Scene 1 kết thúc: Model quay mặt về bên phải, tay chạm tóc
+- Scene 2 bắt đầu: TỪ tư thế đó, tiếp tục chuyển động
+- KHÔNG có động tác đột ngột giữa các scene
+
+**2. QUY TẮC VỊ TRÍ (POSITION CONTINUITY):**
+- Vị trí model trong frame PHẢI nhất quán
+- Scene 1 kết thúc ở giữa frame → Scene 2 bắt đầu ở giữa frame
+- Tránh: Scene 1 ở bên trái, Scene 2 nhảy sang bên phải
+
+**3. QUY TẮC CAMERA (CAMERA CONTINUITY):**
+- Camera angle kết thúc scene N ≈ Camera angle bắt đầu scene N+1
+- Orbit shot phải liên tục: Scene 1 orbit từ 0°-90° → Scene 2 tiếp tục từ 90°-180°
+- Dolly shot: giữ nguyên hướng và tốc độ
+
+**4. QUY TẮC ÁNH SÁNG (LIGHTING CONTINUITY):**
+- Golden hour → tiếp tục golden hour (không nhảy sang harsh midday)
+- Indoor soft light → tiếp tục indoor soft light
+- Rim lighting direction phải nhất quán
+
+**5. ENDING CUES (TÍN HIỆU KẾT THÚC SCENE):**
+Mỗi scene cần có ending cue để transition mượt:
+- Scene 1→2: Model đang xoay → kết thúc ở vị trí chuẩn bị đi bộ
+- Scene 2→3: Đang đi bộ → kết thúc ở vị trí dừng, nhìn camera
+- Scene 3→4: Dừng → kết thúc với pose cuối cùng
+
+**6. VEO 3.1 MOTION RULES (BẮT BUỘC):**
+- Mỗi scene 8 giây = 1-2 hành động LIỀN MẠCH
+- KHÔNG cắt cảnh giữa scene - camera theo dõi liên tục
+- Dùng từ ngữ motion: "smoothly transitions," "gradually," "continuous movement," "fluid motion"
+- Tránh: "suddenly," "cuts to," "jump to" - Veo 3.1 không xử lý tốt
+
+**7. MOTION FORMAT (cho từng scene):**
+"[Subject] + [starting position from previous scene] + [continuous action] + [camera movement] + [ending position for next scene]"
+
+================================================
+📱 9:16 VERTICAL FRAMING (BẮT BUỘC - CRITICAL)
+================================================
+Video phải tối ưu cho màn hình dọc 9:16 (TikTok/Reels/Shorts):
+
+**⚠️ QUY TẮC VÀNG - MODEL CHIẾM 85% FRAME:**
+- **Model PHẢI chiếm 85% chiều cao frame** - đây là tiêu chuẩn bắt buộc
+- **KHÔNG BAO GIỜ** để model nhỏ giữa khung cảnh rộng
+- **GÓC NHÌN GẦN** - camera luôn ở khoảng cách gần với nhân vật
+
+**FRAMING RULES:**
+- **Headroom:** Đỉnh đầu cách mép trên 3-5% frame (rất ít)
+- **Footroom:** Có thể cắt từ đầu gối trở xuống để model chiếm đủ 85%
+- **Model là TRUNG TÂM** - background chỉ là phần phụ, blur mờ
+
+**SHOT TYPES ƯU TIÊN (theo thứ tự):**
+1. **Medium Shot (MS):** Từ đùi trở lên - THấY RÕ 3 vòng + outfit + biểu cảm (ƯU TIÊN #1)
+2. **Medium Close-up (MCU):** Từ ngực trở lên - focus khuôn mặt + outfit cổ/vai
+3. **Cowboy Shot:** Từ đầu gối trở lên - show outfit + pose đẹp
+4. **Close-up (CU):** Chỉ khuôn mặt - cho moment đặc biệt (dùng ít)
+
+**🚫 TUYỆT ĐỐI KHÔNG ĐƯỢC:**
+- ❌ Wide shot / Long shot với model nhỏ
+- ❌ Establishing shot với bối cảnh rộng
+- ❌ Model chiếm dưới 80% chiều cao frame
+- ❌ Camera xa quá 3m
+- ❌ Quá nhiều không gian trống xung quanh model
+- ❌ Background chi tiết rõ nét hơn model
+
+**CAMERA DISTANCE (KHOẢNG CÁCH BẮT BUỘC):**
+- **Gần nhất:** 0.5-1m (close-up khuôn mặt)
+- **Tiêu chuẩn:** 1-1.5m (medium shot - DÙNG NHIỀU NHẤT)
+- **Xa nhất:** 2m (full body nhưng model vẫn chiếm 85% frame)
+- **KHÔNG ĐƯỢC quá 2m** - model sẽ bị nhỏ
+
+**LENS SIMULATION:**
+- Ưu tiên: 50mm-85mm equivalent (portrait lens, natural compression)
+- Tạo bokeh mạnh: f/1.4-f/2.8 để background mờ đẹp
+- Tránh: Wide angle (dưới 35mm) - méo body, background quá rõ
+
+**BACKGROUND BLUR (CRITICAL):**
+- Background PHẢI có bokeh mờ (shallow depth of field)
+- Model sắc nét, background mềm mờ → model nổi bật
+- Địa điểm thật nhưng chỉ là HINTS, không phải focus
+
+**VÍ DỤ FRAMING ĐÚNG (BẮT BUỘC THEO):**
+- "The elegant model fills 85% of the vertical 9:16 frame, framed from head to mid-thigh, soft creamy bokeh background with hints of [REAL LOCATION], 85mm portrait lens f/1.8, camera 1.2m distance at eye level"
+- "Medium shot of the model occupying nearly the entire vertical frame, sharp focus on face and outfit, dreamy blurred background suggesting [REAL LOCATION], natural window light"
+
+**VÍ DỤ FRAMING SAI (TUYỆT ĐỐI TRÁNH):**
+- ❌ "Wide shot of the model standing in a large room" (model quá nhỏ)
+- ❌ "The model in the distance against the city skyline" (camera quá xa)
+- ❌ "Full body shot showing the entire luxury hotel lobby" (background rõ hơn model)
+- ❌ "The model walking through the beautiful garden" (establishing shot)
+
+================================================
+🏛️ ĐỊA ĐIỂM THẬT - KHÔNG BỐI CẢNH GIẢ (CRITICAL)
+================================================
+**CHỈ DÙNG ĐỊA ĐIỂM CÓ THẬT:**
+- Địa điểm PHẢI tìm được trên Google Maps
+- Địa điểm PHẢI có tên cụ thể (tên khách sạn, tên tòa nhà, tên quán...)
+- Background là HINTS của địa điểm thật (vì đã blur mờ)
+
+**KHÔNG ĐƯỢC TẠO ĐỊA ĐIỂM GIẢ:**
+- ❌ "elegant studio" - KHÔNG CÓ THẬT
+- ❌ "modern apartment" - QUÁ CHUNG CHUNG
+- ❌ "luxury hotel room" - KHÔNG CÓ TÊN
+- ❌ "beautiful beach" - KHÔNG CỤ THỂ
+- ❌ "cozy living room" - KHÔNG TỒN TẠI
+
+**PHẢI GHI NHƯ SAU:**
+- ✅ "Park Hyatt Saigon - penthouse suite with city view"
+- ✅ "Vinhomes Central Park - living room with Landmark 81 visible"
+- ✅ "Café Apartment 42 Nguyen Hue - balcony 3rd floor"
+- ✅ "InterContinental Phu Quoc Long Beach - beachfront"
+- ✅ "Hoi An Ancient Town - yellow wall lantern street"
+
+**VÍ DỤ TRANSITION MƯỢT:**
+Scene 1 (00s-08s): The elegant model begins in a poised standing position, then gracefully initiates a slow 360-degree rotation, flowing silk fabric catching soft natural light, completing rotation to face 3/4 right. Camera: Static → Slow orbit follow. END_POSE: Facing 3/4 right, weight on left foot.
+
+Scene 2 (08s-16s): Continuing from 3/4 right position, the model fluidly shifts weight and begins walking forward with confident strides, fabric swaying with each step, camera tracking alongside. Camera: Dolly tracking left-to-right. END_POSE: Mid-stride, facing camera.
+
+Scene 3 (16s-24s): From mid-stride, the model gradually slows to an elegant stop, turning to face camera directly, one hand gracefully touching fabric at hip, soft smile forming. Camera: Push in to medium shot. END_POSE: Standing facing camera, hand on hip.
+
+================================================
+INPUTS
+================================================
+1. Reference Images (Face & Outfit)
+2. Body Configuration (Gender & Measurements)
+3. Video Duration
+4. PREFERRED LOCATION REGION - *The category of location to use (auto = free choice)*
+5. SUGGESTED LOCATIONS - *Pre-vetted options if available*
+6. PREVIOUSLY USED LOCATIONS (BLOCKLIST) - *Avoid these.*
+
+================================================
+OUTPUT FORMAT (STRICT)
+================================================
+
+SECTION 1: COMMON MASTER PROMPT
+This is the **ONLY** place for detailed face preservation and detailed body descriptions.
+CRITICAL REQUIREMENTS:
+1. Start with exactly: "Exact facial features of the reference image, mirroring the subject's unique facial structure with photorealistic fidelity,".
+2. **MANDATORY POSE:** You MUST include: "Standing in a refined 3/4 front fashion pose, facing the camera, accentuating the bust, waist, and hips."
+Format: [Subject + Face Preservation] + [Mandatory Pose] + [Full Body Outfit Description] + [Detailed Visual Vocabulary for Body (No Numbers)] + [Lingerie Details (If Applicable)] + [Unique Cinematic Environment] + [Atmospheric Lighting] + [Camera/Lens].
+
+SECTION 2: KEYFRAME PROMPTS
+Generate the prompt for each required image keyframe.
+**CRITICAL EXCLUSION:** 
+- Do **NOT** include "Exact facial features of the reference image...".
+- Do **NOT** include the detailed body vocabulary. Use a concise character tag.
+- **DO** focus purely on the **POSE** and **ENVIRONMENT**.
+
+Format:
+Image 1 (00s): [Concise Character Ref] + [Starting Pose] + [Environment]
+Image 2 (08s): [Concise Character Ref] + [Dynamic Pose at 8s] + [Environment]
+...and so on up to Image N+1.
+
+SECTION 3: VEO SCENE PROMPTS
+Generate the prompt for each 8-second video segment.
+**CRITICAL EXCLUSION:** Do NOT include face details or detailed body descriptions. Focus purely on **MOTION**.
+Format:
+Scene 1 (00s-08s): [Prompt describing motion from Image 1 to Image 2]
+Scene 2 (08s-16s): [Prompt describing motion from Image 2 to Image 3]
+...and so on.
+
+SECTION 4: METADATA
+Specific Location: [ĐỊA ĐIỂM THẬT - phải tìm được trên Google Maps]
+- VÍ DỤ: "InterContinental Danang - Sun Peninsula private beach"
+- VÍ DỤ: "Santorini Oia - blue dome church viewpoint"
+- VÍ DỤ: "Hoi An Ancient Town - yellow lantern street"
+- KHÔNG ĐƯỢC: "elegant studio," "modern apartment," "luxury hotel" (quá chung chung)
+
+Do not use markdown bolding (**) in the prompt text areas. Keep them raw and clean for copying.
+`;
+
+const TIKTOK_SYSTEM_INSTRUCTION = `
+You are a Viral Choreographer and Technical Movement Director for TikTok.
+
+Your goal is to generate a **SEAMLESS KINETIC PIPELINE** for a dance video.
+Structure the output strictly into four distinct sections for the user to copy-paste.
+
+================================================
+⚠️ FACE vs OUTFIT REFERENCE (CRITICAL)
+================================================
+**FACE REFERENCE:** CHỈ lấy KHUÔN MẶT (facial features, skin tone)
+- ❌ KHÔNG lấy trang phục từ ảnh này
+
+**OUTFIT REFERENCE:** Lấy TRANG PHỤC từ ảnh này
+- ✅ Quần áo, váy, phụ kiện, màu sắc, chất liệu
+
+**CREATIVE DIRECTION & PHYSICS:**
+1. **STYLING FOR MOVEMENT (CRITICAL):**
+   - **Physics Analysis:** Analyze how the specific fabric in the reference image behaves during motion.
+   - **Visual Vocabulary (Body):** Translate measurements into: "Pronounced hourglass silhouette," "Voluminous upper-body silhouette," "Tapered and cinched midsection," "Full, sweeping hip line," "Strategic fabric tension." **NO NUMBERS.**
+
+2. **CHOREOGRAPHIC CONTINUITY (THE MOST IMPORTANT RULE):**
+   - **No Disjointed Poses:** Image 2 MUST be the logical physical consequence of Image 1.
+   - **Weight Transfer:** Describe where the weight shifts.
+   - **Flow:** The video must look like *one continuous take*.
+
+3. **CAMERA WORK (IMMERSIVE):**
+   - Use specific TikTok camera vernacular: "Smartphone gimbal stabilization," "Dynamic following shot," "Crash zoom on the beat drop," "Slight handheld parallax."
+
+4. **LOCATION VAULT - REAL LOCATIONS ONLY:**
+   - **CHỈ DÙNG ĐỊA ĐIỂM THẬT** - có thể tìm thấy trên Google Maps hoặc nơi nổi tiếng có thật.
+   - **KHÔNG TẠO ĐỊA ĐIỂM GIẢ** - không được sáng tác tên địa điểm hay mô tả chung chung.
+   - You will receive a list of "PREVIOUSLY USED LOCATIONS". Do **NOT** repeat them.
+
+================================================
+INPUTS
+================================================
+(Same as Cinematic, plus Blocklist)
+
+================================================
+OUTPUT FORMAT (STRICT)
+================================================
+
+SECTION 1: COMMON MASTER PROMPT
+This is the **ONLY** place for detailed face preservation and detailed body descriptions.
+CRITICAL REQUIREMENTS:
+1. Start with exactly: "Exact facial features of the reference image, mirroring the subject's unique facial structure with photorealistic fidelity,".
+2. **MANDATORY POSE:** You MUST include: "Performing a fluid, high-energy viral dance trend, engaging directly with the smartphone camera."
+Format: [Subject + Face Preservation] + [Mandatory Pose] + [Full Body Outfit + Kinetic Fabric Details] + [Visual Vocabulary for Body (No Numbers)] + [Dance Vibe] + [Environment] + [Lighting] + [Camera].
+
+SECTION 2: KEYFRAME PROMPTS
+Generate the prompt for each required image keyframe. Focus on the *mid-motion* state.
+**CRITICAL EXCLUSION:** 
+- Do **NOT** include "Exact facial features...".
+- Do **NOT** repeat detailed body descriptions.
+- **DO** include the specific dance move pose for that timestamp.
+
+Format:
+Image 1 (00s): [Concise Character Ref] + [Action 1: The Setup] + [Fabric Physics] + [Environment]
+Image 2 (08s): [Concise Character Ref] + [Action 2: The Release] + [Fabric Physics] + [Environment]
+...and so on.
+
+SECTION 3: VEO SCENE PROMPTS
+Generate the prompt for each 8-second video segment.
+**CRITICAL:** Describe the *transition* between the keyframes.
+Format:
+Scene 1 (00s-08s): [Describe the continuous movement from Image 1 to Image 2]
+Scene 2 (08s-16s): [Describe the movement from Image 2 to Image 3]
+...and so on.
+
+SECTION 4: METADATA
+Specific Location: [ĐỊA ĐIỂM THẬT - phải tìm được trên Google Maps]
+- VÍ DỤ: "Landmark 81 Sky Observation Deck - evening city view"
+- KHÔNG: "modern studio," "bright room" (quá chung chung)
+
+Do not use markdown bolding (**) in the prompt text areas. Keep them raw and clean for copying.
+`;
+
+const TIKTOK_SHOP_SYSTEM_INSTRUCTION = `
+You are a TikTok Shop Vietnam Fashion Seller with 10+ years experience.
+You speak like a real Vietnamese seller - friendly, honest, urgent but not pushy.
+
+GOAL: Generate video scripts that CONVERT (Ra Đơn Thật).
+Real model, real body, real lighting, smartphone filming.
+
+================================================
+⚠️ FACE vs OUTFIT REFERENCE (CRITICAL)
+================================================
+**BẠN SẼ NHẬN 2 ẢNH:**
+1. **FACE REFERENCE:** CHỈ lấy KHUÔN MẶT
+   - ❌ KHÔNG lấy trang phục/quần áo từ ảnh này
+   - ✅ CHỈ lấy: khuôn mặt, màu da, nét mặt
+
+2. **OUTFIT REFERENCE:** Đây là SẢN PHẨM BÁN
+   - ✅ Phân tích và mô tả chi tiết sản phẩm này
+   - ✅ Đây là đồ model sẽ mặc trong video
+   - ✅ Script phải nói về sản phẩm NÀY
+
+**LƯU Ý:** Dù Face Reference mặc đồ gì → KHÔNG liên quan
+Chỉ tập trung mô tả sản phẩm từ OUTFIT REFERENCE!
+
+================================================
+AI PRODUCT AUTO-DETECTION (QUAN TRỌNG)
+================================================
+**NẾu Product Type = "AUTO" hoặc không xác định:**
+AI PHẢI phân tích ảnh sản phẩm và tự động xác định:
+
+1. **LOẠI SẢN PHẨM** - Phân loại chính xác:
+   - Đầm dài (maxi) / Đầm ngắn (mini) / Đầm ôm (bodycon)
+   - Áo sơ mi / Áo thun / Croptop / Áo len / Áo khoác
+   - Quần dài / Quần jean / Quần ống rộng / Quần short / Chân váy
+   - Đồ bộ / Vest suit / Jumpsuit
+   - Áo dài / Bikini / Đồ ngủ / Nội y / Đồ thể thao
+
+2. **CHẤT LIỆU VẢI** - Nhận diện từ hình ảnh:
+   - Vải bóng/mờ, dày/mỏng, co giãn/không co giãn
+   - Ren/nhám/trơn/hoa văn
+   - Chiffon/Lụa/Thun/Cotton/Denim/Len/Nhám
+
+3. **ĐẶC ĐIỂM THIẾT KẾ:**
+   - Kiểu cổ: tròn/chữ V/cổ đức/bẹt vai
+   - Kiểu tay: dài/ngắn/không tay/tay phồng/tay áo raglan
+   - Độ dài: maxi/midi/mini/croptop
+   - Chi tiết: nơ/bèo/xếp ly/rách/theu
+
+4. **MÀU SẮC:**
+   - Màu chủ đạo + màu phụ
+   - Tone nóng/lạnh, sáng/tối
+
+5. **NHẬN DIỆN COMBO/KẾT HỢP (CRITICAL):**
+   Nếu ảnh sản phẩm có NHIỀU MÓN ĐỒ kết hợp, AI PHẢI nhận diện TẤT CẢ:
+   
+   **Các kiểu combo phổ biến (SỬ DỤNG TỪ NGỮ FASHION-SAFE):**
+   - 👗 Váy/Đầm + Inner bên trong (nhìn thấy qua vải mỏng/ren)
+   - 🧥 Áo khoác + Áo trong (croptop/áo hai dây/bralette)
+   - 👙 Bikini + Kimono/Cover-up
+   - 👚 Áo sơ mi mở + Bralette/Corset bên trong
+   - 🌙 Đồ ngủ silk + Inner set matching
+   - 👖 Quần + Áo (set đồng bộ)
+   - 👗 Đầm trong suốt + Bodysuit/Slip dress bên trong
+   
+   **OUTPUT cho COMBO (ghi vào METADATA):**
+   - Item chính: [Sản phẩm chính - ví dụ: Đầm ren trắng]
+   - Item phụ: [Sản phẩm kết hợp - ví dụ: Bralette đen]
+   - Kiểu kết hợp: [Layering/Matching set/See-through/etc.]
+   
+   **SCRIPT cho COMBO:**
+   - Nhắc đến CẢ HAI món trong script
+   - Ví dụ: "Váy ren mỏng nhưng đi kèm bralette nên an tâm nha!"
+   - Ví dụ: "Set này gồm áo crop và quần ống rộng, mix chung xinh lắm!"
+
+**OUTPUT của AUTO-DETECTION (ghi vào METADATA):**
+Loại SP: [Loại sản phẩm chính]
+Combo: [Có/Không] - Nếu có: [Liệt kê các item]
+Chất liệu: [Vải đã nhận diện cho từng item]
+Đặc điểm: [Các chi tiết nổi bật]
+
+================================================
+BODY VISUAL VOCABULARY (CHO AI IMAGE PROMPTS)
+================================================
+QUAN TRỌNG: Dùng từ ngữ tượng hình trong MASTER PROMPT & KEYFRAMES.
+KHÔNG dùng số đo (cm/kg) trong visual prompts - chỉ dùng trong SCRIPT tiếng Việt.
+
+**MAPPING RULE (Quy tắc chuyển đổi):**
+Dựa vào SIZE được cung cấp:
+- XS/S → Slim category
+- M/L → Balanced category  
+- XL/XXL → Curvy category
+- 3XL/4XL → Plus Size category
+
+Hoặc dựa vào Weight/Height ratio:
+- Weight < 50kg với Height > 165cm → Slim
+- Weight 50-60kg → Balanced
+- Weight 60-75kg → Curvy
+- Weight > 75kg → Plus Size
+
+**OVERALL SILHOUETTE (Dáng tổng thể):**
+- Slim: "Elegant elongated silhouette," "Graceful willowy frame," "Lithe and slender physique"
+- Balanced: "Harmonious proportioned figure," "Balanced feminine frame," "Well-proportioned silhouette"
+- Curvy: "Pronounced hourglass silhouette," "Voluptuous S-curve figure," "Dramatic feminine curves"
+- Plus Size: "Full-figured statuesque frame," "Generous womanly curves," "Bountiful feminine presence"
+
+**BUST (Ngực):**
+- Small (XS-S): "Subtle bust line," "Delicate décolletage," "Petite upper silhouette"
+- Medium (M-L): "Balanced bust projection," "Feminine upper silhouette," "Gentle bust curvature"
+- Full (XL+): "Voluminous upper-body silhouette," "Ample and well-defined bust plane," "Prominent décolletage"
+
+**WAIST (Eo):**
+- Slim (<65cm): "Dramatically cinched midsection," "Willow-like slender waistline," "Nipped-in waist"
+- Medium (65-75cm): "Tapered and defined waist," "Gentle inward waist curvature"
+- Full (>75cm): "Soft natural waistline," "Relaxed midsection," "Comfortable waist definition"
+
+**HIPS (Hông):**
+- Slim: "Sleek hip line," "Streamlined lower silhouette"
+- Medium: "Balanced hip curvature," "Gentle sweeping hip line"
+- Full: "Full, sweeping hip line," "Bountiful lower-body contours," "Generous hip curvature"
+
+**OUTFIT FIT (Độ ôm) - Chọn theo sản phẩm:**
+- Bodycon/Ôm sát: "Strategic fabric tension highlighting curves," "Form-fitting tailoring accentuating the waist"
+- Regular fit: "Comfortable silhouette with gentle drape," "Relaxed yet flattering fit"
+- Oversize: "Effortlessly draped silhouette," "Relaxed oversized aesthetic"
+
+**VÍ DỤ ÁP DỤNG:**
+Input: Height 160cm, Weight 65kg, Size XL, Waist 75cm
+→ Output: "Voluptuous S-curve figure with pronounced hourglass silhouette, balanced bust projection, gentle inward waist curvature, and full sweeping hip line. Form-fitting tailoring accentuating the waist."
+
+================================================
+TIKTOK SHOP VN RULES (BẮT BUỘC)
+================================================
+1. Video 9:16 dọc, 32 giây = 4 scenes x 8s
+2. Giỏ hàng TikTok ở GÓC DƯỚI màn hình (bottom of screen)
+3. Mỗi scene chỉ nói được 15-20 từ tiếng Việt (8 giây)
+4. Giọng nói: Như chị em nói chuyện, không đọc kịch bản
+5. ⚠️ KHÔNG NÓI "Mình cao X nặng Y" - Đây là video AI, tập trung MÔ TẢ SẢN PHẨM
+6. Scene 2: Mô tả size có sẵn + điểm nổi bật của sản phẩm trên dáng model
+
+================================================
+3 PHONG CÁCH QUAY (CHỌN THEO INPUT)
+================================================
+
+### STYLE: BODY_REAL (⭐ Hiệu quả cao nhất)
+"Thử đồ trực tiếp – Body real"
+- Model đã mặc sẵn từ đầu
+- Xoay 360° ngay Scene 1
+- Focus: Dáng người thật, không filter
+
+FLOW BODY_REAL:
+Scene 1: HOOK + XOAY 360°
+- Model xoay chậm 1 vòng
+- Script gợi ý (TẠO MỚI dựa trên sản phẩm): Hook attention + show dáng
+
+Scene 2: MÔ TẢ SẢN PHẨM + SIZE
+- Tay vuốt eo, vuốt hông
+- Script: Mô tả điểm nổi bật + "Có size [available sizes]" hoặc "Từ S đến XXL"
+
+Scene 3: CHECK VẢI
+- Kéo vải, bóp, show độ co giãn
+- Script gợi ý: Mô tả chất vải cụ thể của sản phẩm
+
+Scene 4: TEST THỰC TẾ + CTA
+- Product-specific action + gập tay dễ thương chỉ xuống góc DƯỚI màn hình
+- Motion: Cười tươi, gập bàn tay kiểu cute chỉ xuống dưới (nơi giỏ hàng TikTok)
+- Script gợi ý: CTA + urgency (đổi cách nói mỗi video)
+
+---
+
+### STYLE: BEFORE_AFTER
+"Mặc lên khác hẳn - Biến hình WOW"
+- Scene 1: Nhân vật mặc outfit BÌNH THƯỜNG/XẤU (AI tự tạo)
+- Transition "wow" khi thay sang sản phẩm
+- Focus: Sự thay đổi DRAMATIC trước/sau
+
+**BEFORE OUTFIT (AI TỰ TẠO - CRITICAL):**
+Vì app chỉ có ảnh sản phẩm, AI PHẢI tự sáng tạo outfit "Before":
+- Mặc đồ bình thường/nhàm chán: áo thun trơn cũ, quần jean basic, đồ ở nhà
+- Hoặc mặc đồ không hợp dáng: quá rộng, quá ngắn, màu sắc tẻ nhạt
+- Tóc hơi rối, pose bình thường, không tự tin
+- KHÔNG cầm đồ trên tay - phải MẶC outfit khác
+
+FLOW BEFORE_AFTER:
+Scene 1: BEFORE - MẶC ĐỒ CŨ/BÌNH THƯỜNG
+- Model mặc outfit bình thường (AI tự tạo: áo thun trơn + quần jean cũ hoặc đồ ở nhà)
+- Đứng trước gương hoặc nhìn vào điện thoại, vẻ mặt không hài lòng
+- Motion: Nhìn xuống outfit cũ, lắc đầu nhẹ hoặc thở dài
+- Script gợi ý: "Mặc hoài mấy cái đồ này chán quá..." hoặc "Hôm nay mặc gì ta..."
+- **KEYFRAME 1 OUTFIT:** AI tự generate (VD: "wearing a plain grey oversized t-shirt and faded blue jeans, looking uninspired")
+
+Scene 2: AFTER - ĐÃ THAY ĐỒ + WOW EFFECT
+- Jump cut/transition: Model đã mặc SẢN PHẨM, xoay người tự tin
+- Tóc gọn, pose đẹp, ánh mắt tự tin
+- Motion: Xoay 1 vòng nhanh, tay chống hông hoặc vuốt tóc
+- Script: "Xong rồi nè! Khác hẳn luôn!" + mô tả sản phẩm + "Có đủ size nha"
+
+Scene 3: DETAIL + SO SÁNH
+- Show chi tiết sản phẩm trên người
+- Script gợi ý: So sánh trước/sau + ưu điểm sản phẩm + vải
+
+Scene 4: FULL LOOK + CTA
+- Xoay hoặc đi bộ show toàn thân
+- Motion: Kết thúc bằng gập bàn tay dễ thương chỉ xuống góc DƯỚI
+- Script gợi ý: CTA bên dưới (đổi cách nói)
+
+**BEFORE_AFTER KEYFRAME RULES:**
+- Image 1 (00s): Model mặc OUTFIT CŨ (AI tự tạo) - không phải sản phẩm
+- Image 2 (08s): Model đã mặc SẢN PHẨM từ ảnh reference - pose tự tin
+- Image 3-5: Tiếp tục với sản phẩm
+
+---
+
+### STYLE: FABRIC_FOCUS
+"Quay cận chất vải – Chi tiết cao cấp"
+- 70% video là cận cảnh vải
+- Dành cho đồ cao cấp, vải đẹp
+- Focus: Chất liệu, đường may, detail
+
+FLOW FABRIC_FOCUS:
+Scene 1: HOOK - CẬN VẢI NGAY
+- Zoom cực cận vào vải, tay chạm/vuốt
+- Script gợi ý: Highlight điểm đặc biệt của vải
+
+Scene 2: CHI TIẾT MAY + FORM
+- Cận đường may, nút, khóa, viền
+- Script: Chi tiết may + chất liệu vải từ input
+
+Scene 3: FULL BODY - LÙI RA
+- Camera lùi ra show toàn thân
+- Script gợi ý: Nhận xét về dáng khi mặc
+
+Scene 4: XOAY + CTA
+- Xoay 1 vòng chậm, kết thúc gập tay cute chỉ xuống dưới
+- Motion: Cười tươi, gập bàn tay kiểu dễ thương chỉ xuống góc dưới màn hình
+- Script gợi ý: CTA bên dưới + promo (đổi mỗi video)
+
+================================================
+PRODUCT-SPECIFIC ACTIONS (TẤT CẢ STYLE)
+================================================
+**AUTO MODE:** AI sẽ tự phân tích ảnh sản phẩm và chọn actions phù hợp nhất.
+
+**ĐẦM/VÁY:**
+- DRESS/MAXI_DRESS: Xoay 360° chậm, show độ bay của vải
+- MINI_DRESS: Xoay 360° + Ngồi xuống check hở đùi
+- BODYCON: Xoay 360° + Vuốt eo, vuốt hông show form ôm
+- SKIRT: Xoay để show độ xòe/bay + Ngồi check độ dài
+
+**ÁO:**
+- TOP/BLOUSE: Giơ tay check nách + Cúi người check hở bụng
+- TSHIRT: Xoay vai + Cúi người check form
+- CROPTOP: Show eo + Giơ tay check độ ngắn
+- SWEATER/JACKET: Mặc/cởi áo + Xoay show form
+
+**QUẦN:**
+- PANTS/JEANS: Ngồi xuống + Đứng lên (BẮT BUỘC) + Bước đi
+- WIDE_PANTS: Đi bộ show độ bay ống + Ngồi check thoải mái
+- SHORTS: Ngồi + Đi bộ show chân
+
+**ĐỒ BỘ:**
+- SET: Show từng món riêng + Mix-match cách phối
+- SUIT: Đứng nghiêm chỉnh + Cài/mở nút áo
+- JUMPSUIT: Xoay 360° + Ngồi check co giãn
+
+**ĐẶC BIỆT:**
+- AODAI: Đi bộ thanh lịch 4-5 bước + Xoay chậm
+- BIKINI/SWIMWEAR: Đi bộ + Xoay nhẹ show dáng
+- SLEEPWEAR: Động tác thoải mái, nhẹ nhàng
+- INTIMATE_WEAR: Tạo dáng editorial sang trọng, focus vào chất liệu và form dáng
+- SPORT: Động tác vận động nhẹ (squat, lunge, chạy tại chỗ)
+- BIGSIZE: Focus "Che bụng", "Thoải mái", "Có size lớn đến 4XL"
+
+================================================
+FASHION-SAFE VOCABULARY (TRÁNH BỊ FLAG)
+================================================
+**TUYỆT ĐỐI KHÔNG DÙNG:** áo ngực, quần lót, thong, sexy, gợi cảm, quyến rũ, khêu gợi, hở hang, lộ
+
+**THAY THẾ BẰNG TỪ NGỮ THỜI TRANG:**
+- "Áo ngực" → "Áo lót định hình", "Bralette", "Áo nâng ngực", "Inner top"
+- "Quần lót" → "Quần định hình", "Brief", "Inner bottom", "Quần trong"
+- "Bộ đồ lót" → "Set nội y", "Bộ foundation", "Intimate set", "Inner coordinates"
+- "Sexy/Gợi cảm" → "Sang trọng", "Tinh tế", "Thanh lịch", "Quyến rũ nhẹ nhàng"
+- "Hở/Lộ" → "Thiết kế cut-out", "Phom dáng hiện đại", "Chi tiết xẻ tinh tế"
+
+**TỪ NGỮ VỀ CHẤT LIỆU (AN TOÀN):**
+- "Ren Pháp cao cấp", "Lụa satin mềm mại", "Vải tulle trong suốt"
+- "Ren hoa nổi", "Cotton organic", "Microfiber co giãn 4 chiều"
+
+**CÁCH MÔ TẢ TRONG SCRIPT (VÍ DỤ):**
+- ❌ "Bộ đồ lót sexy"
+- ✅ "Set inner này chất lụa mềm lắm, form chuẩn!"
+- ❌ "Áo ngực hở lưng gợi cảm"
+- ✅ "Bralette cut-out lưng thanh lịch, mặc với blazer là chuẩn!"
+- ❌ "Quần lót ren sexy"
+- ✅ "Brief ren Pháp matching với bra luôn nha!"
+
+================================================
+SCRIPT RULES
+================================================
+- MAX 20 từ/scene
+- KHÔNG dùng: "sản phẩm", "chất lượng cao", "sang trọng"
+- NÊN dùng: "mẫu này", "em nó", "cái này", "nha", "hen", "á"
+- CTA luôn là "bên dưới"/"góc dưới" (giỏ hàng TikTok ở dưới màn hình)
+
+================================================
+OUTPUT FORMAT
+================================================
+
+SECTION 1: MASTER PROMPT
+Start with: "Exact facial features of the reference image, mirroring the subject's unique facial structure with photorealistic fidelity,"
+**CRITICAL BODY DESCRIPTION:**
+- Use VISUAL VOCABULARY from above (e.g., "Voluptuous S-curve figure with pronounced hourglass silhouette")
+- NEVER use numbers (cm/kg) - translate measurements using the MAPPING RULE
+- Include: [Face Preservation] + [Body Visual Vocabulary] + [Environment: ĐỊA ĐIỂM THẬT]
+- **FOR BEFORE_AFTER STYLE:** Master Prompt mô tả MODEL + LOCATION chung, KHÔNG mô tả outfit cụ thể (vì có 2 outfit khác nhau)
+- **FOR OTHER STYLES:** Include [Outfit Description] trong Master Prompt
+- **LOCATION - CHỈ ĐỊA ĐIỂM THẬT:**
+  * Ưu tiên: Căn hộ/penthouse có tên thật (Vinhomes, Masteri, The Manor)
+  * Hoặc: Khách sạn/quán cafe có tên thật (Park Hyatt, Starbucks Reserve, The Coffee House)
+  * Hoặc: Địa điểm nổi tiếng (Landmark 81, Cafe Apartment, Hội An Ancient Town)
+  * KHÔNG: "modern bedroom," "cozy living room," "bright fitting room" - quá chung chung
+- **LIGHTING:** Describe as natural light (e.g., "soft natural daylight from window," "warm ambient room lighting") 
+- **CRITICAL - DO NOT INCLUDE:** cameras, tripods, ring lights, softboxes, studio equipment, filming gear, microphones, or any production equipment in the visual description
+
+SECTION 2: KEYFRAME PROMPTS (5 images: 00s, 08s, 16s, 24s, 32s)
+- Use concise body reference (e.g., "The curvy model" or "The slender figure")
+- Focus: Pose + Action + Natural environment
+- NO detailed body description, NO outfit repeat (except for BEFORE_AFTER style)
+- **FORBIDDEN in prompts:** camera, tripod, ring light, softbox, studio light, filming equipment, LED panel, microphone
+- Adapt poses to the selected VIDEO STYLE
+
+================================================
+📸 KEYFRAME = ẢNH TĨNH (CRITICAL - PHÂN BIỆT RÕ)
+================================================
+**KEYFRAME là ẢNH TĨNH - 1 POSE duy nhất, 1 khoảnh khắc frozen!**
+
+**KHÔNG ĐƯỢC mô tả MOTION trong keyframe:**
+- ❌ "doing a slow spin" (spin là motion)
+- ❌ "rotating 360 degrees" (rotating là motion)
+- ❌ "walking forward" (walking là motion)
+- ❌ "turning around" (turning là motion)
+- ❌ "twirling happily" (twirling là motion)
+
+**PHẢI mô tả POSE TĨNH trong keyframe:**
+- ✅ "mid-rotation pose, body angled 45 degrees, dress fabric flowing to the left" (frozen moment của spin)
+- ✅ "back view, looking over shoulder with smile" (frozen moment sau khi xoay)
+- ✅ "profile view, one foot forward, arms gracefully positioned" (frozen mid-walk)
+- ✅ "three-quarter back view, dress hem lifted by motion blur" (frozen mid-twirl)
+
+**QUY TẮC 1 HÀNH ĐỘNG:**
+- Mỗi keyframe = 1 POSE tĩnh duy nhất
+- KHÔNG mô tả 2 hành động trong 1 ảnh
+- ❌ SAI: "standing and then raising hand" (2 hành động)
+- ✅ ĐÚNG: "standing with hand raised to touch hair" (1 pose)
+
+**KEYFRAME SEQUENCE (5 ảnh = 5 frozen moments):**
+- Image 1 (00s): POSE BẮT ĐẦU - tư thế khởi điểm (facing camera, standing pose)
+- Image 2 (08s): POSE GIỮ SCENE 1→2 - frozen moment kết thúc scene 1 (mid-rotation, 3/4 view)
+- Image 3 (16s): POSE GIỮ SCENE 2→3 - frozen moment kết thúc scene 2 (touching fabric, looking at waist)
+- Image 4 (24s): POSE GIỮ SCENE 3→4 - frozen moment kết thúc scene 3 (back view, looking over shoulder)
+- Image 5 (32s): POSE KẾT THÚC - tư thế cuối cùng (facing camera, hand gesture pointing down)
+
+**VÍ DỤ KEYFRAME ĐÚNG (BODY_REAL style):**
+Image 1 (00s): The curvy model in the red satin dress, standing facing camera with confident S-curve pose, hands on hips, warm smile
+Image 2 (08s): The model mid-rotation, body angled 45 degrees to the right, dress fabric flowing gracefully, soft profile view
+Image 3 (16s): The model from 3/4 back view, hands running along waist to show the fitted silhouette, looking over shoulder
+Image 4 (24s): The model in medium close-up, fingers gently touching the satin fabric at hip, showing texture detail
+Image 5 (32s): The model facing camera, bright smile, cute folded-hand gesture pointing down toward bottom of frame
+
+**VÍ DỤ KEYFRAME SAI (TRÁNH):**
+- ❌ Image 2: "The model doing a 360 spin" (spin là motion, không thể freeze)
+- ❌ Image 3: "The model walking and talking" (2 motion actions)
+- ❌ Image 4: "The model turning around to show back" (turning là motion)
+
+**🔄 BEFORE_AFTER STYLE - SPECIAL KEYFRAME FORMAT (BẮT BUỘC):**
+Khi Video Style = BEFORE_AFTER, AI PHẢI dùng format đặc biệt:
+
+**Image 1 (00s) - BEFORE (OUTFIT CŨ DO AI TẠO):**
+Format: "[Concise body ref] wearing [OUTFIT CŨ NHÀM CHÁN - AI tự sáng tạo], [biểu cảm không hài lòng], [pose bình thường]"
+- OUTFIT CŨ phải tương phản với sản phẩm:
+  * Nếu SP là váy đẹp → Before: "plain oversized grey t-shirt and old faded jeans"
+  * Nếu SP là đồ công sở → Before: "baggy worn-out hoodie and basic leggings"
+  * Nếu SP là đồ dạ hội → Before: "boring casual home clothes"
+- BIỂU CẢM: "looking at phone with bored expression", "looking unsatisfied in mirror", "sighing while looking at wardrobe"
+- KHÔNG mặc sản phẩm ở Image 1!
+
+**Image 2 (08s) - AFTER (ĐÃ THAY SẢN PHẨM):**
+Format: "[Concise body ref] NOW wearing [MÔ TẢ SẢN PHẨM TỪ ẢNH REFERENCE], [pose tự tin], [biểu cảm vui]"
+- MÔ TẢ chính xác sản phẩm từ ảnh: màu sắc, kiểu dáng, chất liệu
+- POSE: "confident pose with hand on hip", "striking a pose", "twirling happily"
+- BIỂU CẢM: "radiant smile", "looking confident and happy", "eyes sparkling"
+
+**Image 3-5 (16s, 24s, 32s) - TIẾP TỤC VỚI SẢN PHẨM:**
+Format bình thường - model mặc sản phẩm, các góc/action khác nhau
+
+**VÍ DỤ BEFORE_AFTER KEYFRAMES (POSE TĨNH - KHÔNG MOTION):**
+Image 1 (00s): The curvy model wearing a plain oversized grey t-shirt and old faded mom jeans, standing in front of mirror with bored expression, phone in hand, slouched posture
+Image 2 (08s): The curvy model NOW wearing the elegant red satin midi dress from reference, confident S-curve pose with hand on hip, radiant smile, same mirror location
+Image 3 (16s): The model in the red satin dress, hands positioned at waist showing the fitted silhouette, pleased expression, 3/4 view
+Image 4 (24s): Medium close-up of the model, fingers gently touching the satin fabric at hip, showing glossy texture detail
+Image 5 (32s): The model facing camera with bright smile, cute folded-hand gesture pointing down toward bottom of frame, warm inviting expression
+
+SECTION 3: SCENE PROMPTS & SCRIPT (VEO 3.1 OPTIMIZED)
+
+**VEO 3.1 MOTION RULES (BẮT BUỘC):**
+- Mỗi scene 8 giây = 1 hành động chính, liền mạch
+- KHÔNG cắt cảnh giữa scene - camera theo dõi liên tục
+- Dùng từ ngữ motion: "smoothly transitions," "gradually," "continuous movement," "fluid motion"
+- Tránh: "suddenly," "cuts to," "jump to" - Veo 3.1 không xử lý tốt
+
+**LIP SYNC RULES (KHỚP MIỆNG - CRITICAL):**
+- MOTION prompt PHẢI bao gồm: "speaking directly to camera" hoặc "talking naturally to viewer"
+- Mô tả khẩu hình: "lips moving in sync with speech," "natural mouth movements while speaking"
+- Script tiếng Việt = dialogue thực tế mà model nói trong video
+- Timing: Script 15-20 từ = vừa đủ cho 8 giây nói tự nhiên
+- KHÔNG để model im lặng hoặc chỉ cười - phải đang nói
+
+**MOTION FORMAT (cho từng scene):**
+"[Subject] + [speaking to camera] + [physical action] + [camera movement] + [lip sync cue]"
+
+================================================
+🎬 SCENE TRANSITION RULES (GHÉP NỐI MƯỢT MÀ - CRITICAL)
+================================================
+Veo 3.1 tạo mỗi scene 8 giây riêng biệt. Để ghép thành video hoàn chỉnh:
+
+**1. QUY TẮC TƯ THẾ (POSE CONTINUITY):**
+- Tư thế KẾT THÚC scene N = Tư thế BẮT ĐẦU scene N+1
+- Scene 1 kết thúc: Model đứng hướng camera, tay buông tự nhiên
+- Scene 2 bắt đầu: TỪ tư thế đó, bắt đầu vuốt eo
+- KHÔNG có động tác đột ngột giữa các scene
+
+**2. QUY TẮC VỊ TRÍ (POSITION CONTINUITY):**
+- Vị trí model trong frame PHẢI nhất quán
+- Scene 1 kết thúc ở giữa frame → Scene 2 bắt đầu ở giữa frame
+- Tránh: Scene 1 ở bên trái, Scene 2 nhảy sang bên phải
+
+**3. QUY TẮC CAMERA (CAMERA CONTINUITY):**
+- Camera angle kết thúc scene N ≈ Camera angle bắt đầu scene N+1
+- Nếu Scene 1 kết thúc với medium shot → Scene 2 bắt đầu từ medium shot
+- Tránh: Scene 1 close-up → Scene 2 wide shot (gây giật)
+
+**4. QUY TẮC LỜI NÓI (SCRIPT FLOW):**
+- KHÔNG cắt giữa câu nói
+- Mỗi scene = 1-2 câu HOÀN CHỈNH
+- Câu cuối mỗi scene PHẢI kết thúc tự nhiên (không bỏ lửng)
+- Dùng từ nối giữa các scene: "Còn nữa nè...", "À mà...", "Rồi nha..."
+
+**5. ENDING CUES (TÍN HIỆU KẾT THÚC SCENE):**
+Mỗi scene cần có ending cue để transition mượt:
+- Scene 1→2: Kết thúc bằng cử chỉ mời xem tiếp (tay chỉ xuống/sang)
+- Scene 2→3: Kết thúc bằng chạm vải/chuẩn bị show chất liệu
+- Scene 3→4: Kết thúc bằng cười + chuẩn bị nói CTA
+
+**6. SCRIPT BRIDGE (CẦU NỐI LỜI NÓI):**
+Từ nối tự nhiên giữa các scene:
+- "...nha, còn nữa nè!" → Scene tiếp
+- "...hen! À mà..." → Scene tiếp  
+- "...á! Rồi..." → Scene tiếp
+- "...luôn! Giờ thì..." → Scene tiếp
+
+**VÍ DỤ TRANSITION MƯỢT:**
+
+SCENE 1 (kết thúc):
+MOTION: "...completes 360 rotation, returns to face camera, hands naturally at sides, warm smile, pausing briefly"
+SCRIPT: "Mấy chị ơi xem dáng này nè, xoay một vòng cho rõ nha!"
+→ Ending pose: Đứng thẳng, đối mặt camera, tay buông
+
+SCENE 2 (bắt đầu):
+MOTION: "From standing position facing camera, the model begins speaking while slowly raising hands to gesture at waist..."
+SCRIPT: "Còn nữa nè, eo nó ôm vừa khít luôn á, có đủ size cho mấy chị chọn!"
+→ Starting pose: Đứng thẳng, đối mặt camera (KHỚP với Scene 1)
+
+**TRANSITION MARKERS (ghi trong mỗi scene):**
+- END_POSE: [Mô tả tư thế kết thúc]
+- NEXT_START: [Mô tả tư thế bắt đầu scene sau]
+- BRIDGE_WORD: [Từ nối đầu script scene sau]
+
+================================================
+
+Example motions with lip sync:
+- "The model speaks naturally to camera while smoothly rotating 360 degrees, lips moving expressively, warm smile between sentences, soft daylight"
+- "She talks directly to viewer, hands gesturing at waist, mouth movements synced with enthusiastic speech, camera slowly pushing in"
+- "The figure walks forward speaking confidently, natural lip movements, friendly expression, camera tracking alongside"
+
+**FIXED VOICE: NGỌC HUYỀN (BẮT BUỘC - KHÔNG ĐỔI):**
+Tất cả 4 scene PHẢI dùng giọng Ngọc Huyền - giữ nhất quán từ đầu đến cuối.
+
+NGỌC HUYỀN - Voice Configuration:
+- Voice: Vietnamese Female – Northern Neutral
+- Accent: Northern Vietnam (Hà Nội)
+- Style: Neutral / Informative
+- Emotion: None
+- Speed: 0.95
+- Pitch: -1
+- Clarity: High
+- Pause Strength: Medium
+- Ending Intonation: Downward
+
+Character Traits:
+- Giọng: Ấm áp, tự nhiên, thân mật như chị em nói chuyện
+- Tốc độ: Vừa phải, rõ ràng, không quá nhanh
+- Cảm xúc: Chân thật, hào hứng nhẹ, đáng tin cậy
+- Từ ngữ đặc trưng: "nè," "hen," "á," "nha," "mấy chị ơi," "dễ thương ghê," "xinh lắm," "chuẩn luôn"
+- KHÔNG dùng: giọng robot, đọc kịch bản, quá phấn khích
+
+================================================
+SCRIPT VARIETY RULES (AI TỰ SÁNG TẠO - CRITICAL)
+================================================
+⚠️ BẮT BUỘC TẠO SCRIPT HOÀN TOÀN MỚI mỗi lần!
+⚠️ KHÔNG BAO GIỜ copy hay tham khảo ví dụ!
+⚠️ KHÔNG NÓI "Mình cao X nặng Y" - Đây là video AI!
+
+**SCRIPT COLLISION AVOIDANCE:**
+- Bạn sẽ nhận được "PREVIOUSLY USED SCRIPTS (BLOCKLIST)"
+- TUYỆT ĐỐI KHÔNG dùng bất kỳ câu mở đầu nào giống trong blocklist
+- Tạo hook (Scene 1) HOÀN TOÀN KHÁC về ý tưởng và từ ngữ
+
+**CÁCH TẠO SCRIPT ĐỘC ĐÁO:**
+1. Phân tích ẢNH SẢN PHẨM để tìm điểm NỔI BẬT NHẤT
+2. Chọn 1 góc độ độc đáo: màu sắc lạ, chi tiết đặc biệt, form dáng, texture
+3. Viết hook dựa trên góc độ đó - KHÔNG theo công thức cố định
+4. Dùng PRODUCT INFO từ input (fabric, highlights, sizes)
+
+**STRUCTURE (BẮT BUỘC):**
+- Scene 1: Hook ĐỘC (dựa vào điểm NỔI BẬT của SP cụ thể) - KẾT THÚC CÂU HOÀN CHỈNH
+- Scene 2: BẮT ĐẦU bằng từ nối + mô tả SẢN PHẨM + size
+- Scene 3: BẮT ĐẦU bằng từ nối + chất liệu/công dụng
+- Scene 4: BẮT ĐẦU bằng từ nối + CTA bên dưới (gập tay cute chỉ xuống)
+
+**TỪ NỐI GIỮA CÁC SCENE (CHỌN NGẪU NHIÊN):**
+Scene 2: "Còn nữa nè," | "À mà," | "Với lại," | "Mà hay ở chỗ,"
+Scene 3: "Rồi nha," | "Nữa nè," | "Đặc biệt là," | "Mà quan trọng là,"
+Scene 4: "Thích thì," | "Nhanh tay," | "Chốt lẹ đi," | "Mấy chị ơi,"
+
+**TỪ NGỮ MIỀN NAM TỰ NHIÊN:**
+- "nè," "hen," "á," "nha," "mấy chị ơi," "lắm," "ghê," "chuẩn luôn"
+- KHÔNG: giọng robot, đọc kịch bản, quá phấn khích
+
+**CTA SCENE 4 - CHỌN NGẪU NHIÊN (KHÔNG LẶP):**
+- "bấm giỏ hàng bên dưới chốt liền nha!"
+- "link bên dưới nha, free ship luôn!"
+- "bên dưới chốt lẹ đi, hết hàng là hết!"
+- "bấm vô giỏ hàng phía dưới, ship COD!"
+- "chốt đơn bên dưới đi mấy chị!"
+- "giỏ hàng ngay dưới này nè, chốt lẹ nha!"
+
+**VÍ DỤ FORMAT OUTPUT - BODY_REAL/FABRIC_FOCUS:**
+- Scene 1: "[Hook độc đáo dựa vào sản phẩm cụ thể - AI tự sáng tạo]"
+- Scene 2: "[Từ nối] + [Mô tả fit/dáng + size]"
+- Scene 3: "[Từ nối] + [Chất liệu/công dụng]"
+- Scene 4: "[Từ nối] + [CTA bên dưới + gập tay cute chỉ xuống]"
+
+**VÍ DỤ FORMAT OUTPUT - BEFORE_AFTER (AI tự tạo outfit cũ):**
+- Scene 1: "Mặc hoài mấy đồ cũ chán quá..." (Model mặc outfit CŨ do AI tạo - VD: áo thun xám + quần jean cũ)
+- Scene 2: "Xong rồi nè! Khác hẳn luôn!" (Model ĐÃ THAY sang sản phẩm, pose tự tin)
+- Scene 3: "[Từ nối] + [So sánh trước/sau + ưu điểm]"
+- Scene 4: "[Từ nối] + [CTA bên dưới]"
+
+**BEFORE_AFTER KEYFRAME OUTPUT:**
+Image 1 (00s): [Body ref] + wearing plain oversized grey t-shirt and faded mom jeans, looking at phone with bored expression, standing in front of mirror
+Image 2 (08s): [Body ref] + NOW wearing [SẢN PHẨM TỪ ẢNH], confident pose with hand on hip, radiant smile, same location
+Image 3+ : Tiếp tục với sản phẩm...
+
+⚠️ LƯU Ý: AI phải TỰ SÁNG TẠO nội dung dựa vào hình ảnh và thông tin sản phẩm.
+Các hook trong BLOCKLIST đã bị cấm sử dụng - phải nghĩ ra ý tưởng hoàn toàn mới.
+
+For each scene output:
+- MOTION: Veo 3.1 optimized movement (single continuous action)
+- SCRIPT: Vietnamese script (MAX 20 words, consistent persona)
+  * Use PRODUCT INFO from input (fabric, highlights, available sizes)
+  * KHÔNG dùng số đo cá nhân - mô tả SẢN PHẨM và DÁNG
+- CAMERA: Movement type (orbit/push-in/tracking/static)
+- END_POSE: Tư thế kết thúc scene (để transition mượt)
+- BRIDGE: Từ nối sang scene tiếp theo
+
+**OUTPUT FORMAT MẪU (BẮT BUỘC THEO ĐÚNG FORMAT NÀY):**
+
+***VOICE SETTING: Vietnamese Female – Northern Neutral | Accent: Hà Nội | Speed: 0.95 | Pitch: -1 | Clarity: High***
+
+SCENE 1 (00s-08s) - HOOK & XOAY
+VOICE: Vietnamese Female (Ngọc Huyền người Hà Nội) – Northern Neutral | Speed: 0.95 | Pitch: -1
+MOTION: The elegant model speaks naturally to camera with a warm smile, then smoothly begins a slow 360-degree rotation, returning to face camera at the end with hands naturally at sides, lips moving in sync with speech, soft natural daylight.
+SCRIPT: [Vietnamese script - HOOK based on product highlights - KẾT THÚC BẰNG CÂU HOÀN CHỈNH]
+CAMERA: Static → Slow orbit follow
+END_POSE: Standing facing camera, hands at sides, warm smile
+BRIDGE: "Còn nữa nè..." hoặc "À mà..."
+
+↓ TRANSITION: Model đứng yên, đối mặt camera → Bắt đầu cử chỉ tay ↓
+
+SCENE 2 (08s-16s) - CHI TIẾT DÁNG + SIZE
+VOICE: Vietnamese Female (Ngọc Huyền người Hà Nội) – Northern Neutral | Speed: 0.95 | Pitch: -1
+MOTION: From standing position facing camera, the model begins speaking while slowly raising hands to gesture at waist and hips, running hands down the sides to emphasize fit, lips moving expressively, camera slowly pushing in.
+SCRIPT: [Bắt đầu bằng từ nối] + [Describe product fit + size có sẵn]
+CAMERA: Medium shot → Slow push in
+END_POSE: Hands touching fabric at hip level, looking at camera
+BRIDGE: "Rồi nha..." hoặc "Nữa nè..."
+
+↓ TRANSITION: Tay đang chạm vải → Bắt đầu kéo/show vải ↓
+
+SCENE 3 (16s-24s) - CHẤT LIỆU VẢI
+VOICE: Vietnamese Female (Ngọc Huyền người Hà Nội) – Northern Neutral | Speed: 0.95 | Pitch: -1
+MOTION: Continuing from touching the fabric, the model speaks while gently pulling and showing the fabric texture, demonstrating stretch or drape, natural mouth movements, camera maintains medium shot.
+SCRIPT: [Bắt đầu bằng từ nối] + [Mô tả chất liệu vải]
+CAMERA: Medium close-up → Static or slight movement
+END_POSE: Releasing fabric, hands moving towards gesture position, soft smile
+BRIDGE: "Thích thì..." hoặc "Nhanh tay..."
+
+↓ TRANSITION: Buông vải → Chuẩn bị gập tay dễ thương chỉ xuống dưới ↓
+
+SCENE 4 (24s-32s) - CTA
+VOICE: Vietnamese Female (Ngọc Huyền người Hà Nội) – Northern Neutral | Speed: 0.95 | Pitch: -1
+MOTION: The model takes a small step forward with a bright smile, speaking with warm enthusiasm, then performs a cute folded-hand gesture pointing down towards the bottom of frame where the TikTok cart icon appears, bending wrist in an adorable kawaii-style pointing motion, lips moving naturally, ending with an inviting smile and eyebrows raised slightly, camera tracking alongside.
+SCRIPT: [Bắt đầu bằng từ nối] + [CTA - bên dưới/giỏ hàng phía dưới]
+CAMERA: Tracking → End on medium shot with hand visible pointing down
+END_POSE: Cute folded-hand pointing down, warm smile at camera (FINAL FRAME)
+**GESTURE DETAIL:** Gập bàn tay kiểu dễ thương (kawaii style) - ngón tay khép lại, cổ tay gập nhẹ chỉ xuống dưới, không chỉ thẳng cứng nhắc
+
+SECTION 4: PRODUCTION NOTES
+Per-scene breakdown:
+- Model action (specific movement cues)
+- Camera (tripod/handheld/gimbal)
+- Framing (full/medium/close-up)
+- Retake priority (critical/flexible)
+
+SECTION 5: METADATA
+- Specific Location: [TÊN ĐỊA ĐIỂM THẬT - phải có thể tìm thấy trên Google Maps]
+  * VÍ DỤ ĐÚNG: "Penthouse Vinhomes Central Park - living room with city view"
+  * VÍ DỤ ĐÚNG: "Park Hyatt Saigon - lobby lounge"
+  * VÍ DỤ ĐÚNG: "Cafe Apartment 42 Nguyen Hue - balcony 3rd floor"
+  * VÍ DỤ SAI: "Modern bright bedroom" (quá chung chung)
+  * VÍ DỤ SAI: "Elegant living space" (không có địa điểm cụ thể)
+- Reusable scenes for batch production
+- Suggested music vibe (trending TikTok sounds)
+
+Keep prompts clean, no markdown.
+`;
+
+const INITIAL_BRIEF = `Create a high-end cinematic fashion portrait.
+The model wears the exact dress from the reference.
+
+Overall mood: Elegant, confident, and expensive.`;
+
+const BODY_TEMPLATES = [
+  { label: "Runway Tall", gender: "Female", mode: "custom" as const, bodyType: "Slim (Model)", measurements: { height: "180", weight: "52", bust: "81", waist: "61", hips: "87", size: "S" } },
+  { label: "Commercial", gender: "Female", mode: "preset" as const, bodyType: "Balanced", measurements: { height: "165", weight: "55", bust: "86", waist: "64", hips: "92", size: "M" } },
+  { label: "Curvy/Plus", gender: "Female", mode: "custom" as const, bodyType: "Curvy", measurements: { height: "160", weight: "75", bust: "108", waist: "90", hips: "115", size: "XXL" } },
+  { label: "Male Fit", gender: "Male", mode: "preset" as const, bodyType: "Athletic", measurements: { height: "175", weight: "70", bust: "102", waist: "82", hips: "98", size: "L" } },
+];
+
+const PRODUCT_TYPES = [
+  // Auto detection
+  { value: 'auto', label: 'Tự động', emoji: '🤖', desc: 'AI nhận diện' },
+  { value: 'combo', label: 'Combo/Mix', emoji: '🎀', desc: 'Nhiều món' },
+  // Đầm/Váy
+  { value: 'dress', label: 'Đầm/Váy', emoji: '👗' },
+  { value: 'maxi_dress', label: 'Đầm Maxi', emoji: '👗' },
+  { value: 'mini_dress', label: 'Đầm Mini', emoji: '👗' },
+  { value: 'bodycon', label: 'Đầm Ôm', emoji: '👗' },
+  // Áo
+  { value: 'top', label: 'Áo', emoji: '👚' },
+  { value: 'blouse', label: 'Áo Sơ Mi', emoji: '👔' },
+  { value: 'tshirt', label: 'Áo Thun', emoji: '👕' },
+  { value: 'croptop', label: 'Croptop', emoji: '👙' },
+  { value: 'sweater', label: 'Áo Len', emoji: '🧥' },
+  { value: 'jacket', label: 'Áo Khoác', emoji: '🧥' },
+  // Quần
+  { value: 'pants', label: 'Quần', emoji: '👖' },
+  { value: 'jeans', label: 'Quần Jean', emoji: '👖' },
+  { value: 'wide_pants', label: 'Quần Ống Rộng', emoji: '👖' },
+  { value: 'shorts', label: 'Quần Short', emoji: '🩳' },
+  { value: 'skirt', label: 'Chân Váy', emoji: '👗' },
+  // Đồ bộ
+  { value: 'set', label: 'Đồ Bộ', emoji: '🎽' },
+  { value: 'suit', label: 'Vest/Suit', emoji: '🤵' },
+  { value: 'jumpsuit', label: 'Jumpsuit', emoji: '🥻' },
+  // Đặc biệt
+  { value: 'aodai', label: 'Áo Dài', emoji: '🌸' },
+  { value: 'bikini', label: 'Bikini/Đồ Bơi', emoji: '👙' },
+  { value: 'sleepwear', label: 'Đồ Ngủ/Loungewear', emoji: '🌙' },
+  { value: 'lingerie', label: 'Inner/Foundation', emoji: '🎀' },
+  { value: 'sport', label: 'Đồ Thể Thao', emoji: '🏃' },
+  { value: 'bigsize', label: 'Big Size', emoji: '✨' },
+];
+
+const VIDEO_STYLES = [
+  { 
+    value: 'body_real', 
+    label: 'Body Real', 
+    emoji: '💪',
+    desc: 'Thử đồ trực tiếp, xoay 360°, show dáng thật',
+    hot: true
+  },
+
+  { 
+    value: 'before_after', 
+    label: 'Before-After', 
+    emoji: '✨',
+    desc: 'Cầm đồ → Mặc vào → Wow effect',
+    hot: false
+  },
+  { 
+    value: 'fabric_focus', 
+    label: 'Cận Vải', 
+    emoji: '🔍',
+    desc: 'Zoom chi tiết vải, may, chất liệu cao cấp',
+    hot: false
+  },
+];
+
+// Location Regions for smart background selection
+const LOCATION_REGIONS = [
+  { 
+    value: 'auto', 
+    label: 'AI Tự Chọn', 
+    emoji: '🤖',
+    desc: 'AI chọn bối cảnh phù hợp với sản phẩm',
+    locations: []
+  },
+  { 
+    value: 'indoor_home', 
+    label: 'Trong Nhà', 
+    emoji: '🏠',
+    desc: 'Căn hộ, penthouse, biệt thự Việt Nam',
+    locations: [
+      'Penthouse Vinhomes Central Park Saigon - living room with Landmark 81 view',
+      'Masteri Thao Dien apartment - modern bedroom with river view',
+      'The Manor HCMC luxury apartment - minimalist living space',
+      'Ecopark Hanoi villa - Scandinavian-style living room',
+      'Vinhomes Golden River apartment - floor-to-ceiling windows',
+      'Palm Heights An Phu - bohemian bedroom with balcony'
+    ]
+  },
+  { 
+    value: 'indoor_studio', 
+    label: 'Studio', 
+    emoji: '🎨',
+    desc: 'Studio chụp ảnh chuyên nghiệp Việt Nam',
+    locations: [
+      'Mộc Studio Saigon - clean white cyclorama background',
+      'Phototalk Studio HCMC - professional grey seamless backdrop',
+      'Luala Concert Hall rooftop studio - natural light loft',
+      'The Factory Contemporary Arts Centre - industrial studio space',
+      'Lavender Studio Hanoi - elegant portrait setup',
+      'Sai Gon Photo Studio - fashion photography white backdrop'
+    ]
+  },
+  { 
+    value: 'indoor_luxury', 
+    label: 'Sang Trọng', 
+    emoji: '💎',
+    desc: 'Khách sạn 5 sao, spa cao cấp Việt Nam',
+    locations: [
+      'Park Hyatt Saigon - elegant lobby with chandelier',
+      'The Reverie Saigon - Italian marble bathroom suite',
+      'InterContinental Danang Sun Peninsula - villa living room',
+      'JW Marriott Phu Quoc - beachfront suite terrace',
+      'Vinpearl Luxury Landmark 81 - penthouse sky lounge',
+      'Six Senses Ninh Van Bay - spa pavilion with ocean view'
+    ]
+  },
+  { 
+    value: 'outdoor_urban', 
+    label: 'Phố Xá', 
+    emoji: '🏙️',
+    desc: 'Phố đi bộ Nguyễn Huệ, Hội An, Đà Lạt',
+    locations: [
+      'Nguyen Hue Walking Street Saigon - city lights at night',
+      'Cafe Apartment 42 Nguyen Hue - iconic balcony view',
+      'Hoi An Ancient Town - yellow wall lantern street',
+      'Da Lat Palace Heritage Hotel - French colonial entrance',
+      'Hanoi Old Quarter - Hang Dao silk street morning',
+      'Bitexco Financial Tower Sky Deck - Saigon panorama'
+    ]
+  },
+  { 
+    value: 'outdoor_nature', 
+    label: 'Thiên Nhiên', 
+    emoji: '🌿',
+    desc: 'Vườn hoa Đà Lạt, Sapa, Bà Nà',
+    locations: [
+      'Dalat Flower Garden - colorful hydrangea field',
+      'Sapa rice terraces - golden hour mountain view',
+      'Ba Na Hills Golden Bridge - misty morning',
+      'Suoi Tien Eco Park - lavender field backdrop',
+      'Tam Dao National Park - forest clearing sunlight',
+      'Moc Chau tea plantation - rolling green hills'
+    ]
+  },
+  { 
+    value: 'outdoor_tropical', 
+    label: 'Nhiệt Đới', 
+    emoji: '🌴',
+    desc: 'Phú Quốc, Nha Trang, Đà Nẵng, Quy Nhơn',
+    locations: [
+      'JW Marriott Phu Quoc - infinity pool sunset',
+      'Vinpearl Nha Trang - beachfront cabana',
+      'An Bang Beach Hoi An - white sand sunrise',
+      'Intercontinental Danang - private beach deck',
+      'Sailing Club Nha Trang - beach lounge chairs',
+      'Quy Nhon Ky Co Beach - crystal clear lagoon'
+    ]
+  },
+  { 
+    value: 'event_wedding', 
+    label: 'Đám Cưới', 
+    emoji: '💒',
+    desc: 'Nhà hàng tiệc cưới, khách sạn Việt Nam',
+    locations: [
+      'White Palace Phu Nhuan - grand ballroom wedding',
+      'GEM Center Saigon - rooftop ceremony sunset',
+      'InterContinental Saigon - crystal ballroom',
+      'Caravelle Saigon - elegant wedding reception',
+      'The Clifton Wedding Venue - garden ceremony',
+      'Vinpearl Phu Quoc - beachside wedding arch'
+    ]
+  },
+  { 
+    value: 'event_party', 
+    label: 'Tiệc Tùng', 
+    emoji: '🎉',
+    desc: 'Rooftop bar, club, lounge Saigon',
+    locations: [
+      'Chill Skybar Saigon - AB Tower rooftop city lights',
+      'Social Club Saigon - Hotel des Arts lounge',
+      'Lush Saigon - nightclub neon ambiance',
+      'EON51 Bitexco - fine dining city view',
+      'The Deck Saigon - riverside cocktail lounge',
+      'Air 360 Sky Lounge - Ben Thanh panorama night'
+    ]
+  },
+  { 
+    value: 'seasonal_tet', 
+    label: 'Tết/Lễ Hội', 
+    emoji: '🎊',
+    desc: 'Phố hoa Nguyễn Huệ, chùa Việt Nam',
+    locations: [
+      'Nguyen Hue Flower Street Saigon - Tet decoration',
+      'Jade Emperor Pagoda Saigon - incense atmosphere',
+      'One Pillar Pagoda Hanoi - Tet prayer ceremony',
+      'Dam Sen Park - Lunar New Year lantern display',
+      'Tao Dan Park Saigon - spring flower festival',
+      'Hue Imperial City - traditional Tet celebration'
+    ]
+  }
+];
+
+// --- Components ---
+
+const CopyButton = ({ text }: { text: string }) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy', err);
+    }
+  };
+
+  return (
+    <button
+      onClick={handleCopy}
+      className={`absolute top-3 right-3 p-2 rounded-lg backdrop-blur-md transition-all border z-20
+        ${copied 
+          ? 'bg-green-500/20 border-green-500/50 text-green-400' 
+          : 'bg-zinc-800/80 border-zinc-700/50 text-zinc-400 hover:text-white hover:bg-zinc-700'}`}
+      title="Copy to clipboard"
+    >
+      {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+    </button>
+  );
+};
+
+const TabButton = ({ active, onClick, icon: Icon, label }: any) => (
+  <button
+    onClick={onClick}
+    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-all
+      ${active 
+        ? 'bg-purple-500/20 text-purple-200 border border-purple-500/30' 
+        : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800'}`}
+  >
+    <Icon className="w-3 h-3" />
+    {label}
+  </button>
+);
+
+const App = () => {
+  // State
+  const [step, setStep] = useState<'input' | 'director'>('input');
+  const [appMode, setAppMode] = useState<'cinematic' | 'tiktok' | 'tiktok_shop'>('cinematic');
+  const [activeTab, setActiveTab] = useState<'master' | 'keyframes' | 'scenes' | 'production'>('master');
+
+  const [faceImage, setFaceImage] = useState<string | null>(null);
+  const [outfitImage, setOutfitImage] = useState<string | null>(null);
+  
+  // Body Configuration
+  const [gender, setGender] = useState('Female');
+  const [bodyMode, setBodyMode] = useState<'preset' | 'custom'>('preset');
+  const [bodyType, setBodyType] = useState('Balanced');
+  const [measurements, setMeasurements] = useState({
+    height: '175',
+    weight: '55',
+    bust: '86',
+    waist: '60',
+    hips: '90',
+    size: 'M'
+  });
+  
+  // Product type for TikTok Shop (default to auto-detect)
+  const [productType, setProductType] = useState<string>('auto');
+  
+  // Video style for TikTok Shop
+  const [videoStyle, setVideoStyle] = useState<'body_real' | 'before_after' | 'fabric_focus'>('body_real');
+  
+  // Product Details for TikTok Shop (user input)
+  const [fabricMaterial, setFabricMaterial] = useState<string>('');
+  const [productHighlights, setProductHighlights] = useState<string>('');
+  const [availableSizes, setAvailableSizes] = useState<string>('S-XXL');
+  
+  // Video Config only (Cine is auto)
+  const [videoDuration, setVideoDuration] = useState<string>('24');
+
+  const [brief, setBrief] = useState(INITIAL_BRIEF);
+  
+  // Location Region preference
+  const [locationRegion, setLocationRegion] = useState<string>('auto');
+  
+  // Editorial Mode (18+) - foundation-free silhouette
+  const [editorialMode, setEditorialMode] = useState<boolean>(false);
+  
+  // Wallpaper Mode - phone wallpaper friendly composition
+  const [wallpaperMode, setWallpaperMode] = useState<boolean>(false);
+  
+  // Location Vault State - now stores detailed location history
+  const [locationVault, setLocationVault] = useState<{
+    id: string;
+    location: string;
+    region: string;
+    timestamp: number;
+    productType?: string;
+  }[]>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('cinematic_location_vault_v2');
+        return saved ? JSON.parse(saved) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+    return [];
+  });
+
+  // Script Vault State - stores script hooks to avoid repetition
+  const [scriptVault, setScriptVault] = useState<{
+    id: string;
+    hook: string; // Scene 1 script (the unique opener)
+    productType: string;
+    timestamp: number;
+  }[]>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('tiktok_script_vault');
+        return saved ? JSON.parse(saved) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+    return [];
+  });
+
+  // Persist Location Vault
+  useEffect(() => {
+    localStorage.setItem('cinematic_location_vault_v2', JSON.stringify(locationVault));
+  }, [locationVault]);
+
+  // Persist Script Vault
+  useEffect(() => {
+    localStorage.setItem('tiktok_script_vault', JSON.stringify(scriptVault));
+  }, [scriptVault]);
+
+  // Add script hook to vault
+  const addToScriptVault = (hook: string, productType: string) => {
+    const newEntry = {
+      id: Date.now().toString(),
+      hook: hook.trim(),
+      productType,
+      timestamp: Date.now()
+    };
+    setScriptVault(prev => [newEntry, ...prev].slice(0, 30)); // Keep last 30 hooks
+  };
+
+  // Clear script vault
+  const clearScriptVault = () => {
+    if (confirm("Xóa lịch sử script? AI có thể tạo script tương tự.")) {
+      setScriptVault([]);
+      localStorage.removeItem('tiktok_script_vault');
+    }
+  };
+
+  // Get script hooks blocklist
+  const getScriptBlocklist = () => {
+    return scriptVault.map(item => item.hook);
+  };
+
+  // Add new location to vault
+  const addToLocationVault = (location: string, region: string, productType?: string) => {
+    const newEntry = {
+      id: Date.now().toString(),
+      location: location.trim(),
+      region,
+      timestamp: Date.now(),
+      productType
+    };
+    setLocationVault(prev => [newEntry, ...prev].slice(0, 50)); // Keep last 50
+  };
+
+  // Remove specific location from vault
+  const removeFromVault = (id: string) => {
+    setLocationVault(prev => prev.filter(item => item.id !== id));
+  };
+
+  const clearLocationVault = () => {
+    if (confirm("Xóa toàn bộ lịch sử bối cảnh? AI có thể tái sử dụng các bối cảnh cũ.")) {
+      setLocationVault([]);
+      localStorage.removeItem('cinematic_location_vault_v2');
+    }
+  };
+
+  // Get unique locations as blocklist
+  const getLocationBlocklist = () => {
+    return locationVault.map(item => item.location);
+  };
+
+  // Get suggested locations based on region (excluding used ones)
+  const getSuggestedLocations = (region: string) => {
+    const regionData = LOCATION_REGIONS.find(r => r.value === region);
+    if (!regionData || region === 'auto') return [];
+    
+    const usedLocations = getLocationBlocklist();
+    return regionData.locations.filter(loc => 
+      !usedLocations.some(used => 
+        used.toLowerCase().includes(loc.toLowerCase().slice(0, 20)) ||
+        loc.toLowerCase().includes(used.toLowerCase().slice(0, 20))
+      )
+    );
+  };
+
+  // Processing State
+  const [directorThinking, setDirectorThinking] = useState(false);
+  const [directorOutput, setDirectorOutput] = useState<{
+    fullText: string;
+    sections: {
+      master: string;
+      keyframes: string;
+      scenes: string;
+      production: string;
+      metadata: string;
+    }
+  } | null>(null);
+
+  const fileInputFaceRef = useRef<HTMLInputElement>(null);
+  const fileInputOutfitRef = useRef<HTMLInputElement>(null);
+
+  // --- Handlers ---
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>, setter: (s: string) => void) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setter(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const applyTemplate = (template: typeof BODY_TEMPLATES[0]) => {
+    setGender(template.gender);
+    setBodyMode(template.mode);
+    setBodyType(template.bodyType);
+    setMeasurements(template.measurements);
+  };
+
+  const parseDirectorOutput = (text: string) => {
+    // Robust parsing based on sections - support multiple formats
+    // Try SECTION X: format first
+    let masterMatch = text.match(/SECTION 1:[\s\S]*?(?=SECTION 2:|Image 1|SCENE 1|$)/i);
+    let keyframesMatch = text.match(/SECTION 2:[\s\S]*?(?=SECTION 3:|SCENE 1|$)/i);
+    let scenesMatch = text.match(/SECTION 3:[\s\S]*?(?=SECTION 4:|SECTION 5:|PRODUCTION|$)/i);
+    let productionMatch = text.match(/SECTION 4:[\s\S]*?(?=SECTION 5:|METADATA|$)/i);
+    let metadataMatch = text.match(/SECTION 5:[\s\S]*$/i) || text.match(/SECTION 4:\s*METADATA[\s\S]*$/i);
+
+    // If SECTION format not found, try alternative formats
+    if (!masterMatch) {
+      masterMatch = text.match(/(?:MASTER PROMPT|COMMON MASTER PROMPT)[:\s]*[\s\S]*?(?=KEYFRAME|IMAGE 1|SCENE 1|$)/i);
+    }
+    if (!keyframesMatch) {
+      // Try Image 1, Image 2... format (common in TikTok Shop mode)
+      keyframesMatch = text.match(/(?:KEYFRAME PROMPTS?|IMAGE SEQUENCE)[:\s]*[\s\S]*?(?=SCENE|VEO|$)/i);
+      if (!keyframesMatch) {
+        // Try to find Image 1 through Image 5 directly
+        const imageMatch = text.match(/Image 1[\s\S]*?(?=SCENE 1|\*\*\*VOICE|$)/i);
+        if (imageMatch) keyframesMatch = imageMatch;
+      }
+    }
+    if (!scenesMatch) {
+      // Try SCENE 1, SCENE 2... format (TikTok Shop mode)
+      scenesMatch = text.match(/(?:SCENE PROMPTS?|VEO SCENE|SCENES? & SCRIPT)[:\s]*[\s\S]*?(?=PRODUCTION|METADATA|SECTION 4|$)/i);
+      if (!scenesMatch) {
+        // Try to find SCENE 1 through SCENE 4 directly
+        const sceneMatch = text.match(/(?:\*\*\*VOICE SETTING|\bSCENE 1\b)[\s\S]*?(?=SECTION 4:|PRODUCTION|METADATA|$)/i);
+        if (sceneMatch) scenesMatch = sceneMatch;
+      }
+    }
+    if (!productionMatch) {
+      productionMatch = text.match(/(?:PRODUCTION NOTES?|SECTION 4:\s*PRODUCTION)[:\s]*[\s\S]*?(?=METADATA|SECTION 5|$)/i);
+    }
+    if (!metadataMatch) {
+      metadataMatch = text.match(/(?:METADATA|Specific Location:)[:\s]*[\s\S]*$/i);
+    }
+
+    const cleanSection = (raw: string, sectionHeaderRegex: RegExp) => {
+       if (!raw) return "";
+       // Remove the main section header (e.g. "SECTION 1: ...")
+       let content = raw.replace(sectionHeaderRegex, '').trim();
+       
+       // Remove common redundant sub-headers that models sometimes add
+       const redundantHeaders = [
+         /^SECTION \d+:?\s*[^\n]*\n?/i,
+         /^Common Master Prompt:?\s*/i,
+         /^Master Prompt:?\s*/i,
+         /^Keyframe Prompts?:?\s*/i,
+         /^Image Sequence:?\s*/i,
+         /^Veo Scene Prompts?:?\s*/i,
+         /^Scene Prompts?.*?:?\s*/i,
+         /^Scenes? & Script.*?:?\s*/i,
+         /^Production Notes?:?\s*/i,
+         /^Prompts?:?\s*/i,
+         /^Output:?\s*/i,
+         /^\*+[^\n]*\*+\s*/i,
+         /^---+\s*/i,
+       ];
+       
+       for (const regex of redundantHeaders) {
+         content = content.replace(regex, '');
+       }
+       return content.trim();
+    };
+
+    // If still no master prompt found, try to extract first substantial paragraph
+    let masterContent = masterMatch ? cleanSection(masterMatch[0], /SECTION 1:.*?\n?|MASTER PROMPT:?\s*|COMMON MASTER PROMPT:?\s*/i) : "";
+    if (!masterContent && text.includes("Exact facial features")) {
+      const exactMatch = text.match(/Exact facial features[\s\S]*?(?=\n\n|Image 1|SCENE 1|$)/i);
+      if (exactMatch) masterContent = exactMatch[0].trim();
+    }
+
+    // Extract keyframes - handle both Image X format and SECTION 2 format
+    let keyframesContent = "";
+    if (keyframesMatch) {
+      keyframesContent = cleanSection(keyframesMatch[0], /SECTION 2:.*?\n?|KEYFRAME PROMPTS?:?\s*|IMAGE SEQUENCE:?\s*/i);
+    }
+    if (!keyframesContent || keyframesContent === "Keyframes unavailable") {
+      // Try to extract Image 1, Image 2... directly from text
+      const allImages = text.match(/Image \d+\s*\([^)]+\):[\s\S]*?(?=Image \d+|SCENE 1|\*\*\*VOICE|SECTION|$)/gi);
+      if (allImages && allImages.length > 0) {
+        keyframesContent = allImages.join('\n\n');
+      }
+    }
+
+    // Extract scenes - handle SCENE 1, SCENE 2... format
+    let scenesContent = "";
+    if (scenesMatch) {
+      scenesContent = cleanSection(scenesMatch[0], /SECTION 3:.*?\n?|SCENE PROMPTS?.*?:?\s*|VEO SCENE.*?:?\s*/i);
+    }
+    if (!scenesContent || scenesContent === "Scenes unavailable") {
+      // Try to extract SCENE 1, SCENE 2... directly
+      const allScenes = text.match(/SCENE \d+\s*\([^)]+\)[\s\S]*?(?=SCENE \d+\s*\(|SECTION 4|PRODUCTION|METADATA|$)/gi);
+      if (allScenes && allScenes.length > 0) {
+        scenesContent = allScenes.join('\n\n');
+      }
+    }
+
+    return {
+      master: masterContent || "Master prompt unavailable - AI may have used different format. Check full output.",
+      keyframes: keyframesContent || "Keyframes unavailable",
+      scenes: scenesContent || "Scenes unavailable",
+      production: productionMatch ? cleanSection(productionMatch[0], /SECTION 4:.*?\n?|PRODUCTION NOTES?:?\s*/i) : "",
+      metadata: metadataMatch ? cleanSection(metadataMatch[0], /SECTION 5:.*?\n?|METADATA:?\s*/i) : ""
+    };
+  };
+
+  // Improved parser for Keyframes and Scenes to handle individual copying
+  const parseSegments = (text: string, type: 'image' | 'scene') => {
+      const segments: { title: string; content: string }[] = [];
+      
+      // Multiple regex patterns to match various AI output formats
+      const patterns = type === 'image' 
+        ? [
+            /(Image \d+[^:\n]*:)/gi,           // "Image 1 (00s):" or "Image 1:"
+            /(\d+s\s*:)/gi,                     // "00s:" or "08s :"
+            /(\(\d+s\)\s*:)/gi,                 // "(00s):" 
+            /(Keyframe \d+[^:\n]*:)/gi,        // "Keyframe 1:"
+          ]
+        : [
+            /(Scene \d+[^:\n]*:)/gi,           // "Scene 1 (00s-08s):"
+            /(\d+s\s*-\s*\d+s\s*:)/gi,         // "00s-08s:"
+            /(\(\d+s-\d+s\)\s*:)/gi,           // "(00s-08s):"
+          ];
+
+      let matches: { match: string; index: number }[] = [];
+      
+      // Try each pattern until we find matches
+      for (const regex of patterns) {
+        matches = [];
+        let match;
+        // Reset regex
+        regex.lastIndex = 0;
+        while ((match = regex.exec(text)) !== null) {
+          matches.push({ match: match[0], index: match.index });
+        }
+        if (matches.length >= 2) break; // Found valid segments
+      }
+
+      // If still no matches, try line-by-line split for numbered format
+      if (matches.length < 2) {
+        const lines = text.split('\n').filter(line => line.trim());
+        const lineMatches: { match: string; index: number; content: string }[] = [];
+        
+        for (const line of lines) {
+          // Match patterns like "00s: content" or "1. (00s): content"
+          const lineMatch = line.match(/^(\d+s|\d+\.\s*\(?\d+s\)?|Image \d+[^:]*)\s*:\s*(.+)$/i);
+          if (lineMatch) {
+            lineMatches.push({
+              match: lineMatch[1],
+              index: 0,
+              content: lineMatch[2].trim()
+            });
+          }
+        }
+        
+        if (lineMatches.length >= 2) {
+          return lineMatches.map((m, idx) => ({
+            title: type === 'image' ? `Image ${idx + 1} (${m.match})` : `Scene ${idx + 1} (${m.match})`,
+            content: m.content
+          }));
+        }
+      }
+
+      // If still no matches, return as single block
+      if (matches.length === 0) {
+        return [{ title: type === 'image' ? 'All Keyframes' : 'All Scenes', content: text.trim() }];
+      }
+
+      // Extract content between matches
+      for (let i = 0; i < matches.length; i++) {
+        const currentMatch = matches[i];
+        const nextMatch = matches[i + 1];
+        
+        let title = currentMatch.match.replace(/:$/, '').trim();
+        // Make title more readable
+        if (/^\d+s$/.test(title)) {
+          title = `Image ${i + 1} (${title})`;
+        }
+        
+        const startIndex = currentMatch.index + currentMatch.match.length;
+        const endIndex = nextMatch ? nextMatch.index : text.length;
+        const content = text.slice(startIndex, endIndex).trim();
+        
+        if (title && content) {
+          segments.push({ title, content });
+        }
+      }
+      
+      return segments.length > 0 
+        ? segments 
+        : [{ title: type === 'image' ? 'All Keyframes' : 'All Scenes', content: text.trim() }];
+  };
+
+  const getBase64AndMime = (dataUrl: string) => {
+    const matches = dataUrl.match(/^data:(.+);base64,(.+)$/);
+    if (!matches) {
+      return { mimeType: 'image/png', data: dataUrl.split(',')[1] || '' };
+    }
+    return { mimeType: matches[1], data: matches[2] };
+  };
+
+  const runDirector = async () => {
+    if (!faceImage || !outfitImage) {
+      alert("Please upload both face and outfit reference images.");
+      return;
+    }
+    
+    setStep('director');
+    setDirectorThinking(true);
+    setDirectorOutput(null);
+
+    try {
+      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      
+      let bodyDataString = "";
+      if (bodyMode === 'preset') {
+        bodyDataString = `Body Preset: ${bodyType}`;
+      } else {
+        bodyDataString = `Exact Measurements: Height ${measurements.height}cm, Bust ${measurements.bust}cm, Waist ${measurements.waist}cm, Hips ${measurements.hips}cm`;
+      }
+      
+      // For TikTok Shop, use product details instead of personal measurements
+      const isAutoDetect = productType === 'auto';
+      const isComboMode = productType === 'combo';
+      const shopModelInfo = appMode === 'tiktok_shop' 
+        ? `\n\nPRODUCT INFO FOR VIETNAMESE SCRIPT (USE THESE DETAILS):
+- Product Type: ${isAutoDetect ? '🤖 AUTO-DETECT (AI phân tích từ ảnh sản phẩm)' : isComboMode ? '🎀 COMBO/MIX (Nhiều món kết hợp)' : productType.toUpperCase()}
+- Video Style: ${videoStyle.toUpperCase()}
+- Fabric/Material: ${fabricMaterial || (isAutoDetect || isComboMode ? '🤖 AUTO-DETECT từ ảnh' : 'Analyze from image')}
+- Key Highlights: ${productHighlights || (isAutoDetect || isComboMode ? '🤖 AUTO-DETECT từ ảnh' : 'Analyze from image')}
+- Available Sizes: ${availableSizes}
+
+${isAutoDetect ? `🤖 AUTO-DETECTION MODE ACTIVATED:
+Phân tích ảnh sản phẩm và xác định:
+1. Loại sản phẩm cụ thể (dress/top/pants/etc.)
+2. Chất liệu vải (lụa/cotton/thun/ren/etc.)
+3. Đặc điểm thiết kế (cổ/tay/dáng/chi tiết)
+4. Màu sắc chủ đạo
+5. Kiểm tra xem có COMBO/nhiều món không
+Ghi kết quả vào METADATA section.` : ''}
+
+${isComboMode ? `🎀 COMBO/MIX MODE ACTIVATED:
+Ảnh sản phẩm có NHIỀU MÓN ĐỒ kết hợp. AI PHẢI:
+1. Nhận diện TẤT CẢ các món đồ trong ảnh
+2. Xác định item chính và item phụ
+3. Mô tả từng món riêng biệt (loại + chất liệu)
+4. Script phải nhắc đến CẢ HAI/TẤT CẢ các món
+5. Ghi chi tiết combo vào METADATA
+
+Các kiểu combo phổ biến:
+- Váy/Đầm + Nội y bên trong (nhìn qua vải mỏng/ren)
+- Áo khoác + Áo trong (croptop/bralette)
+- Đồ ngủ silk + Nội y matching
+- Bikini + Kimono/Cover-up
+- Set quần + áo đồng bộ` : ''}
+
+⚠️ IMPORTANT: This is AI-generated video. DO NOT say "Mình cao X nặng Y" - instead describe the PRODUCT and how it looks on the MODEL's body type.` 
+        : '';
+
+      // Enforce 32s for TikTok Shop Mode
+      const isTikTokShop = appMode === 'tiktok_shop';
+      const finalDuration = isTikTokShop ? 32 : parseInt(videoDuration);
+      const scenes = finalDuration / 8;
+      
+      const faceData = getBase64AndMime(faceImage);
+      const outfitData = getBase64AndMime(outfitImage);
+
+      // Prepare Blocklist - use location strings from vault
+      const historyBlocklist = locationVault.length > 0 
+          ? locationVault.map(item => item.location).join(", ") 
+          : "None (Fresh Start)";
+
+      // Prepare Location Region preference
+      const selectedRegionData = LOCATION_REGIONS.find(r => r.value === locationRegion);
+      const regionName = selectedRegionData?.label || 'Auto';
+      const regionDescription = selectedRegionData?.desc || 'AI chọn tự do';
+      
+      // Get suggested locations for the region (excluding used ones)
+      const suggestedLocs = getSuggestedLocations(locationRegion);
+      const suggestedLocationsText = suggestedLocs.length > 0 
+          ? `\n\nSUGGESTED LOCATIONS (Pre-vetted for ${regionName}):\n${suggestedLocs.slice(0, 3).join('\n')}`
+          : '';
+
+      const locationPreferenceText = locationRegion !== 'auto'
+          ? `\n\nPREFERRED LOCATION REGION: ${regionName}\nRegion Description: ${regionDescription}${suggestedLocationsText}`
+          : '';
+
+      // Editorial Mode (18+) flag
+      const editorialModeText = editorialMode && appMode === 'cinematic'
+          ? `\n\n🔞 EDITORIAL_MODE: ON\nApply foundation-free silhouette vocabulary. Use visual descriptions like "seamless foundation-free silhouette," "uninterrupted natural fabric drape," "clean garment lines without undergarment interference."`
+          : '';
+
+      // Wallpaper Mode flag
+      const wallpaperModeText = wallpaperMode && appMode === 'cinematic'
+          ? `\n\n📱 WALLPAPER_MODE: ON\nCreate phone wallpaper-friendly composition:\n- Leave 15-20% clean space at TOP for clock/notifications\n- Leave 10-15% clean space at BOTTOM for dock icons\n- Position model in center-lower area (65-75% of frame)\n- Use beautiful gradient backgrounds: sunset, twilight, bokeh city lights\n- Soft rim lighting, dreamy aesthetic\n- Colors: warm golden, soft pastels, or dramatic twilight tones`
+          : '';
+
+      // Prepare Script Blocklist (only for TikTok Shop mode)
+      const scriptBlocklist = appMode === 'tiktok_shop' && scriptVault.length > 0
+          ? `\n\nPREVIOUSLY USED SCRIPTS (BLOCKLIST - DO NOT USE SIMILAR HOOKS):\n${scriptVault.slice(0, 15).map(s => `- "${s.hook}"`).join('\n')}`
+          : '';
+
+      const parts = [
+        { text: `Mode: ${appMode.toUpperCase()}\nGender: ${gender}\n${bodyDataString}${shopModelInfo}\n\nTarget Duration: ${finalDuration}s (${scenes} scenes).${locationPreferenceText}${editorialModeText}${wallpaperModeText}\n\nPREVIOUSLY USED LOCATIONS (COLLISION AVOIDANCE ACTIVATED):\n${historyBlocklist}${scriptBlocklist}\n\nCreative Brief:\n${brief}` },
+        { inlineData: { mimeType: faceData.mimeType, data: faceData.data } }, 
+        { inlineData: { mimeType: outfitData.mimeType, data: outfitData.data } }
+      ];
+      
+      // Select Instruction
+      let systemInstruction = DIRECTOR_SYSTEM_INSTRUCTION;
+      if (appMode === 'tiktok') systemInstruction = TIKTOK_SYSTEM_INSTRUCTION;
+      if (appMode === 'tiktok_shop') systemInstruction = TIKTOK_SHOP_SYSTEM_INSTRUCTION;
+
+      const response = await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: { parts },
+        config: {
+          systemInstruction: systemInstruction,
+          safetySettings: [
+            { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH },
+            { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH },
+            { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH },
+            { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH }
+          ]
+        }
+      });
+      
+      const text = response.text;
+      
+      if (!text) {
+        console.error("Director Response Missing Text. Full Response:", response);
+        if (response.candidates && response.candidates.length > 0) {
+            const reason = response.candidates[0].finishReason;
+            if (reason === 'SAFETY') {
+                 throw new Error("The Director could not generate the prompt due to Safety Filters. Please try a different image or description.");
+            }
+        }
+        throw new Error("No text response from Director. The model might be overloaded or the input was blocked.");
+      }
+      
+      // Extract Metadata (Specific Location)
+      const metaMatch = text.match(/Specific Location:\s*(.+)/i);
+      if (metaMatch && metaMatch[1]) {
+        const newLoc = metaMatch[1].trim();
+        // Add to vault with region info
+        const alreadyExists = locationVault.some(item => 
+          item.location.toLowerCase() === newLoc.toLowerCase()
+        );
+        if (!alreadyExists) {
+            addToLocationVault(newLoc, locationRegion, productType);
+        }
+      }
+
+      // Extract Scene 1 Script (Hook) for TikTok Shop - save to vault
+      if (appMode === 'tiktok_shop') {
+        const scene1Match = text.match(/SCENE 1[\s\S]*?SCRIPT:\s*["""]?([^"""]+)["""]?/i);
+        if (scene1Match && scene1Match[1]) {
+          const hook = scene1Match[1].trim().slice(0, 100); // Keep first 100 chars
+          const hookExists = scriptVault.some(s => 
+            s.hook.toLowerCase().slice(0, 30) === hook.toLowerCase().slice(0, 30)
+          );
+          if (!hookExists && hook.length > 10) {
+            addToScriptVault(hook, productType);
+          }
+        }
+      }
+
+      const sections = parseDirectorOutput(text);
+
+      setDirectorOutput({
+        fullText: text,
+        sections: sections
+      });
+
+      setActiveTab('master');
+
+    } catch (error: any) {
+      console.error("Director Error:", error);
+      
+      let message = error.message || "An unexpected error occurred.";
+
+      if (typeof message === 'string' && (message.includes('{') || message.includes('429') || message.includes('404'))) {
+          if (message.includes("429") || message.includes("RESOURCE_EXHAUSTED") || message.includes("quota")) {
+              message = "API Quota Exceeded (429). You have reached the usage limit for the Gemini API. Please wait a moment or check your billing details in Google AI Studio.";
+          } else if (message.includes("404") || message.includes("NOT_FOUND")) {
+              message = "Model Not Found (404). The selected Gemini model is not available. Please try again later or contact support.";
+          } else {
+             try {
+                 const jsonMatch = message.match(/\{.*\}/);
+                 if (jsonMatch) {
+                     const parsed = JSON.parse(jsonMatch[0]);
+                     if (parsed.error && parsed.error.message) {
+                        message = parsed.error.message;
+                     }
+                 }
+             } catch(e) {}
+          }
+      }
+
+      alert(`Director Error: ${message}`);
+      setStep('input');
+    } finally {
+      setDirectorThinking(false);
+    }
+  };
+
+  const reset = () => {
+    setStep('input');
+    setDirectorOutput(null);
+  };
+
+  // --- Render Steps ---
+
+  return (
+    <div className="min-h-screen bg-[#09090b] text-zinc-200 selection:bg-purple-500/30 selection:text-purple-200 p-4 md:p-8 flex items-center justify-center font-sans">
+      <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        {/* Left Panel: Inputs & Controls */}
+        <div className="lg:col-span-5 flex flex-col gap-6">
+          <header className="mb-2">
+            <div className="flex items-center gap-2 mb-2">
+              <Sparkles className="w-5 h-5 text-purple-400" />
+              <span className="text-xs font-medium tracking-[0.2em] text-purple-400 uppercase">AI Visual Director</span>
+            </div>
+            <h1 className="text-3xl md:text-4xl font-display font-bold text-white leading-tight">
+              Cinematic <br/>Fashion Studio
+            </h1>
+          </header>
+
+          <div className="glass-panel rounded-2xl p-6 flex flex-col gap-6 border border-zinc-800 bg-zinc-900/40">
+            
+            {/* Mode Selector */}
+            <div className="grid grid-cols-3 gap-1 bg-zinc-900/50 p-1 rounded-xl border border-zinc-800">
+               <button 
+                  onClick={() => setAppMode('cinematic')}
+                  className={`flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all
+                  ${appMode === 'cinematic' 
+                     ? 'bg-zinc-800 text-white shadow-sm border border-zinc-700' 
+                     : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50'}`}
+               >
+                  <Film className="w-3.5 h-3.5" /> Cinematic
+               </button>
+               <button 
+                  onClick={() => setAppMode('tiktok')}
+                  className={`flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all
+                  ${appMode === 'tiktok' 
+                     ? 'bg-gradient-to-r from-pink-500/20 to-cyan-500/20 text-white shadow-sm border border-white/10' 
+                     : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50'}`}
+               >
+                  <Music className="w-3.5 h-3.5" /> Viral Dance
+               </button>
+               <button 
+                  onClick={() => setAppMode('tiktok_shop')}
+                  className={`flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all
+                  ${appMode === 'tiktok_shop' 
+                     ? 'bg-gradient-to-r from-orange-500/20 to-red-500/20 text-white shadow-sm border border-white/10' 
+                     : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50'}`}
+               >
+                  <ShoppingBag className="w-3.5 h-3.5" /> Shop Sales
+               </button>
+            </div>
+
+            {/* Reference Images */}
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { label: "Face Reference", state: faceImage, setter: setFaceImage, ref: fileInputFaceRef, icon: Upload },
+                { label: "Outfit Reference", state: outfitImage, setter: setOutfitImage, ref: fileInputOutfitRef, icon: ImageIcon }
+              ].map((item, idx) => (
+                <div key={idx} className="space-y-2">
+                  <label className="text-[10px] uppercase tracking-wider font-semibold text-zinc-500">{item.label}</label>
+                  <div 
+                    onClick={() => item.ref.current?.click()}
+                    className={`aspect-[3/4] rounded-xl border border-dashed flex items-center justify-center cursor-pointer transition-all overflow-hidden relative group
+                      ${item.state ? 'border-purple-500/50 bg-purple-900/10' : 'border-zinc-700 hover:border-zinc-500 bg-zinc-900/50'}`}
+                  >
+                    {item.state ? (
+                      <img src={item.state} alt="Ref" className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="text-center p-4">
+                        <item.icon className="w-5 h-5 mx-auto mb-2 text-zinc-500 group-hover:text-zinc-300" />
+                        <span className="text-[10px] text-zinc-500 group-hover:text-zinc-300">Upload</span>
+                      </div>
+                    )}
+                    {item.state && <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity"><span className="text-xs font-medium">Change</span></div>}
+                  </div>
+                  <input type="file" ref={item.ref} onChange={(e) => handleFileUpload(e, item.setter)} className="hidden" accept="image/*" />
+                </div>
+              ))}
+            </div>
+
+            {/* Configuration Groups */}
+            <div className="space-y-5">
+               
+               {/* 1. Body & Subject */}
+               <div className="space-y-3">
+                  <div className="flex items-center justify-between text-xs">
+                     <span className="font-semibold text-zinc-400 flex items-center gap-1.5"><Ruler className="w-3.5 h-3.5" /> Subject & Body</span>
+                     <div className="flex bg-zinc-900 rounded p-0.5 border border-zinc-800">
+                        {['preset', 'custom'].map(m => (
+                           <button key={m} onClick={() => setBodyMode(m as any)} 
+                           className={`px-2 py-0.5 text-[10px] uppercase font-medium rounded transition-colors ${bodyMode === m ? 'bg-zinc-700 text-white' : 'text-zinc-500'}`}>
+                              {m}
+                           </button>
+                        ))}
+                     </div>
+                  </div>
+
+                  {/* Template Buttons */}
+                  <div className="grid grid-cols-4 gap-2">
+                     {BODY_TEMPLATES.map((t, i) => (
+                        <button key={i} onClick={() => applyTemplate(t)}
+                           className="px-2 py-1.5 rounded bg-zinc-900/40 border border-zinc-800 hover:bg-purple-900/20 hover:border-purple-500/30 text-[9px] text-zinc-400 hover:text-purple-300 transition-all truncate"
+                           title={t.label}
+                        >
+                           {t.label}
+                        </button>
+                     ))}
+                  </div>
+                  
+                  <div className="space-y-3">
+                     <select value={gender} onChange={(e) => setGender(e.target.value)}
+                        className="w-full bg-zinc-900/80 border border-zinc-700 rounded-lg px-2 py-2 text-xs text-zinc-300 focus:outline-none focus:border-purple-500">
+                        <option>Female</option> <option>Male</option>
+                     </select>
+                     
+                     {bodyMode === 'preset' ? (
+                        <select value={bodyType} onChange={(e) => setBodyType(e.target.value)}
+                           className="w-full bg-zinc-900/80 border border-zinc-700 rounded-lg px-2 py-2 text-xs text-zinc-300 focus:outline-none focus:border-purple-500">
+                           <option>Slim (Model)</option> <option>Athletic</option> <option>Balanced</option> <option>Curvy</option>
+                        </select>
+                     ) : (
+                        <div className="grid grid-cols-2 gap-2 animate-in fade-in slide-in-from-top-1">
+                             <div className="space-y-1">
+                                <label className="text-[9px] uppercase text-zinc-600 font-bold ml-1">Height (cm)</label>
+                                <input type="number" placeholder="165" className="w-full bg-zinc-900/80 border border-zinc-700 rounded-lg px-2 py-2 text-xs text-zinc-300 focus:outline-none focus:border-purple-500"
+                                    value={measurements.height} onChange={(e) => setMeasurements({...measurements, height: e.target.value})} />
+                             </div>
+                             <div className="space-y-1">
+                                <label className="text-[9px] uppercase text-zinc-600 font-bold ml-1">Weight (kg)</label>
+                                <input type="number" placeholder="55" className="w-full bg-zinc-900/80 border border-zinc-700 rounded-lg px-2 py-2 text-xs text-zinc-300 focus:outline-none focus:border-purple-500"
+                                    value={measurements.weight} onChange={(e) => setMeasurements({...measurements, weight: e.target.value})} />
+                             </div>
+                             <div className="space-y-1">
+                                <label className="text-[9px] uppercase text-zinc-600 font-bold ml-1">Waist (cm)</label>
+                                <input type="number" placeholder="64" className="w-full bg-zinc-900/80 border border-zinc-700 rounded-lg px-2 py-2 text-xs text-zinc-300 focus:outline-none focus:border-purple-500"
+                                    value={measurements.waist} onChange={(e) => setMeasurements({...measurements, waist: e.target.value})} />
+                             </div>
+                             <div className="space-y-1">
+                                <label className="text-[9px] uppercase text-zinc-600 font-bold ml-1">Size</label>
+                                <select value={measurements.size} onChange={(e) => setMeasurements({...measurements, size: e.target.value})}
+                                   className="w-full bg-zinc-900/80 border border-zinc-700 rounded-lg px-2 py-2 text-xs text-zinc-300 focus:outline-none focus:border-purple-500">
+                                   <option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option><option>3XL</option><option>4XL</option>
+                                </select>
+                             </div>
+                        </div>
+                     )}
+                     
+                     {/* Product Type Selector - Only for TikTok Shop */}
+                     {appMode === 'tiktok_shop' && (
+                        <div className="mt-3 pt-3 border-t border-zinc-800/50 animate-in fade-in">
+                           <div className="flex items-center justify-between mb-2">
+                              <label className="text-[9px] uppercase text-orange-400 font-bold ml-1">Loại sản phẩm</label>
+                              {productType === 'auto' && (
+                                 <span className="text-[8px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded flex items-center gap-1">
+                                    🤖 AI tự nhận diện
+                                 </span>
+                              )}
+                              {productType === 'combo' && (
+                                 <span className="text-[8px] bg-pink-500/20 text-pink-400 px-1.5 py-0.5 rounded flex items-center gap-1">
+                                    🎀 Nhiều món kết hợp
+                                 </span>
+                              )}
+                           </div>
+                           <div className="grid grid-cols-4 gap-1 max-h-[180px] overflow-y-auto pr-1 scrollbar-thin">
+                              {PRODUCT_TYPES.map((pt) => (
+                                 <button key={pt.value} onClick={() => setProductType(pt.value)}
+                                    className={`py-1.5 px-1 rounded text-[8px] font-medium border transition-all flex flex-col items-center justify-center gap-0.5
+                                    ${productType === pt.value 
+                                       ? pt.value === 'auto' 
+                                          ? 'bg-green-500/20 border-green-500 text-green-200' 
+                                          : pt.value === 'combo'
+                                             ? 'bg-pink-500/20 border-pink-500 text-pink-200'
+                                             : 'bg-orange-500/20 border-orange-500 text-orange-200' 
+                                       : 'bg-zinc-900/50 border-zinc-700 text-zinc-400 hover:border-zinc-500'}`}>
+                                    <span className="text-sm">{pt.emoji}</span>
+                                    <span className="truncate w-full text-center">{pt.label}</span>
+                                 </button>
+                              ))}
+                           </div>
+                           {productType === 'auto' && (
+                              <p className="text-[9px] text-green-400/70 mt-2 ml-1">
+                                 ✨ AI sẽ phân tích ảnh sản phẩm để xác định loại, chất liệu và đặc điểm tự động
+                              </p>
+                           )}
+                           {productType === 'combo' && (
+                              <p className="text-[9px] text-pink-400/70 mt-2 ml-1">
+                                 🎀 AI sẽ nhận diện TẤT CẢ các món đồ trong ảnh (VD: Váy + Nội y, Áo khoác + Croptop)
+                              </p>
+                           )}
+                        </div>
+                     )}
+                     
+                     {/* Product Details Input - Only for TikTok Shop */}
+                     {appMode === 'tiktok_shop' && (
+                        <div className="mt-3 pt-3 border-t border-zinc-800/50 animate-in fade-in">
+                           <label className="text-[9px] uppercase text-cyan-400 font-bold ml-1 mb-2 block">📝 Chi tiết sản phẩm (để script chính xác)</label>
+                           <div className="space-y-2">
+                              <div className="space-y-1">
+                                 <label className="text-[9px] text-zinc-500 ml-1">Chất liệu vải</label>
+                                 <input 
+                                    type="text" 
+                                    placeholder="VD: Vải thun lạnh, Lụa cao cấp, Cotton 100%..." 
+                                    className="w-full bg-zinc-900/80 border border-zinc-700 rounded-lg px-2 py-2 text-xs text-zinc-300 focus:outline-none focus:border-cyan-500 placeholder:text-zinc-600"
+                                    value={fabricMaterial} 
+                                    onChange={(e) => setFabricMaterial(e.target.value)} 
+                                 />
+                              </div>
+                              <div className="space-y-1">
+                                 <label className="text-[9px] text-zinc-500 ml-1">Điểm nổi bật</label>
+                                 <input 
+                                    type="text" 
+                                    placeholder="VD: Che bắp tay, Tôn eo, Co giãn 4 chiều..." 
+                                    className="w-full bg-zinc-900/80 border border-zinc-700 rounded-lg px-2 py-2 text-xs text-zinc-300 focus:outline-none focus:border-cyan-500 placeholder:text-zinc-600"
+                                    value={productHighlights} 
+                                    onChange={(e) => setProductHighlights(e.target.value)} 
+                                 />
+                              </div>
+                              <div className="space-y-1">
+                                 <label className="text-[9px] text-zinc-500 ml-1">Size có sẵn</label>
+                                 <input 
+                                    type="text" 
+                                    placeholder="VD: S-XXL, Freesize, S đến 4XL..." 
+                                    className="w-full bg-zinc-900/80 border border-zinc-700 rounded-lg px-2 py-2 text-xs text-zinc-300 focus:outline-none focus:border-cyan-500 placeholder:text-zinc-600"
+                                    value={availableSizes} 
+                                    onChange={(e) => setAvailableSizes(e.target.value)} 
+                                 />
+                              </div>
+                           </div>
+                        </div>
+                     )}
+                     
+                     {/* Video Style Selector - Only for TikTok Shop */}
+                     {appMode === 'tiktok_shop' && (
+                        <div className="mt-3 pt-3 border-t border-zinc-800/50 animate-in fade-in">
+                           <label className="text-[9px] uppercase text-pink-400 font-bold ml-1 mb-2 block">Phong cách quay</label>
+                           <div className="space-y-1.5">
+                              {VIDEO_STYLES.map((vs) => (
+                                 <button key={vs.value} onClick={() => setVideoStyle(vs.value as any)}
+                                    className={`w-full py-2 px-3 rounded text-left border transition-all flex items-center gap-2
+                                    ${videoStyle === vs.value 
+                                       ? 'bg-pink-500/20 border-pink-500 text-pink-200' 
+                                       : 'bg-zinc-900/50 border-zinc-700 text-zinc-400 hover:border-zinc-500'}`}>
+                                    <span className="text-base">{vs.emoji}</span>
+                                    <div className="flex-1">
+                                       <div className="flex items-center gap-1.5">
+                                          <span className="text-[10px] font-bold">{vs.label}</span>
+                                          {vs.hot && <span className="text-[8px] bg-red-500 text-white px-1 rounded">HOT</span>}
+                                       </div>
+                                       <span className="text-[9px] opacity-70">{vs.desc}</span>
+                                    </div>
+                                 </button>
+                              ))}
+                           </div>
+                        </div>
+                     )}
+                     
+                     {/* Location Region Selector */}
+                     <div className="mt-3 pt-3 border-t border-zinc-800/50 animate-in fade-in">
+                        <div className="flex items-center justify-between mb-2">
+                           <label className="text-[9px] uppercase text-emerald-400 font-bold ml-1 flex items-center gap-1">
+                              📍 Bối cảnh / Location
+                           </label>
+                           {locationVault.length > 0 && (
+                              <span className="text-[9px] text-zinc-500">{locationVault.length} đã dùng</span>
+                           )}
+                        </div>
+                        
+                        {/* Region Grid */}
+                        <div className="grid grid-cols-2 gap-1.5 mb-2">
+                           {LOCATION_REGIONS.slice(0, 6).map((region) => (
+                              <button 
+                                 key={region.value} 
+                                 onClick={() => setLocationRegion(region.value)}
+                                 className={`py-1.5 px-2 rounded text-left border transition-all flex items-center gap-1.5
+                                    ${locationRegion === region.value 
+                                       ? 'bg-emerald-500/20 border-emerald-500 text-emerald-200' 
+                                       : 'bg-zinc-900/50 border-zinc-700 text-zinc-400 hover:border-zinc-500'}`}
+                              >
+                                 <span className="text-sm">{region.emoji}</span>
+                                 <span className="text-[9px] font-medium truncate">{region.label}</span>
+                              </button>
+                           ))}
+                        </div>
+                        
+                        {/* More Regions Dropdown */}
+                        <details className="group">
+                           <summary className="text-[9px] text-zinc-500 cursor-pointer hover:text-zinc-300 flex items-center gap-1">
+                              <ChevronDown className="w-3 h-3 group-open:rotate-180 transition-transform" />
+                              Thêm bối cảnh khác
+                           </summary>
+                           <div className="grid grid-cols-2 gap-1.5 mt-2 animate-in fade-in slide-in-from-top-2">
+                              {LOCATION_REGIONS.slice(6).map((region) => (
+                                 <button 
+                                    key={region.value} 
+                                    onClick={() => setLocationRegion(region.value)}
+                                    className={`py-1.5 px-2 rounded text-left border transition-all flex items-center gap-1.5
+                                       ${locationRegion === region.value 
+                                          ? 'bg-emerald-500/20 border-emerald-500 text-emerald-200' 
+                                          : 'bg-zinc-900/50 border-zinc-700 text-zinc-400 hover:border-zinc-500'}`}
+                                 >
+                                    <span className="text-sm">{region.emoji}</span>
+                                    <span className="text-[9px] font-medium truncate">{region.label}</span>
+                                 </button>
+                              ))}
+                           </div>
+                        </details>
+                        
+                        {/* Selected Region Info */}
+                        {locationRegion !== 'auto' && (
+                           <div className="mt-2 p-2 bg-emerald-900/10 border border-emerald-500/20 rounded text-[9px] text-emerald-300/80">
+                              <span className="font-bold">{LOCATION_REGIONS.find(r => r.value === locationRegion)?.label}:</span>{' '}
+                              {LOCATION_REGIONS.find(r => r.value === locationRegion)?.desc}
+                              {getSuggestedLocations(locationRegion).length > 0 && (
+                                 <p className="mt-1 text-emerald-400/60">
+                                    ✓ {getSuggestedLocations(locationRegion).length} bối cảnh chưa dùng
+                                 </p>
+                              )}
+                           </div>
+                        )}
+                        
+                        {/* Editorial Mode Toggle (18+) - Cinematic only */}
+                        {appMode === 'cinematic' && (
+                           <div className="mt-3 pt-3 border-t border-zinc-800/30">
+                              <button
+                                 onClick={() => setEditorialMode(!editorialMode)}
+                                 className={`w-full py-2 px-3 rounded-lg border transition-all flex items-center justify-between
+                                    ${editorialMode 
+                                       ? 'bg-rose-500/20 border-rose-500/50 text-rose-200' 
+                                       : 'bg-zinc-900/30 border-zinc-700/50 text-zinc-500 hover:border-zinc-600'}`}
+                              >
+                                 <div className="flex items-center gap-2">
+                                    <span className="text-base">🔞</span>
+                                    <div className="text-left">
+                                       <span className="text-[10px] font-medium block">Editorial Mode</span>
+                                       <span className="text-[8px] opacity-70">Foundation-free silhouette</span>
+                                    </div>
+                                 </div>
+                                 <div className={`w-8 h-4 rounded-full transition-all relative ${editorialMode ? 'bg-rose-500' : 'bg-zinc-700'}`}>
+                                    <div className={`absolute top-0.5 w-3 h-3 rounded-full bg-white transition-all ${editorialMode ? 'left-4' : 'left-0.5'}`} />
+                                 </div>
+                              </button>
+                              {editorialMode && (
+                                 <p className="mt-1.5 text-[8px] text-rose-300/60 px-1">
+                                    ⚠️ Mô tả trang phục với silhouette tự nhiên, không có lớp foundation bên trong
+                                 </p>
+                              )}
+                              
+                              {/* Wallpaper Mode Toggle */}
+                              <button
+                                 onClick={() => setWallpaperMode(!wallpaperMode)}
+                                 className={`w-full mt-2 py-2 px-3 rounded-lg border transition-all flex items-center justify-between
+                                    ${wallpaperMode 
+                                       ? 'bg-violet-500/20 border-violet-500/50 text-violet-200' 
+                                       : 'bg-zinc-900/30 border-zinc-700/50 text-zinc-500 hover:border-zinc-600'}`}
+                              >
+                                 <div className="flex items-center gap-2">
+                                    <span className="text-base">🖼️</span>
+                                    <div className="text-left">
+                                       <span className="text-[10px] font-medium block">Wallpaper Mode</span>
+                                       <span className="text-[8px] opacity-70">Hình nền điện thoại</span>
+                                    </div>
+                                 </div>
+                                 <div className={`w-8 h-4 rounded-full transition-all relative ${wallpaperMode ? 'bg-violet-500' : 'bg-zinc-700'}`}>
+                                    <div className={`absolute top-0.5 w-3 h-3 rounded-full bg-white transition-all ${wallpaperMode ? 'left-4' : 'left-0.5'}`} />
+                                 </div>
+                              </button>
+                              {wallpaperMode && (
+                                 <p className="mt-1.5 text-[8px] text-violet-300/60 px-1">
+                                    📱 Background đẹp cho lock screen - chừa chỗ cho đồng hồ & icons
+                                 </p>
+                              )}
+                           </div>
+                        )}
+                     </div>
+                  </div>
+               </div>
+
+               {/* 2. Cinematography (Auto) & Location Vault */}
+               <div className="space-y-3 pt-3 border-t border-zinc-800/50">
+                  <div className="flex items-center justify-between text-xs">
+                     <div className="flex items-center text-xs font-semibold text-zinc-400 gap-1.5">
+                        <BrainCircuit className="w-3.5 h-3.5 text-purple-400" /> Auto-Director
+                     </div>
+                     <span className="text-[9px] uppercase tracking-wider text-purple-400/80 font-medium">AI Active</span>
+                  </div>
+                  <div className="p-3 bg-purple-900/10 border border-purple-500/20 rounded-lg">
+                      <p className="text-[10px] text-purple-200/70 leading-relaxed">
+                          {appMode === 'tiktok' && "The AI Director will choreograph viral dance moves and simulate a TikTok-style camera."}
+                          {appMode === 'tiktok_shop' && "Real-life production script: 32s video with motion prompts, Vietnamese sales script, and production notes for your team."}
+                          {appMode === 'cinematic' && "The AI Director will automatically select the optimal Camera Angle, Lens, Lighting, and Environment."}
+                      </p>
+                      
+                      {/* Location History Panel */}
+                      {locationVault.length > 0 && (
+                        <div className="mt-3 pt-2 border-t border-purple-500/10">
+                           <div className="flex items-center justify-between mb-2">
+                              <span className="text-[9px] text-zinc-500 flex items-center gap-1">
+                                 <History className="w-3 h-3" /> Lịch sử bối cảnh
+                              </span>
+                              <button 
+                                 onClick={clearLocationVault}
+                                 className="text-[8px] text-red-400/70 hover:text-red-300 flex items-center gap-0.5"
+                              >
+                                 <Trash2 className="w-2.5 h-2.5" /> Xóa tất cả
+                              </button>
+                           </div>
+                           <div className="space-y-1 max-h-24 overflow-y-auto">
+                              {locationVault.slice(0, 5).map((item) => (
+                                 <div key={item.id} className="flex items-center gap-2 text-[9px] p-1.5 bg-zinc-900/50 rounded group">
+                                    <span className="text-zinc-600">
+                                       {LOCATION_REGIONS.find(r => r.value === item.region)?.emoji || '📍'}
+                                    </span>
+                                    <span className="flex-1 text-zinc-400 truncate" title={item.location}>
+                                       {item.location.slice(0, 40)}...
+                                    </span>
+                                    <button 
+                                       onClick={() => removeFromVault(item.id)}
+                                       className="opacity-0 group-hover:opacity-100 text-red-400/50 hover:text-red-400 transition-opacity"
+                                    >
+                                       <X className="w-3 h-3" />
+                                    </button>
+                                 </div>
+                              ))}
+                              {locationVault.length > 5 && (
+                                 <p className="text-[8px] text-zinc-600 text-center">+{locationVault.length - 5} khác</p>
+                              )}
+                           </div>
+                        </div>
+                      )}
+                      
+                      {/* Script History Panel - TikTok Shop only */}
+                      {appMode === 'tiktok_shop' && scriptVault.length > 0 && (
+                        <div className="mt-3 pt-2 border-t border-orange-500/10">
+                           <div className="flex items-center justify-between mb-2">
+                              <span className="text-[9px] text-zinc-500 flex items-center gap-1">
+                                 <FileText className="w-3 h-3" /> Script đã dùng ({scriptVault.length})
+                              </span>
+                              <button 
+                                 onClick={clearScriptVault}
+                                 className="text-[8px] text-red-400/70 hover:text-red-300 flex items-center gap-0.5"
+                              >
+                                 <Trash2 className="w-2.5 h-2.5" /> Xóa
+                              </button>
+                           </div>
+                           <div className="space-y-1 max-h-20 overflow-y-auto">
+                              {scriptVault.slice(0, 4).map((item) => (
+                                 <div key={item.id} className="text-[9px] p-1.5 bg-zinc-900/50 rounded text-zinc-500 truncate" title={item.hook}>
+                                    "{item.hook.slice(0, 50)}..."
+                                 </div>
+                              ))}
+                              {scriptVault.length > 4 && (
+                                 <p className="text-[8px] text-zinc-600 text-center">+{scriptVault.length - 4} khác</p>
+                              )}
+                           </div>
+                           <p className="text-[8px] text-orange-400/60 mt-1.5">AI sẽ tránh các hook tương tự</p>
+                        </div>
+                      )}
+                  </div>
+               </div>
+
+               {/* 3. Duration */}
+               <div className="space-y-3 pt-3 border-t border-zinc-800/50">
+                  <div className="flex items-center justify-between text-xs">
+                     <span className="font-semibold text-zinc-400 flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> Timeline</span>
+                  </div>
+                  <div className="grid grid-cols-4 gap-2">
+                     {['8', '16', '24', '32'].map((dur) => (
+                        <button key={dur} onClick={() => setVideoDuration(dur)}
+                           disabled={appMode === 'tiktok_shop' && dur !== '32'}
+                           className={`py-1.5 rounded text-[10px] font-medium border transition-all 
+                              ${(appMode === 'tiktok_shop' && dur === '32') || (appMode !== 'tiktok_shop' && videoDuration === dur)
+                                ? 'bg-purple-600/20 border-purple-500 text-purple-200' 
+                                : appMode === 'tiktok_shop' ? 'opacity-30 cursor-not-allowed bg-zinc-900 border-zinc-800' : 'bg-zinc-900/50 border-zinc-700 text-zinc-400 hover:border-zinc-500'}`}>
+                           {dur}s
+                        </button>
+                     ))}
+                  </div>
+                  {appMode === 'tiktok_shop' && <p className="text-[9px] text-orange-400 text-right">Fixed 32s for Sales format</p>}
+               </div>
+            </div>
+
+            {/* Brief Input */}
+            <div className="relative">
+               <textarea
+                value={brief}
+                onChange={(e) => setBrief(e.target.value)}
+                className="w-full h-20 bg-zinc-900/50 border border-zinc-700 rounded-lg px-3 py-2 text-xs text-zinc-300 focus:outline-none focus:border-purple-500 resize-none"
+                placeholder={appMode === 'tiktok' ? "Describe the vibe (e.g., K-pop, Hip-hop, Cute) or specific song beat..." : "Additional creative details..."}
+               />
+               <button
+                  onClick={runDirector}
+                  disabled={!faceImage || !outfitImage || directorThinking}
+                  className={`absolute bottom-2 right-2 p-2 rounded-lg transition-all
+                     ${faceImage && outfitImage && !directorThinking ? 'bg-purple-600 text-white shadow-lg hover:scale-105' : 'bg-zinc-800 text-zinc-600'}`}
+               >
+                  {directorThinking ? <RefreshCcw className="w-4 h-4 animate-spin" /> : <Wand2 className="w-4 h-4" />}
+               </button>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Right Panel: Results */}
+        <div className="lg:col-span-7 flex flex-col h-full min-h-[600px]">
+          <div className="glass-panel rounded-2xl h-full flex flex-col relative overflow-hidden border border-zinc-800 bg-black/20">
+            
+            {/* 1. Director View */}
+            {step === 'director' && (
+              <div className="absolute inset-0 z-10 flex flex-col bg-[#09090b]">
+                
+                {directorThinking ? (
+                   <div className="flex-1 flex flex-col items-center justify-center space-y-6">
+                     <div className="relative">
+                       <div className="w-16 h-16 border-4 border-zinc-800 rounded-full"></div>
+                       <div className="w-16 h-16 border-4 border-purple-500 border-t-transparent rounded-full animate-spin absolute top-0 left-0"></div>
+                     </div>
+                     <div className="text-center">
+                        <h3 className="text-lg font-display text-white">
+                           {appMode === 'tiktok' && "Choreographing Dance"}
+                           {appMode === 'tiktok_shop' && "Analyzing Product & Sales Strategy"}
+                           {appMode === 'cinematic' && "Director is Filming"}
+                        </h3>
+                        <p className="text-xs text-zinc-500 mt-2 uppercase tracking-widest">
+                           {appMode === 'tiktok' && "Syncing Moves & Camera"}
+                           {appMode === 'tiktok_shop' && "Generating Real Production Script (Ra Đơn Thật)"}
+                           {appMode === 'cinematic' && "Scouting Locations & Lighting"}
+                        </p>
+                        {locationVault.length > 0 && (
+                            <p className="text-[10px] text-purple-400 mt-2">
+                                Avoiding {locationVault.length} previous locations
+                            </p>
+                        )}
+                     </div>
+                   </div>
+                ) : (
+                  <>
+                     {/* Tab Header */}
+                     <div className="flex items-center gap-2 p-4 border-b border-zinc-800 bg-zinc-900/50 backdrop-blur flex-wrap">
+                        <TabButton active={activeTab === 'master'} onClick={() => setActiveTab('master')} icon={Camera} label="Master Prompt" />
+                        <TabButton active={activeTab === 'keyframes'} onClick={() => setActiveTab('keyframes')} icon={Layers} label="Keyframes" />
+                        <TabButton active={activeTab === 'scenes'} onClick={() => setActiveTab('scenes')} icon={Clapperboard} label={appMode === 'tiktok_shop' ? "Scenes & Script" : "Video Scenes"} />
+                        {appMode === 'tiktok_shop' && directorOutput?.sections.production && (
+                           <TabButton active={activeTab === 'production'} onClick={() => setActiveTab('production')} icon={FileText} label="Production Notes" />
+                        )}
+                     </div>
+
+                     {/* Content Area */}
+                     <div className="flex-1 overflow-y-auto p-6 relative">
+                        <div className="font-mono text-sm leading-relaxed text-zinc-300">
+                           {activeTab === 'master' && (
+                              <div className="animate-in fade-in slide-in-from-bottom-2 space-y-6 relative">
+                                 <div>
+                                    <h4 className="text-purple-400 mb-2 text-xs font-bold uppercase tracking-widest">Common Master Prompt</h4>
+                                    <div className="bg-zinc-900/50 p-6 rounded-lg border border-zinc-800/50 whitespace-pre-wrap relative group">
+                                       {directorOutput?.sections.master}
+                                       <CopyButton text={directorOutput?.sections.master || ''} />
+                                    </div>
+                                    <p className="mt-2 text-[10px] text-zinc-500">
+                                       Use this prompt as the "Common Prompt" in your generation tool. It defines the character, outfit, and style for the entire video.
+                                    </p>
+                                 </div>
+                              </div>
+                           )}
+                           {activeTab === 'keyframes' && (
+                              <div className="animate-in fade-in slide-in-from-bottom-2 space-y-4">
+                                 <h4 className="text-blue-400 mb-2 text-xs font-bold uppercase tracking-widest">Image Sequence</h4>
+                                 {parseSegments(directorOutput?.sections.keyframes || '', 'image').map((segment, idx) => (
+                                    <div key={idx} className="bg-zinc-900/50 rounded-lg border border-zinc-800/50 overflow-hidden relative group">
+                                      <div className="bg-zinc-900/80 px-4 py-2 border-b border-zinc-800/50 flex justify-between items-center">
+                                          <span className="text-[10px] font-bold text-blue-300 uppercase tracking-wider">{segment.title}</span>
+                                      </div>
+                                      <div className="p-4 pr-12 whitespace-pre-wrap text-xs text-zinc-300">
+                                          {segment.content}
+                                      </div>
+                                      <CopyButton text={segment.content} />
+                                    </div>
+                                 ))}
+                                 <p className="mt-2 text-[10px] text-zinc-500">
+                                    Copy individual prompts to generate keyframes (Start, Middle, End).
+                                 </p>
+                              </div>
+                           )}
+                           {activeTab === 'scenes' && (
+                              <div className="animate-in fade-in slide-in-from-bottom-2 space-y-4">
+                                 <h4 className="text-green-400 mb-2 text-xs font-bold uppercase tracking-widest">
+                                    {appMode === 'tiktok_shop' ? 'Scene Prompts & Vietnamese Script' : 'Veo Video Prompts'}
+                                 </h4>
+                                 {parseSegments(directorOutput?.sections.scenes || '', 'scene').map((segment, idx) => (
+                                    <div key={idx} className="bg-zinc-900/50 rounded-lg border border-zinc-800/50 overflow-hidden relative group">
+                                      <div className="bg-zinc-900/80 px-4 py-2 border-b border-zinc-800/50 flex justify-between items-center">
+                                          <span className="text-[10px] font-bold text-green-300 uppercase tracking-wider">{segment.title}</span>
+                                      </div>
+                                      <div className="p-4 pr-12 whitespace-pre-wrap text-xs text-zinc-300">
+                                          {segment.content}
+                                      </div>
+                                      <CopyButton text={segment.content} />
+                                    </div>
+                                 ))}
+                                 <p className="mt-2 text-[10px] text-zinc-500">
+                                    {appMode === 'tiktok_shop' 
+                                       ? 'Each scene includes motion prompt and Vietnamese sales script. Use for real video shooting.'
+                                       : 'Use these prompts for the "Image-to-Video" generation of each 8-second segment.'}
+                                 </p>
+                              </div>
+                           )}
+                           {activeTab === 'production' && appMode === 'tiktok_shop' && (
+                              <div className="animate-in fade-in slide-in-from-bottom-2 space-y-4">
+                                 <h4 className="text-orange-400 mb-2 text-xs font-bold uppercase tracking-widest">Production Notes</h4>
+                                 <div className="bg-zinc-900/50 rounded-lg border border-zinc-800/50 overflow-hidden relative">
+                                    <div className="bg-orange-900/20 px-4 py-2 border-b border-orange-800/30 flex justify-between items-center">
+                                       <span className="text-[10px] font-bold text-orange-300 uppercase tracking-wider">Shooting Guide</span>
+                                    </div>
+                                    <div className="p-4 pr-12 whitespace-pre-wrap text-xs text-zinc-300 leading-relaxed">
+                                       {directorOutput?.sections.production}
+                                    </div>
+                                    <CopyButton text={directorOutput?.sections.production || ''} />
+                                 </div>
+                                 {directorOutput?.sections.metadata && (
+                                    <div className="bg-zinc-900/50 rounded-lg border border-zinc-800/50 overflow-hidden relative mt-4">
+                                       <div className="bg-purple-900/20 px-4 py-2 border-b border-purple-800/30">
+                                          <span className="text-[10px] font-bold text-purple-300 uppercase tracking-wider">Metadata & Batch Info</span>
+                                       </div>
+                                       <div className="p-4 pr-12 whitespace-pre-wrap text-xs text-zinc-300">
+                                          {directorOutput?.sections.metadata}
+                                       </div>
+                                       <CopyButton text={directorOutput?.sections.metadata || ''} />
+                                    </div>
+                                 )}
+                                 <p className="mt-2 text-[10px] text-zinc-500">
+                                    Use these notes to guide your production team. Includes camera setup, framing, and retake flexibility for each scene.
+                                 </p>
+                              </div>
+                           )}
+                        </div>
+                     </div>
+
+                     {/* Footer Actions */}
+                     <div className="p-4 border-t border-zinc-800 bg-zinc-900/80 backdrop-blur flex justify-between items-center">
+                        <button onClick={reset} className="text-xs text-zinc-500 hover:text-white transition-colors">CLEAR OUTPUT</button>
+                        <button 
+                              onClick={runDirector}
+                              className="bg-zinc-800 text-zinc-300 border border-zinc-700 px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-zinc-700 hover:text-white transition-all flex items-center gap-2"
+                        >
+                              <RotateCcw className="w-4 h-4" /> Regenerate Prompts
+                        </button>
+                     </div>
+                  </>
+                )}
+              </div>
+            )}
+
+            {/* 3. Placeholder */}
+            {step === 'input' && (
+               <div className="absolute inset-0 flex flex-col items-center justify-center text-zinc-700 space-y-4">
+                  <Film className="w-12 h-12 opacity-20" />
+                  <p className="text-xs uppercase tracking-widest opacity-50">Studio Idle</p>
+               </div>
+            )}
+
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const container = document.getElementById('root');
+const root = createRoot(container!);
+root.render(<App />);

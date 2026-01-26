@@ -1,0 +1,272 @@
+# CINEMATIC FASHION VIDEO AUTO-DETECTION
+
+## 🤖 PRODUCT TYPE AUTO-DETECTION FOR VIDEOS
+
+When generating CINEMATIC MODE videos (NOT lookbook), detect product category from outfit reference and apply appropriate scene structure.
+
+---
+
+## 📋 SCENE STRUCTURES BY PRODUCT TYPE
+
+### **TOPS**
+
+**Blouses (24s):**
+- Scene 1 (00s-06s): POV Mirror buttoning, hands on buttons
+- Scene 2 (06s-14s): Collar detail close-up + tucked/untucked reveal
+- Scene 3 (14s-22s): Standing in office/cafe environment, camera slow pan around
+- Scene 4 (22s-24s): 3/4 confident pose
+**Key:** Show collar, cuffs, fabric drape
+
+**T-Shirts (20s):**
+- Scene 1 (00s-04s): Bold statement, direct gaze
+- Scene 2 (04s-12s): 3 styling ways (front tuck, layered, knotted) - fast cuts
+- Scene 3 (12s-18s): Standing casual pose, slight sway in place
+- Scene 4 (18s-20s): Casual confident pose
+**Key:** Fast pacing, versatility, casual vibe
+
+**Sweaters/Cardigans (26s):**
+- Scene 1 (00s-06s): Hidden Subject - back view putting on, slow reveal
+- Scene 2 (06s-14s): Fabric texture macro + buttoning/styling
+- Scene 3 (14s-22s): Cozy context (coffee/home), warm vibe
+- Scene 4 (22s-26s): Content smile, warm lighting
+**Key:** Slower pacing, cozy aesthetic, warmth
+
+**Blazers (26s):**
+- Scene 1 (00s-06s): Transformation - puts on blazer, casual→boss
+- Scene 2 (06s-14s): Shoulder line detail + power pose (hands in pockets)
+- Scene 3 (14s-22s): Standing power pose, low angle, city/office backdrop
+- Scene 4 (22s-26s): Arms crossed or hip hand, confident
+**Key:** Power angles, sharp lighting, CEO energy
+
+---
+
+### **BOTTOMS**
+
+**Jeans (24s):**
+- Scene 1 (00s-06s): Problem-Solution - multiple jeans laid out, choose one
+- Scene 2 (06s-14s): Mirror POV fit check (front/side/back) + full body reveal
+- Scene 3 (14s-22s): Walking street/cafe, tracking from behind then front
+- Scene 4 (22s-24s): Confident standing
+**Key:** Focus on fit (waist, butt, length), walking crucial
+
+**Skirts (24s):**
+- Scene 1 (00s-06s): Hidden Subject - close-up fabric flowing, pan up
+- Scene 2 (06s-14s): Twirl/spin in place showing flow, gentle sway to show fabric movement
+- Scene 3 (14s-22s): Styled 2 ways (blouse/crop top) fast cuts
+- Scene 4 (22s-24s): Final twirl or elegant pose
+**Key:** Movement/flow crucial, show how it moves
+
+**Dress Pants (24s):**
+- Scene 1 (00s-06s): Bold Controversy - styled unexpected (sneakers not heels)
+- Scene 2 (06s-14s): Versatility (heels/sneakers/flats) fast transitions
+- Scene 3 (14s-22s): Standing professional pose, side angle showcasing tailored fit
+- Scene 4 (22s-24s): Power stance, slight low angle
+**Key:** Professional clean lines, versatility
+
+---
+
+### **DRESSES**
+
+**Office Dresses (24s):**
+- Scene 1 (00s-06s): POV Mirror GRWM - zipping dress, morning routine
+- Scene 2 (06s-14s): Neckline/sleeve detail + mirror full body turn
+- Scene 3 (14s-22s): Work context (desk/office), professional vibe
+- Scene 4 (22s-24s): Confident standing, professional smile
+**Key:** Professional, relatable morning routine
+
+**Cocktail/Evening Dresses (28s):**
+- Scene 1 (00s-06s): Hidden Subject - silhouette doorway backlit, mystery
+- Scene 2 (06s-16s): Back detail + turn around face reveal (beat drop) + full showcase
+- Scene 3 (16s-24s): Elegant standing pose with slow 180° turn, dramatic lighting, upscale venue
+- Scene 4 (24s-28s): Elegant pose, slow zoom face
+**Key:** Dramatic lighting, luxury fabric catching light, slower elegant
+
+---
+
+### **OUTERWEAR**
+
+**Denim Jackets (22s):**
+- Scene 1 (00s-05s): Bold Statement - unexpected styling (over dress/double denim)
+- Scene 2 (05s-13s): Versatility quick cuts (3 ways) beat sync
+- Scene 3 (13s-19s): Standing casual in street/park backdrop
+- Scene 4 (19s-22s): Leaning wall, cool pose
+**Key:** Fast casual vibe, versatility, trendy
+
+**Coats (26s):**
+- Scene 1 (00s-06s): Hidden Subject - back view coat flowing, mystery
+- Scene 2 (06s-14s): Turn around reveal + adjust collar + full silhouette
+- Scene 3 (14s-22s): Standing in winter city/park, gentle sway showing coat flow, sophisticated
+- Scene 4 (22s-26s): Elegant standing, soft winter light
+**Key:** Elegance, flow, sophisticated winter vibe
+
+---
+
+### **ACCESSORIES**
+
+**Handbags (18s - shorter):**
+- Scene 1 (00s-04s): Detail Focus - macro on hardware/leather/logo
+- Scene 2 (04s-10s): Opening show interior + carried on shoulder
+- Scene 3 (10s-16s): With full outfit lifestyle setting, standing showcase
+- Scene 4 (16s-18s): Close-up bag with outfit
+**Key:** Detail quality, functionality, lifestyle integration
+
+**Shoes (20s):**
+- Scene 1 (00s-05s): Transformation - changing flats to heels, POV foot level
+- Scene 2 (05s-12s): Product detail pan + worn standing, low angle
+- Scene 3 (12s-18s): Walking toward camera, low angle confidence
+- Scene 4 (18s-20s): Crossed legs or standing, shoes with outfit
+**Key:** Low angles, walking shots, confidence boost
+
+**Jewelry (15s - very short):**
+- Scene 1 (00s-04s): Detail Macro - extreme close-up sparkling, slow rotation
+- Scene 2 (04s-09s): Putting on + full adorned portrait, catching light
+- Scene 3 (09s-13s): Hair toss (earrings) or hand gesture (ring/bracelet)
+- Scene 4 (13s-15s): Still portrait, jewelry focal, slow zoom
+**Key:** Macro sparkle, lighting crucial, luxury feel
+
+**Sunglasses (18s):**
+- Scene 1 (00s-05s): POV Transform - putting on POV, instant cool
+- Scene 2 (05s-11s): Front portrait + profile side detail
+- Scene 3 (11s-16s): Standing cool in city/beach setting, camera tracks around
+- Scene 4 (16s-18s): Lower sunglasses eye contact or push up confident
+**Key:** POV transformation, cool factor, effortless
+
+---
+
+## 🎬 CAMERA TECHNIQUES BY PRODUCT TYPE
+
+**Detail-Focused (Accessories):**
+- Macro close-ups show quality
+- Product rotation shots
+- Highlight shine/texture lighting
+- Shorter duration acceptable (15-20s)
+
+**Full Outfit (Clothes):**
+- Full body shots show fit
+- Movement minimal (in-place turns, gentle sway, standing showcase)
+- Environmental context (where to wear)
+- Standard 24-28s duration
+- 90% frame height mandatory
+
+**Layering Pieces (Jackets, Cardigans):**
+- Transformation sequences
+- Before/after quick cuts
+- Versatility showcase
+- Mix static and movement
+
+---
+
+## 🎨 LIGHTING & VIBE BY CATEGORY
+
+**Professional (Office wear, Blazers, Dress Pants):**
+- Clean bright natural window light
+- Sharp, professional
+- Office/city environment
+- Confident energy
+
+**Casual (T-shirts, Jeans, Denim Jackets):**
+- Soft natural daylight
+- Relaxed handheld feel
+- Street/cafe/park
+- Approachable relatable
+
+**Elegant/Evening (Cocktail Dresses, Coats):**
+- Dramatic golden hour, rim lighting
+- Slower elegant movements
+- Upscale venues, heritage sites
+- Sophisticated aspirational
+
+**Cozy (Sweaters, Sleepwear):**
+- Warm soft ambient light
+- Slower comfortable pacing
+- Home interior, cozy spaces
+- Inviting warm
+
+**Accessories (Bags, Jewelry, Shoes):**
+- Clean product lighting
+- Detail-focused close-ups
+- Lifestyle integration
+- Luxury or everyday aesthetic
+
+---
+
+## ⚙️ AUTO-DETECTION WORKFLOW
+
+**When generating CINEMATIC video (NOT lookbook):**
+
+1. **Analyze outfit reference image**
+2. **Detect product category:**
+   - Dress? → Office (24s) or Cocktail (28s)
+   - Top? → Blouse/Tee/Sweater/Blazer (20-26s)
+   - Bottom? → Jeans/Skirt/Pants (24s)
+   - Outerwear? → Denim Jacket (22s) or Coat (26s)
+   - Accessory? → Bag/Shoes/Jewelry/Sunglasses (15-20s)
+3. **Apply appropriate structure:**
+   - Select scene breakdown
+   - Set duration
+   - Choose viral hook type
+   - Apply lighting/vibe guide
+4. **Generate 4 scenes with beats**
+
+---
+
+## 📐 DURATION GUIDE
+
+**SYSTEM MAXIMUM: 32s (5 scenes: 00s, 08s, 16s, 24s, 32s)**
+
+**Recommendations below are for AFFILIATE MARKETING optimization (better completion rate):**
+**User can choose ANY duration from 16s to 32s based on needs.**
+
+| Product Type | Recommended | Scenes | Pacing | Can Extend to 32s? |
+|--------------|-------------|--------|--------|--------------------|
+| T-Shirts | 20s | 4 | Fast | ✅ Yes, for story |
+| Denim Jackets | 22s | 4 | Fast | ✅ Yes, for versatility |
+| Most Fashion | 24s | 4 | Standard | ✅ Yes, standard |
+| Sweaters, Blazers, Coats | 26s | 4 | Slow | ✅ Yes, recommended |
+| Cocktail Dresses | 28s | 4 | Slow Elegant | ✅ Yes, for drama |
+| Jewelry | 15s | 4 | Very Short | ✅ Yes, if detailed |
+| Sunglasses, Handbags | 18s | 4 | Short | ✅ Yes, lifestyle |
+| Shoes | 20s | 4 | Short | ✅ Yes, for context |
+
+**32s FULL CINEMATIC USE CASES:**
+- Complex products needing explanation
+- High-end luxury items (detailed showcase)
+- Storytelling/brand content
+- When artistic expression > algorithm optimization
+- Up to 5 scenes with more breathing room
+
+**24-28s AFFILIATE OPTIMIZATION:**
+- Better TikTok completion rate
+- Algorithm-friendly (people watch till end)
+- Quick impactful product showcase
+- Recommended for most affiliate content
+
+**16-20s QUICK VIRAL:**
+- Maximum retention
+- Accessories and simple products
+- Trending audio compatibility
+- High rewatch potential
+
+---
+
+## ✅ INTEGRATION NOTES
+
+**For director.txt reference:**
+- Use this when CINEMATIC mode (NOT lookbook)
+- Auto-detect product from outfit image
+- Apply category-specific scene structure
+- Maintain pure visual (no text overlay unless specified)
+- Duration varies by product (15-28s)
+
+**Viral Hook Integration:**
+- Each product has recommended hook type
+- Combine with existing viral hooks framework
+- Hook timing: Scene 1 (00s-06s) always
+- Scene 2-4: Showcase, Context, Finale
+
+**For Affiliate Marketing Videos:**
+- Prioritize showing product clearly
+- Include movement/lifestyle context
+- Fast enough pacing (no dead time)
+- Clear product benefits visible
+- Professional aesthetic maintained
