@@ -20,7 +20,8 @@ import {
    PRODUCT_TYPE_GROUPS,
    PRODUCT_TYPES,
    VIDEO_STYLES,
-   LOCATION_REGIONS
+   LOCATION_REGIONS,
+   STUDIO_CATEGORIES
 } from './constants';
 
 // --- Components ---
@@ -275,6 +276,110 @@ const App = () => {
    // Get script hooks blocklist
    const getScriptBlocklist = () => {
       return scriptVault.map(item => item.hook);
+   };
+
+   // Studio Category preference (for Studio Mode)
+   const [studioCategory, setStudioCategory] = useState<string>('auto');
+
+   // Studio Vault State - stores used studios to avoid repetition
+   const [studioVault, setStudioVault] = useState<{
+      id: string;
+      studio: string;
+      category: string;
+      timestamp: number;
+      productType?: string;
+   }[]>(() => {
+      if (typeof window !== 'undefined') {
+         try {
+            const saved = localStorage.getItem('studio_vault');
+            return saved ? JSON.parse(saved) : [];
+         } catch (e) {
+            return [];
+         }
+      }
+      return [];
+   });
+
+   // Persist Studio Vault
+   useEffect(() => {
+      localStorage.setItem('studio_vault', JSON.stringify(studioVault));
+   }, [studioVault]);
+
+   // Add studio to vault
+   const addToStudioVault = (studio: string, category: string, productType?: string) => {
+      const newEntry = {
+         id: Date.now().toString(),
+         studio: studio.trim().slice(0, 100), // Store only first 100 chars for comparison
+         category,
+         timestamp: Date.now(),
+         productType
+      };
+      setStudioVault(prev => [newEntry, ...prev].slice(0, 50)); // Keep last 50
+   };
+
+   // Get studio blocklist
+   const getStudioBlocklist = () => {
+      return studioVault.map(item => item.studio);
+   };
+
+   // Get random studios from category (excluding used ones)
+   const getRandomStudios = (category: string, count: number = 5) => {
+      const usedStudios = getStudioBlocklist();
+
+      if (category === 'auto') {
+         // Collect studios from all categories
+         const allStudios: string[] = [];
+         STUDIO_CATEGORIES.forEach(cat => {
+            if (cat.value !== 'auto' && cat.studios) {
+               allStudios.push(...cat.studios);
+            }
+         });
+
+         // Filter used studios
+         const available = allStudios.filter(studio => {
+            const studioShort = studio.split(' | ')[0].toLowerCase();
+            return !usedStudios.some(used =>
+               used.toLowerCase().includes(studioShort) ||
+               studioShort.includes(used.toLowerCase().slice(0, 30))
+            );
+         });
+
+         // Fisher-Yates shuffle
+         const shuffled = [...available];
+         for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+         }
+         return shuffled.slice(0, count);
+      }
+
+      // For specific category
+      const categoryData = STUDIO_CATEGORIES.find(c => c.value === category);
+      if (!categoryData || !categoryData.studios) return [];
+
+      const available = categoryData.studios.filter(studio => {
+         const studioShort = studio.split(' | ')[0].toLowerCase();
+         return !usedStudios.some(used =>
+            used.toLowerCase().includes(studioShort) ||
+            studioShort.includes(used.toLowerCase().slice(0, 30))
+         );
+      });
+
+      // Fisher-Yates shuffle
+      const shuffled = [...available];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+         const j = Math.floor(Math.random() * (i + 1));
+         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled.slice(0, count);
+   };
+
+   // Clear studio vault
+   const clearStudioVault = () => {
+      if (confirm("Xóa lịch sử studio? AI có thể tái sử dụng các studio cũ.")) {
+         setStudioVault([]);
+         localStorage.removeItem('studio_vault');
+      }
    };
 
    // Add new location to vault
@@ -1038,9 +1143,32 @@ Các kiểu combo phổ biến:
             ? `\n\n🔥 SEXY_MODE: ON (SFW VOCABULARY - NANO BANANA PRO COMPATIBLE)\nChế độ riêng tư tạo nội dung gợi cảm - TỐI ƯU cho Nano Banana Pro và Veo 3.1.\n\n⛔ BLOCKLIST - TUYỆT ĐỐI KHÔNG DÙNG:\n🔴 HARD BLOCK: vagina, penis, nipples, nude, naked, topless, braless, sex, cum, bdsm, fetish, bondage, orgasm\n🟡 CONTEXT BLOCK: see-through, sheer, micro bikini, wet t-shirt, upskirt, spread legs, cleavage, bust, breast\n🟡 WORKAROUNDS BỊ BLOCK: nsfw, uncensored, r18, 18+, hentai, gravure, risqué\n\n✅ SFW ALTERNATIVES - DÙNG CÁC TỪ NÀY:\n- Cleavage → décolletage, neckline depth, V-neckline\n- Bust/Breast → upper body silhouette, bodice architecture, heart opening\n- Sexy → alluring, captivating, magnetic\n- Seductive → confident gaze, magnetic presence, self-assured\n- Sheer → lightweight fabric, flowing material\n- Wet look → glossy finish, reflective surface\n- Bedroom eyes → half-lidded gaze, confident gaze\n- Lingerie → lounge coordinates, loungewear set\n- Bikini → two-piece swimwear, swim set${wallpaperMode ? `\n\n📱 WALLPAPER + SEXY COMBINATION:\n- Tạo hình nền elegant nhưng TINH TẾ, phù hợp làm lock screen\n- Poses: elegant standing, confident lean, soft recline - KHÔNG provocative\n- Expression: half-lidded gaze, knowing smile - confident not intense\n- Background: dreamy gradient, bokeh lights - beautiful for wallpaper\n- Model 90% frame như Wallpaper Mode yêu cầu` : ''}\n\n⚠️ QUY TẮC ÁO DÀI:\n- Áo dài VẪN PHẢI tuân thủ: KHÔNG XẺ TÀ, VẠT LIỀN MẠCH\n- Gợi cảm qua: form-fitting silhouette, thin silk fabric, deep back scoop, wind-blown panels\n- KHÔNG: sheer fabric, high side slit trên vạt\n- EN: "ao dai INTACT panels, elegant via fitted silhouette and flowing fabric, NO panel slits"\n\n💃 BODY VOCABULARY (SFW):\n- Graceful silhouette, elegant figure, hourglass silhouette\n- Generous figure, elegant curves, slender waist\n- Smooth radiant skin, long elegant legs\n\n👗 OUTFIT VOCABULARY (SFW):\n- Form-fitting dress, bodycon, deep V-neckline, backless\n- High slit, lightweight fabric, lace overlay, strapless\n- Loungewear set, silk robe, two-piece swimwear\n- ⚠️ NGOẠI TRỪ ÁO DÀI: chỉ form-fitting, thin silk, NO slits on panels\n\n🧘 YOGA POSES CHO TƯ THẾ KHÓ/DỄ FLAG:\n| Pose | Yoga Sanskrit | Dùng Khi |\n|------|--------------|----------|\n| Xoạc ngang 180° | Samakonasana (Straight Angle) | Thay "180° splits" |\n| Xoạc cúi trước | Upavistha Konasana (Wide-Angle Forward Bend) | Thay "spread legs bend forward" |\n| Nằm mở hông | Supta Baddha Konasana (Reclined Bound Angle) | Thay "lying with open legs" |\n| Cong lưng sâu | Bhujangasana/Ustrasana (Cobra/Camel) | Thay "deep backbend" |\n\n🎭 ELEGANT POSES:${wallpaperMode ? `\n- Elegant standing with hip tilt, confident lean\n- Graceful back arch, hand on hip, over-shoulder glance\n- Hair toss, subtle fabric touch - tinh tế cho wallpaper` : `\n- Graceful back arch, hip tilt, leaning forward\n- Wall lean, confident arch, styled poses\n- Elegant recline, relaxed poses, dynamic movement\n- Hair styling, fabric draping, strap adjusting`}\n\n📸 CAMERA:\n- Low angle looking up, bird's eye view\n- Slow pan up body, circling orbit, push-in close\n\n💡 LIGHTING:\n- Warm amber key light, strong rim/backlight glow\n- Single spotlight, candle flicker, neon glow\n- Pattern shadows, dramatic chiaroscuro${lookbookMode ? '' : `\n\n🎬 SCENE FLOW (VIDEO ONLY):\n- Scene 1: Introduction - elegant silhouette emerging\n- Scene 2: Reveal - full body spotlight showcase\n- Scene 3: Highlight - peak captivating moment\n- Scene 4: Finale - confident elegant close, smile`}`
             : '';
 
-         // Studio Mode flag - Professional themed backgrounds
+         // Studio Mode flag - Professional themed backgrounds with random studio suggestions
+         const studioSuggestions = studioMode ? getRandomStudios(studioCategory, 5) : [];
          const studioModeText = studioMode
-            ? `\n\n🎬 STUDIO_MODE: ON\nUse professional themed studio backgrounds instead of real-world locations.\n\n📐 SELECTION LOGIC:\n1. Analyze outfit/product from reference image\n2. Match to category: aodai, professional, casual, evening, sportswear, sleepwear, accessories\n3. Select appropriate studio (use default ⭐ or pick variant for variety)\n4. Build environment using studio specs from database\n\n🏢 STUDIO DESCRIPTION FORMAT:\n"Professional photography studio with [theme]. [Background: gradient/texture]. [Props: 1-3 items, background, minimal]. [Lighting: simulation, color temp]. [Floor: material/color]. [Vibe]. - STUDIO FIXED"\n\n⚠️ CRITICAL RULES:\n- Props MUST be minimal (1-3 max) and in BACKGROUND (out of focus)\n- Lighting is SIMULATED (say "golden hour simulation" not "golden hour")\n- End with "- STUDIO FIXED" tag\n- NO realistic room names (living room/bedroom) - use "studio with [aesthetic]"\n- Same studio throughout all keyframes (no changes)\n\n📚 REFERENCE: See studio_mode_guide.txt for complete 43-studio database and detailed instructions.`
+            ? `\n\n🎬 STUDIO_MODE: ON (Category: ${studioCategory === 'auto' ? 'AI Auto' : STUDIO_CATEGORIES.find(c => c.value === studioCategory)?.label || studioCategory})
+Use professional themed studio backgrounds instead of real-world locations.
+
+📐 SELECTION LOGIC:
+1. Analyze outfit/product from reference image
+2. Match to category: aodai, professional, casual, evening, sportswear, sleepwear, accessories
+3. ${studioSuggestions.length > 0 ? 'SELECT FROM SUGGESTED STUDIOS BELOW' : 'Select appropriate studio from database'}
+4. Build environment using studio specs
+
+🎯 SUGGESTED STUDIOS (RANDOM - TRÁNH TRÙNG LẶP):
+${studioSuggestions.length > 0
+               ? studioSuggestions.map((s, i) => `${i + 1}. ${s}`).join('\n\n')
+               : '(Tất cả studios đã dùng - AI tự chọn từ database)'}
+
+⚠️ CRITICAL RULES:
+- PHẢI CHỌN 1 STUDIO từ danh sách trên (hoặc từ database nếu hết)
+- Props MUST be minimal (1-3 max) and in BACKGROUND (out of focus)
+- Lighting is SIMULATED (say "golden hour simulation" not "golden hour")
+- End with "- STUDIO FIXED" tag
+- NO realistic room names (living room/bedroom) - use "studio with [aesthetic]"
+- Same studio throughout all keyframes (no changes)
+
+📚 REFERENCE: See studio_mode_guide.txt for complete 103-studio database.`
             : '';
 
          // Aspect Ratio flag
@@ -1080,9 +1208,28 @@ Các kiểu combo phổ biến:
 ⚠️ OUTPUT FORMAT: STRICT JSON (cho Nano Banana Pro & Veo 3.1)
 AI PHẢI output định dạng JSON để tối ưu workflow Image-to-Video.`;
 
+         // Build parts array with CLEAR LABELS for images
+         const faceReferenceText = faceImage
+            ? `\n\n🔴 FACE REFERENCE: UPLOADED ✅
+⚠️ CRITICAL: Face Reference image is attached FIRST (before outfit).
+- Use EXACT facial features from Face Reference image
+- OVERRIDE the Default Douyin Face - DO NOT USE DEFAULT
+- Preserve: Face shape, eyes, nose, lips, skin tone, hair style/color
+- Do NOT add Douyin makeup (wine-red eyeshadow, amber lenses, etc.)
+- Do NOT change hair color/style from reference
+- Only describe what you SEE in the Face Reference
+
+✅ CORRECT: "Faithful character likeness from reference: [describe actual features seen]"
+❌ WRONG: Using any Default Douyin Face description when face is uploaded`
+            : `\n\n⚠️ FACE REFERENCE: NOT UPLOADED
+→ Use DEFAULT DOUYIN/DOLL STYLE FACE (see instructions for full description)`;
+
          const parts = [
-            { text: `Mode: ${appMode.toUpperCase()}\nGender: ${gender}\n${bodyDataString}${shopModelInfo}${userAdditionalDescText}\n\nTarget Duration: ${finalDuration}s (${scenes} scenes).\nAspect Ratio: ${aspectRatio}${keyframeCountText}${realWorldPhotoText}${locationPreferenceText}${editorialModeText}${wallpaperModeText}${lookbookModeText}${seductiveModeText}${sexyModeText}${studioModeText}${aspectRatioText}\n\nPREVIOUSLY USED LOCATIONS (COLLISION AVOIDANCE ACTIVATED):\n${historyBlocklist}${scriptBlocklist}\n\n🎯 OUTPUT FORMAT: JSON (Nano Banana Pro & Veo 3.1 optimized)\nCreative Brief:\n${brief}${faceImage ? '\n\n⚠️ Face Reference: Uploaded - Preserve exact facial features from reference image' : '\n\n⚠️ Face Reference: NOT uploaded - Use DEFAULT DOUYIN/DOLL STYLE FACE (see instructions)'}` },
-            ...(faceImage ? [{ inlineData: { mimeType: faceData.mimeType, data: faceData.data } }] : []),
+            { text: `Mode: ${appMode.toUpperCase()}\nGender: ${gender}\n${bodyDataString}${shopModelInfo}${userAdditionalDescText}\n\nTarget Duration: ${finalDuration}s (${scenes} scenes).\nAspect Ratio: ${aspectRatio}${keyframeCountText}${realWorldPhotoText}${locationPreferenceText}${editorialModeText}${wallpaperModeText}${lookbookModeText}${seductiveModeText}${sexyModeText}${studioModeText}${aspectRatioText}\n\nPREVIOUSLY USED LOCATIONS (COLLISION AVOIDANCE ACTIVATED):\n${historyBlocklist}${scriptBlocklist}\n\n🎯 OUTPUT FORMAT: JSON (Nano Banana Pro & Veo 3.1 optimized)\nCreative Brief:\n${brief}${faceReferenceText}` },
+            // Face Reference image FIRST (with label)
+            ...(faceImage ? [{ text: '\n\n📸 IMAGE 1 - FACE REFERENCE (Use this face):' }, { inlineData: { mimeType: faceData.mimeType, data: faceData.data } }] : []),
+            // Outfit Reference image SECOND (with label)
+            { text: faceImage ? '\n\n📸 IMAGE 2 - OUTFIT/PRODUCT REFERENCE (Use this product):' : '\n\n📸 OUTFIT/PRODUCT REFERENCE:' },
             { inlineData: { mimeType: outfitData.mimeType, data: outfitData.data } }
          ];
 
@@ -1171,6 +1318,44 @@ AI PHẢI output định dạng JSON để tối ưu workflow Image-to-Video.`;
             );
             if (!alreadyExists) {
                addToLocationVault(extractedLocation, locationRegion, productType);
+            }
+         }
+
+         // Extract Studio from AI response (for Studio Mode) - save to vault
+         if (studioMode) {
+            let extractedStudio = null;
+
+            // Try JSON format - look in masterPrompt.environment
+            try {
+               const jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/) || text.match(/\{[\s\S]*"masterPrompt"[\s\S]*\}/);
+               if (jsonMatch) {
+                  const jsonText = jsonMatch[1] || jsonMatch[0];
+                  const jsonData = JSON.parse(jsonText);
+                  if (jsonData.masterPrompt && jsonData.masterPrompt.environment) {
+                     extractedStudio = jsonData.masterPrompt.environment;
+                  }
+               }
+            } catch (e) {
+               // JSON parsing failed
+            }
+
+            // Fallback: look for "STUDIO FIXED" tag
+            if (!extractedStudio) {
+               const studioMatch = text.match(/([^.]+)\s*-\s*STUDIO FIXED/i);
+               if (studioMatch && studioMatch[1]) {
+                  extractedStudio = studioMatch[1].trim();
+               }
+            }
+
+            if (extractedStudio) {
+               const studioShort = extractedStudio.slice(0, 100);
+               const studioExists = studioVault.some(s =>
+                  s.studio.toLowerCase().slice(0, 30) === studioShort.toLowerCase().slice(0, 30)
+               );
+               if (!studioExists && studioShort.length > 10) {
+                  addToStudioVault(studioShort, studioCategory, productType);
+                  console.log('🎬 Studio saved to vault:', studioShort.slice(0, 50) + '...');
+               }
             }
          }
 
@@ -1939,9 +2124,69 @@ AI PHẢI output định dạng JSON để tối ưu workflow Image-to-Video.`;
                                        </div>
                                     </button>
                                     {studioMode && (
-                                       <p className="mt-1.5 text-[8px] text-indigo-300/60 px-1">
-                                          🎥 Studio backgrounds: Minimalist, Luxury, Nature-lit, Urban chic cho TikTok affiliate
-                                       </p>
+                                       <div className="mt-2 space-y-2 animate-in fade-in slide-in-from-top-2">
+                                          {/* Studio Category Selector */}
+                                          <div className="p-2 bg-indigo-900/10 border border-indigo-500/20 rounded">
+                                             <div className="flex items-center justify-between mb-2">
+                                                <span className="text-[9px] text-indigo-300 font-medium">🎬 Chọn loại Studio</span>
+                                                {studioVault.length > 0 && (
+                                                   <button
+                                                      onClick={clearStudioVault}
+                                                      className="text-[8px] text-red-400 hover:text-red-300 flex items-center gap-1"
+                                                   >
+                                                      <Trash2 className="w-2.5 h-2.5" /> Xóa vault
+                                                   </button>
+                                                )}
+                                             </div>
+                                             <div className="grid grid-cols-2 gap-1">
+                                                {STUDIO_CATEGORIES.map((cat) => (
+                                                   <button
+                                                      key={cat.value}
+                                                      onClick={() => setStudioCategory(cat.value)}
+                                                      className={`py-1 px-2 rounded text-left border transition-all flex items-center gap-1
+                                                         ${studioCategory === cat.value
+                                                            ? 'bg-indigo-500/20 border-indigo-500 text-indigo-200'
+                                                            : 'bg-zinc-900/50 border-zinc-700 text-zinc-400 hover:border-zinc-500'}`}
+                                                   >
+                                                      <span className="text-xs">{cat.emoji}</span>
+                                                      <span className="text-[8px] font-medium truncate">{cat.label.replace(' Studios', '').replace(' Tết & Hội', '')}</span>
+                                                   </button>
+                                                ))}
+                                             </div>
+                                             {/* Selected Category Info */}
+                                             <div className="mt-2 text-[8px] text-indigo-300/70">
+                                                {studioCategory === 'auto' ? (
+                                                   <span>🎲 AI tự chọn từ {STUDIO_CATEGORIES.reduce((acc, c) => acc + (c.studios?.length || 0), 0)} studios</span>
+                                                ) : (
+                                                   <span>
+                                                      {STUDIO_CATEGORIES.find(c => c.value === studioCategory)?.studios?.length || 0} studios -
+                                                      {getRandomStudios(studioCategory, 10).length} khả dụng
+                                                   </span>
+                                                )}
+                                             </div>
+                                          </div>
+                                          {/* Studio Vault History */}
+                                          {studioVault.length > 0 && (
+                                             <div className="p-2 bg-zinc-800/30 border border-zinc-700/30 rounded">
+                                                <div className="flex items-center justify-between mb-1">
+                                                   <span className="text-[8px] text-zinc-400 flex items-center gap-1">
+                                                      <History className="w-2.5 h-2.5" />
+                                                      {studioVault.length} studio đã dùng
+                                                   </span>
+                                                </div>
+                                                <div className="text-[7px] text-zinc-500 space-y-0.5 max-h-16 overflow-y-auto">
+                                                   {studioVault.slice(0, 3).map((item, i) => (
+                                                      <div key={item.id} className="truncate">
+                                                         • {item.studio.split(' | ')[0]}
+                                                      </div>
+                                                   ))}
+                                                   {studioVault.length > 3 && (
+                                                      <div className="text-zinc-600">...và {studioVault.length - 3} khác</div>
+                                                   )}
+                                                </div>
+                                             </div>
+                                          )}
+                                       </div>
                                     )}
 
                                     {/* Aspect Ratio Selector */}
