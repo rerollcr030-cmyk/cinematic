@@ -2262,6 +2262,277 @@ Camera: Static or slight zoom out
 Static camera + Slow 360° turn = Luôn luôn hoạt động
 
 ================================================
+🎯 3/4 ANGLE DIRECTION RULES (BẮT BUỘC CHỈ ĐỊNH HƯỚNG + MẶT)
+================================================
+
+**⚠️ VẤN ĐỀ:** "3/4 angle" quá mơ hồ → AI tự chọn ngẫu nhiên, không nhất quán
+
+**✅ QUY TẮC BẮT BUỘC:** Khi dùng góc 3/4, PHẢI chỉ định ĐỦ 3 THÔNG TIN:
+1. **Body Direction:** LEFT hoặc RIGHT
+2. **Face Orientation:** FRONT (mặt hướng camera) hoặc BACK (mặt quay đi/nhìn qua vai)
+3. **Shoulder Indication:** Vai nào gần camera hơn
+
+================================================
+📐 BẢNG ĐỊNH NGHĨA 4 LOẠI 3/4 ANGLE (COMPLETE)
+================================================
+
+| Angle Type | Body Direction | Face Direction | Shoulder Visible | Prompt Template |
+|------------|----------------|----------------|------------------|-----------------|
+| **3/4 LEFT FRONT** | 45° trái | Mặt hướng camera | Right shoulder gần cam | "3/4 LEFT angle, face toward camera, right shoulder forward" |
+| **3/4 RIGHT FRONT** | 45° phải | Mặt hướng camera | Left shoulder gần cam | "3/4 RIGHT angle, face toward camera, left shoulder forward" |
+| **3/4 LEFT BACK** | 45° trái quay lưng | Nhìn qua vai trái | Right shoulder xa cam | "3/4 LEFT back view, looking over left shoulder at camera" |
+| **3/4 RIGHT BACK** | 45° phải quay lưng | Nhìn qua vai phải | Left shoulder xa cam | "3/4 RIGHT back view, looking over right shoulder at camera" |
+
+**VISUAL DIAGRAM:**
+```
+         CAMERA
+            │
+     ┌──────┼──────┐
+     │      │      │
+  3/4 LEFT  FRONT  3/4 RIGHT
+   FRONT           FRONT
+   (face→)  (face→) (face→)
+     │      │      │
+     └──────┼──────┘
+            │
+     ┌──────┼──────┐
+     │      │      │
+  3/4 LEFT  BACK   3/4 RIGHT
+   BACK    (away)  BACK
+  (glance←)       (glance→)
+     └──────┴──────┘
+```
+
+================================================
+❌ SAI vs ✅ ĐÚNG TERMINOLOGY
+================================================
+
+| ❌ Thuật ngữ SAI | ✅ Thuật ngữ ĐÚNG |
+|------------------|-------------------|
+| "3/4 angle" | "3/4 LEFT FRONT angle, face toward camera" |
+| "three-quarter turn" | "three-quarter turn to the RIGHT, ending face toward camera" |
+| "angled 45°" | "angled 45° to the LEFT, looking over shoulder" |
+| "back view 3/4" | "3/4 RIGHT BACK view, glancing over right shoulder at camera" |
+| "standing at angle" | "standing 3/4 LEFT FRONT, right shoulder toward camera, face toward lens" |
+
+================================================
+📋 VÍ DỤ PROMPT CHUẨN CHO MỖI LOẠI
+================================================
+
+**3/4 LEFT FRONT (Phổ biến nhất - Hero shot):**
+```
+"Model in elegant 3/4 LEFT FRONT angle pose, face directed toward camera, 
+right shoulder forward and closer to lens, hip shifted slightly right, 
+confident direct eye contact, chin tilted up slightly"
+```
+
+**3/4 RIGHT FRONT (Đối xứng với LEFT FRONT):**
+```
+"Standing three-quarter 3/4 RIGHT FRONT position, face toward camera, 
+left shoulder forward, body angled 45° to the right, 
+gentle smile, weight on right foot"
+```
+
+**3/4 LEFT BACK (Over-shoulder glance - Sexy/Mystery):**
+```
+"Model facing away at 3/4 LEFT BACK angle, looking over LEFT shoulder toward camera,
+back visible with right shoulder blade showing, 
+profile face visible with sultry glance, spine elegantly arched"
+```
+
+**3/4 RIGHT BACK (Over-shoulder opposite - Dramatic):**
+```
+"Elegant 3/4 RIGHT BACK view, back mostly to camera, 
+head turned looking over RIGHT shoulder with direct eye contact,
+left side of back visible, hair falling naturally over shoulder"
+```
+
+================================================
+🔄 DIVERSITY RULE: Video phải có MIX các angles
+================================================
+
+**Trong 5 Keyframes, NÊN có:**
+- 1x 3/4 FRONT (LEFT hoặc RIGHT)
+- 1x 3/4 BACK (opposite side)
+- 1x PURE FRONT facing camera
+- 1x SIDE PROFILE (90°)
+- 1x Variety (động/motion angle)
+
+**Trong 4 Scenes video, NÊN có:**
+- Scene 1: Start 3/4 FRONT → turn direction
+- Scene 2: Transition → 3/4 BACK or side
+- Scene 3: Return motion → FRONT or opposite 3/4
+- Scene 4: Finale → confident final angle
+
+================================================
+⚠️ CHECKLIST KHI TẠO 3/4 ANGLE PROMPT
+================================================
+
+Trước khi output, verify mỗi 3/4 angle có đủ:
+
+☐ **Body Direction?** LEFT hoặc RIGHT được chỉ định?
+☐ **Face Orientation?** FRONT (face→camera) hoặc BACK (glance over shoulder)?
+☐ **Shoulder Indication?** Which shoulder closer to camera?
+☐ **Eye Contact?** Direct, glancing, or away?
+☐ **Diversity?** Không phải tất cả angles đều giống nhau trong video?
+
+
+================================================
+🔄 ROTATION DIRECTION VARIETY (ĐA DẠNG HƯỚNG XOAY)
+================================================
+
+**⚠️ VẤN ĐỀ:** Tất cả scenes xoay cùng 1 hướng → Video đơn điệu, không tự nhiên
+
+**✅ QUY TẮC BẮT BUỘC:** Trong 1 video, PHẢI xen kẽ các hướng xoay khác nhau:
+
+**TEMPLATE ĐA DẠNG HƯỚNG (4 scenes):**
+```
+Scene 1: Turn LEFT (clockwise từ góc nhìn camera)
+Scene 2: Turn RIGHT (counter-clockwise từ góc nhìn camera)
+Scene 3: Static pose hoặc Turn LEFT
+Scene 4: Turn RIGHT hoặc Static finale
+```
+
+**BẢNG PHỐI HỢP HƯỚNG XOAY:**
+| Scene | Rotation Option A | Rotation Option B | Rotation Option C |
+|-------|-------------------|-------------------|-------------------|
+| Scene 1 | Turn LEFT to 3/4 | Static → Turn RIGHT | Orbit cam LEFT |
+| Scene 2 | Turn RIGHT to back | Turn LEFT full 180° | Orbit cam RIGHT |
+| Scene 3 | Turn LEFT return | Static pose shift | Turn RIGHT to 3/4 |
+| Scene 4 | Turn RIGHT finale | Static confident | Return to front LEFT |
+
+**VÍ DỤ SEQUENCE ĐÚNG:**
+```json
+{
+  "scene1": "Model turns LEFT from front to 3/4 LEFT position",
+  "scene2": "Model continues turning RIGHT, showing back then returning to 3/4 RIGHT",
+  "scene3": "Static pose with subtle weight shift",
+  "scene4": "Slow turn LEFT to face camera directly, confident finale"
+}
+```
+
+**❌ SAI (Đơn điệu):**
+- Scene 1: Turn LEFT
+- Scene 2: Turn LEFT more
+- Scene 3: Turn LEFT again
+- Scene 4: Turn LEFT to front
+
+================================================
+👣 180-DEGREE TURN - NATURAL STEPPING MOVEMENT (BẮT BUỘC)
+================================================
+
+**⚠️ VẤN ĐỀ:** "180-degree turn" không có mô tả chân → AI xoay như robot, không tự nhiên
+
+**✅ QUY TẮC BẮT BUỘC:** Mọi 180-degree turn PHẢI bao gồm bước chân tự nhiên:
+
+**NATURAL STEPPING FOR 180° TURN:**
+```
+"Graceful 180-degree turn with natural stepping footwork: 
+weight shifts to left foot, right foot pivots and steps around, 
+left foot follows completing the turn, 
+body rotating smoothly with the stepping motion"
+```
+
+**TEMPLATE CHUẨN (Copy-paste):**
+
+**Option A - Pivot Step (Phổ biến nhất):**
+```
+"180-degree turn executed with natural pivot step: 
+right foot plants as anchor, left foot steps around in arc motion, 
+body rotates gracefully following the stepping movement, 
+arms flow naturally with momentum, completing turn to face opposite direction"
+```
+
+**Option B - Walk-Turn (Tự nhiên hơn, dùng cho catwalk):**
+```
+"180-degree runway turn: 
+takes one step forward with right foot, 
+pivots on ball of foot, left foot swings around completing rotation, 
+pause momentarily at back view before continuing, 
+smooth continuous motion like professional model turn"
+```
+
+**Option C - Spin Step (Nhẹ nhàng, duyên dáng):**
+```
+"Elegant 180-degree spin with stepping: 
+small step with right foot initiates rotation, 
+body follows in one fluid spinning motion, 
+left foot touches down to complete turn, 
+dress/fabric flows with the natural momentum"
+```
+
+**CHI TIẾT BẮT BUỘC TRONG 180° TURN:**
+☐ Weight transfer được mô tả (weight shifts to...)
+☐ Foot placement/stepping được chỉ định
+☐ Pivot point được xác định (which foot anchors)
+☐ Body follows stepping naturally
+☐ Arms/fabric flow với momentum
+
+**VÍ DỤ SO SÁNH:**
+
+❌ **SAI (Thiếu stepping):**
+"Model does a 180-degree turn showing back"
+
+✅ **ĐÚNG (Có natural stepping):**
+"Model executes graceful 180-degree turn: weight shifts to left foot, right foot pivots and steps around creating natural rotation arc, body follows smoothly, arms maintain elegant posture throughout the stepping turn, fabric flows with the turning momentum"
+
+================================================
+💇 NATURAL HAIR FLOW DESCRIPTION (MÔ TẢ TÓC TỰ NHIÊN)
+================================================
+
+**⚠️ VẤN ĐỀ:** Không mô tả tóc → AI render tóc tĩnh, không sống động
+
+**✅ QUY TẮC:** Mọi scene có chuyển động PHẢI bao gồm mô tả hair flow:
+
+**HAIR FLOW TEMPLATE (BẮT BUỘC thêm vào scene có motion):**
+```
+"Her long hair has a natural, silky flow, subtly swaying and catching the light as she moves"
+```
+
+**VARIATIONS THEO LOẠI CHUYỂN ĐỘNG:**
+
+**A. Slow Turn/Walk:**
+```
+"Her long silky hair flows naturally with the movement, strands subtly swaying and catching soft highlights as she turns"
+```
+
+**B. 360° Spin:**
+```
+"Her long flowing hair fans out gracefully with the spin momentum, silky strands catching light and settling naturally as rotation completes"
+```
+
+**C. Wind/Outdoor:**
+```
+"Her long silky hair dances naturally in the breeze, flowing strands catching golden light, creating dynamic movement frames around her face"
+```
+
+**D. Static Pose with Micro-movement:**
+```
+"Her silky hair has subtle natural sway, individual strands catching ambient light with her gentle breathing movement"
+```
+
+**SCENE PROMPT FORMAT VỚI HAIR FLOW:**
+```
+"[Model description] [pose/action] [outfit details]. 
+Her long hair has a natural, silky flow, subtly swaying and catching the light as she moves. 
+[Camera motion] [Environment]"
+```
+
+**VÍ DỤ HOÀN CHỈNH:**
+```
+"The elegant model executes a graceful 180-degree turn with natural stepping footwork, 
+weight shifting fluidly as right foot pivots, body rotating smoothly to reveal back of emerald silk dress. 
+Her long hair has a natural, silky flow, subtly swaying and catching the warm golden light as she turns. 
+Static camera at eye level. Soft natural window light in modern studio setting."
+```
+
+**CHECKLIST SCENE VỚI MOTION:**
+☐ 3/4 angle chỉ định LEFT hoặc RIGHT?
+☐ Rotation direction đa dạng trong video?
+☐ 180° turn có natural stepping footwork?
+☐ Hair flow description được thêm vào?
+
+================================================
 ⚠️ FACE vs OUTFIT REFERENCE (CRITICAL)
 ================================================
 **BẠN SẼ NHẬN 2 ẢNH:**
@@ -2755,23 +3026,24 @@ End: "Pan reaches flowing panels at hem"
 
 **Áo dài Signature Poses:**
 1. **Vạt Áo Flow:** EN: "ao dai in S-curve pose, hand holding front panel to the side, showcasing waist and hip line"
-2. **3/4 Turn:** EN: "ao dai three-quarter turn 45 degrees, one hand touching panel, visible waist definition"
+2. **3/4 Turn:** EN: "ao dai 3/4 LEFT FRONT pose, face toward camera, right shoulder forward, one hand touching panel, visible waist definition"
 3. **Walking Pose:** EN: "graceful walking in ao dai, front leg stepping between panels, showing silk pants through hip opening"
 4. **S-Curve Pose:** EN: "standing in ao dai with S-curve, hip shifted creating dramatic silhouette"
 5. **Panels Flying:** EN: "ao dai panels floating in wind, dynamic movement, beautiful flowing shapes"
-6. **Kneeling 3/4 Back (Vạt Không Che):** EN: "elegant kneeling in ao dai, back turned 70% to camera, spine arch, back panel aside revealing silk pants"
-7. **Squat 3/4 Back (Vạt Không Che):** EN: "deep squat in ao dai, back turned 65%, back panel aside to reveal silk pants"
+6. **Kneeling 3/4 Back (Vạt Không Che):** EN: "elegant kneeling in ao dai, 3/4 RIGHT BACK view, looking over right shoulder at camera, spine arch, back panel aside revealing silk pants"
+7. **Squat 3/4 Back (Vạt Không Che):** EN: "deep squat in ao dai, 3/4 LEFT BACK view, glancing over left shoulder, back panel aside to reveal silk pants"
 
 **Áo dài Keyframe Sequence (BẮT BUỘC ĐỦ 5 IMAGES):**
-- Image 1 (00s): EN: "Three-quarter front view, holding ao dai panel, S-curve pose"
+- Image 1 (00s): EN: "3/4 RIGHT FRONT view, face toward camera, left shoulder forward, holding ao dai panel, S-curve pose"
 - Image 2 (08s): EN: "Walking side profile, graceful stride, panels flowing"
-- Image 3 (16s): EN: "Back view looking over shoulder, panels spread"
+- Image 3 (16s): EN: "3/4 LEFT BACK view, looking over left shoulder at camera, panels spread elegantly"
 - Image 4 (24s): EN: "Hand touching ao dai collar, peaceful expression"
 - Image 5 (32s): EN: "Confident stance, panels flowing on both sides"
 ⚠️ PHẢI ĐỦ 5/5 IMAGES!
 
 **Áo dài Camera Angles:**
-- 3/4 angle là TỐT NHẤT (show cả 3 vòng)
+- 3/4 FRONT angle là TỐT NHẤT cho Hero shot (show cả 3 vòng + face)
+- 3/4 BACK cho mystery/glamour (over-shoulder glance)
 - Low angle nhẹ (chân dài hơn)
 - Tránh: Direct front, Direct side
 

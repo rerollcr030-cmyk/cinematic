@@ -3,6 +3,48 @@
 ## Purpose
 When STUDIO_MODE is ON, use professional themed studio backgrounds instead of real-world locations for TikTok affiliate product videos.
 
+## ⚠️ CRITICAL: STUDIO ≠ REAL LOCATION (QUAN TRỌNG NHẤT)
+
+**STUDIO LÀ GÌ?**
+- Một PHÒNG CHỤP ẢNH chuyên nghiệp
+- Có BACKDROP (phông nền như giấy, vải, canvas)
+- Có ĐẠO CỤ (props) đặt trong studio để MÔ PHỎNG theme
+- KHÔNG PHẢI địa điểm thật!
+
+**❌ SAI - Đây là REAL LOCATION (không dùng cho Studio Mode):**
+```
+"Elegant ballroom with crystal chandeliers, marble floors, golden pillars"
+"Royal palace interior with velvet curtains and antique furniture"
+"French château living room with fireplace and oil paintings"
+```
+→ Đây là MÔ TẢ ĐỊA ĐIỂM THẬT, AI sẽ tạo ra bối cảnh siêu thực!
+
+**✅ ĐÚNG - Đây là STUDIO với props mô phỏng:**
+```
+"Professional photography studio. 9ft cream seamless paper backdrop on stand. 
+Props (background only): gilded mirror frame (leaning against wall), crystal vase 
+with white roses, velvet chair edge visible. Softbox at 3200K. Polished parquet 
+studio floor. - STUDIO FIXED"
+```
+→ Đây là PHÒNG CHỤP với đạo cụ tạo không khí sang trọng!
+
+**SỰ KHÁC BIỆT:**
+| Yếu tố | Real Location | Studio |
+|--------|---------------|--------|
+| Background | Thật (tường thật, cửa sổ thật) | BACKDROP (giấy, vải, canvas) |
+| Đồ nội thất | Đầy đủ như phòng thật | CHỈ 1-3 PROPS ở background |
+| Ánh sáng | Tự nhiên từ cửa sổ | THIẾT BỊ STUDIO (softbox, LED) |
+| Sàn nhà | Sàn thật của địa điểm | SÀN STUDIO (gỗ, vinyl, thảm) |
+| Kết quả AI | Bối cảnh siêu thực | Phòng chụp chuyên nghiệp |
+
+**TEMPLATE CHUẨN CHO MỌI STUDIO:**
+```
+"Professional photography studio. [BACKDROP TYPE] backdrop [COLOR/PATTERN]. 
+Props (background only, out of focus): [PROP 1], [PROP 2], [PROP 3 max]. 
+[LIGHTING EQUIPMENT] at [TEMPERATURE]K. [STUDIO FLOOR TYPE]. 
+[Theme aesthetic] professional studio. - STUDIO FIXED"
+```
+
 ## Benefits
 - 0% AI artifact risk (studio background never changes)
 - Professional, consistent, clean look
@@ -10,6 +52,7 @@ When STUDIO_MODE is ON, use professional themed studio backgrounds instead of re
 - Scalable (same setup for multiple products)
 
 ---
+
 
 ## When Studio Mode is Active
 
@@ -116,6 +159,228 @@ This tag indicates controlled studio environment (different from real locations 
 
 Studio = Backdrop + Minimal props, NOT full realistic room
 
+### 6. 🎨 STUDIO COLOR CONTRAST RULE (BẮT BUỘC)
+
+**Studio backdrop PHẢI tương phản với màu sản phẩm để sản phẩm nổi bật!**
+
+**COLOR CONTRAST GUIDE:**
+| Màu sản phẩm | ❌ TRÁNH backdrop | ✅ NÊN chọn backdrop |
+|--------------|-------------------|---------------------|
+| Đỏ / Red | Đỏ, hồng đậm, cam | Xanh lá, trắng, xám nhạt, cream |
+| Xanh dương / Blue | Xanh dương, tím | Cam nhẹ, vàng nhạt, trắng, beige |
+| Xanh lá / Green | Xanh lá, cyan | Hồng nhạt, cream, nâu, trắng |
+| Vàng / Yellow | Vàng, cam | Xám, navy, trắng, lavender |
+| Hồng / Pink | Hồng, đỏ | Xanh mint, trắng, gray, cream |
+| Đen / Black | Đen, xám đậm | Trắng, cream, pastel, gold highlight |
+| Trắng / White | Trắng thuần, ngà | Xám, màu nền có texture, màu nhẹ |
+| Nâu / Brown | Nâu đậm | Cream, trắng, xanh lá nhạt, beige |
+
+**CONTRAST LOGIC FOR AI:**
+```
+IF product_color == backdrop_dominant_color:
+   → REJECT → Choose contrasting studio
+   
+IF product_color is WARM (red, orange, yellow):
+   → Prefer COOL backdrops (blue-gray, sage, mint)
+   
+IF product_color is COOL (blue, green, purple):
+   → Prefer WARM backdrops (cream, beige, ivory, warm gray)
+   
+IF product_color is NEUTRAL (black, white, gray):
+   → Prefer SUBTLE COLOR backdrops (soft pastels, warm neutrals)
+```
+
+**VÍ DỤ:**
+- ❌ SAI: Áo dài ĐỎ + Studio đỏ Tết → Sản phẩm chìm
+- ✅ ĐÚNG: Áo dài ĐỎ + Studio cream/trắng với điểm nhấn mai vàng → Nổi bật
+
+- ❌ SAI: Sườn xám XANH + Studio Đỏ Sang Trọng → Quá clash
+- ✅ ĐÚNG: Sườn xám XANH + Studio cream Thượng Hải → Hài hòa, nổi sản phẩm
+
+---
+
+## 🎯 PROFESSIONAL STUDIO REALISM RULES (BẮT BUỘC)
+
+================================================
+⚠️ STUDIO PHẢI TRÔNG NHƯ STUDIO CHUYÊN NGHIỆP THẬT
+================================================
+
+**VẤN ĐỀ:** AI tạo studio trông ảo, fantasy, không giống studio thật
+**MỤC TIÊU:** Mọi studio output PHẢI nhìn như chụp trong studio photography thật
+
+---
+
+### 🔴 MANDATORY REALISM REQUIREMENTS
+
+**1. REAL PHYSICAL STUDIO STRUCTURE:**
+```
+✅ PHẢI CÓ:
+- "Professional photography studio with physical backdrop stand"
+- "Actual seamless paper backdrop (9ft wide roll)"
+- "Professional studio ambient sound (quiet, controlled)"
+
+❌ KHÔNG ĐƯỢC LỘ TRONG KHUNG HÌNH:
+- Máy ảnh, chân máy
+- Đèn studio, softbox, strobe
+- Reflector, V-flat
+- Backdrop stand, khung phông
+→ Chỉ thấy BACKDROP + PROPS + MODEL
+```
+
+**2. REAL STUDIO BACKDROP TYPES (Chọn 1):**
+| Type | Description | When to Use |
+|------|-------------|-------------|
+| **Seamless Paper** | "9ft seamless paper roll on backdrop stand, [color]" | Most common, clean look |
+| **Muslin Fabric** | "Muslin fabric backdrop with natural wrinkles and texture" | Vintage, textured look |
+| **Vinyl Backdrop** | "Vinyl backdrop with [pattern], smooth no-crease surface" | Pattern backgrounds |
+| **Painted Canvas** | "Hand-painted canvas backdrop with [gradient/texture]" | Artistic, editorial |
+| **Cyclorama** | "Infinity cyclorama wall, white curved floor-to-wall" | High-end product |
+
+**3. LIGHTING DESCRIPTION (Equipment NOT visible):**
+```
+✅ DESCRIBE HIỆU ỨNG ÁNH SÁNG (không thấy thiết bị):
+- "Soft diffused key light from camera-left" (không nói softbox)
+- "Rim light glow from behind" (không nói strip light)
+- "Gentle fill light reducing shadows" (không nói reflector)
+- "Warm [temperature]K studio lighting"
+
+❌ KHÔNG MÔ TẢ THIẾT BỊ LỘ TRONG FRAME:
+- KHÔNG: "softbox visible", "strobe in frame"
+- KHÔNG: "lighting equipment at edge"
+→ Chỉ mô tả HIỆU ỨNG ánh sáng, KHÔNG mô tả thiết bị
+```
+
+**4. REAL STUDIO FLOOR OPTIONS:**
+| Floor Type | Description | Style |
+|------------|-------------|-------|
+| **Studio Concrete** | "Polished concrete studio floor, gray, professional" | Industrial |
+| **White Vinyl** | "White vinyl studio flooring, easy clean, seamless" | Clean product |
+| **Wood Laminate** | "Light wood studio flooring, natural warm" | Cozy, lifestyle |
+| **Paper Sweep** | "Seamless paper sweeps onto floor, no visible seam" | Editorial |
+| **Posing Mat** | "Black rubber posing mat area, practical" | Fashion |
+
+---
+
+### 🚫 FORBIDDEN FANTASY ELEMENTS
+
+**❌ TUYỆT ĐỐI CẤM những từ/hiệu ứng sau:**
+
+| ❌ FORBIDDEN | ✅ THAY BẰNG |
+|--------------|--------------|
+| "Magical glow" | "Softbox diffused light" |
+| "Ethereal atmosphere" | "Clean studio ambient" |
+| "Floating petals in air" | "Scattered petals on floor (pre-placed)" |
+| "Mystical fog" | "Fog machine haze (optional, controlled)" |
+| "Dreamy blur everywhere" | "Shallow depth of field, f/1.8" |
+| "Heavenly light beams" | "Softbox with grid spot pattern" |
+| "Fantasy castle backdrop" | "Painted canvas with architectural pattern" |
+| "Glowing aura around subject" | "Rim light from behind creating edge highlight" |
+| "Stars twinkling" | "Christmas lights bokeh in background (real props)" |
+| "Smoke swirling artistically" | "Fog machine effect behind backdrop" |
+
+**❌ CẤM các từ AI-fantasy:**
+- "magical", "mystical", "ethereal", "enchanted", "fantastical"
+- "glowing", "radiating", "luminous" (unless describing actual light source)
+- "floating" (for objects that can't float)
+- "swirling", "dancing" (for static objects)
+- "otherworldly", "dreamlike", "surreal"
+
+---
+
+### 📷 REAL PHOTOGRAPHY TERMINOLOGY (BẮT BUỘC SỬ DỤNG)
+
+**Mô tả như photographer thực sự:**
+
+**Lighting Setup:**
+```
+✅ "Key light: 48" octabox camera-left at 45°, f/5.6 power"
+✅ "Fill: Silver reflector camera-right, 1-stop below key"
+✅ "Hair light: Strip box behind subject camera-right"
+✅ "Background light: Gel blue, low power for separation"
+```
+
+**Camera & Lens:**
+```
+✅ "Shot at 85mm f/2.0, medium compression"
+✅ "Full-length shot requires wider lens, 35mm"
+✅ "Shallow DOF isolates subject from backdrop"
+```
+
+**Studio Practical Details:**
+```
+✅ "Apple box for height adjustment"
+✅ "C-stand with arm holding reflector"
+✅ "Gaffer tape marks on floor for positioning"
+✅ "Tethered shooting to laptop visible at studio edge"
+```
+
+---
+
+### 🎨 PROFESSIONAL STUDIO AESTHETIC GUIDE
+
+**REALISTIC STUDIO LOOKS:**
+
+**1. HIGH-KEY (Bright, Clean):**
+```
+"White seamless backdrop, lit evenly with two large softboxes.
+Minimal shadows. Clean product photography aesthetic.
+Floor: white vinyl sweep seamless with backdrop."
+```
+
+**2. LOW-KEY (Dramatic, Moody):**
+```
+"Black seamless backdrop absorbing all spill light.
+Single key light creating dramatic shadows.
+Negative fill (black V-flat) deepening contrasts.
+Floor: Black posing mat, matte finish."
+```
+
+**3. LIFESTYLE STUDIO:**
+```
+"Gray muslin backdrop with painted texture.
+Warm tungsten key light mixing with cool fill.
+Props: Real furniture pieces (chair, side table) in background.
+Floor: Warm wood studio flooring, practical."
+```
+
+**4. FASHION EDITORIAL:**
+```
+"Painted canvas backdrop with subtle gradient.
+Beauty dish overhead for catchlights.
+Edge lighting from both sides for definition.
+Floor: Paper sweep matching backdrop color."
+```
+
+---
+
+### ✅ REALISM VERIFICATION CHECKLIST
+
+**Trước khi output studio description, KIỂM TRA:**
+
+☐ **Backdrop type specified?** (seamless paper/muslin/vinyl/canvas/cyclorama)
+☐ **Lighting equipment named?** (softbox/strobe/LED/reflector)
+☐ **Floor type realistic?** (concrete/vinyl/wood/paper sweep)
+☐ **No fantasy words?** (magical, ethereal, glowing, floating)
+☐ **Props are real physical objects?** (pre-placed, not floating)
+☐ **Camera/lens reference realistic?** (focal length, aperture)
+☐ **Overall: Could this exist in real photo studio?** YES required
+
+**Quick Test:** Đọc lại description - nếu nghe như fantasy novel → VIẾT LẠI
+Nếu nghe như photographer mô tả setup → ĐẠT
+
+---
+
+### 📋 TEMPLATE: Professional Studio Prompt
+
+```
+"Professional photography studio. [BACKDROP_TYPE] backdrop in [COLOR/PATTERN], mounted on heavy-duty backdrop stand. [LIGHTING_SETUP] lighting at [TEMPERATURE]K color temperature. [FLOOR_TYPE] studio floor. [PROPS - minimal, 1-3 real items in soft focus background]. Clean controlled studio environment. - STUDIO FIXED"
+```
+
+**Example Output:**
+```
+"Professional photography studio. 9ft white seamless paper backdrop mounted on heavy-duty backdrop stand. 48-inch octabox key light camera-left at 5500K, strip light for rim lighting behind subject. Polished gray concrete studio floor. Small artificial plant on wooden apple box in soft focus background right. Clean controlled studio environment. - STUDIO FIXED"
+```
+
 ---
 
 ## Selection Logic
@@ -145,18 +410,83 @@ Studio = Backdrop + Minimal props, NOT full realistic room
 
 ---
 
-## 103 Studio Options Summary (43 Regular + 60 Tết/Festival)
+## 151 Studio Options Summary (91 Regular + 60 Tết/Festival)
 
-### **Regular Studios (43 total)**
+### **Regular Studios (91 total)**
 
-### Áo Dài (7 styles)
+
+### Áo Dài (11 styles)
 - Traditional Cultural ⭐
 - Modern Fusion
 - Heritage Minimalist
-- Festive Tet
 - Garden Poetry
 - Royal Palace
 - Countryside Charm
+- Biệt Thự Pháp Colonial (French villa)
+- Hành Lang Cung Điện (Palace corridor)
+- Phòng Trà Huế (Huế tea room)
+- Sân Vườn Nhẹ Nhàng (Gentle garden)
+- Studio Trắng Tinh Khôi (Pure white)
+
+### Áo Dài Tết - Mai/Đào (15 styles) 🌸
+**Mai Vàng Theme (5):**
+- Mai Vàng Miền Nam ⭐ (Southern apricot)
+- Mai Vàng Hoàng Cung (Imperial apricot)
+- Mai Vàng Đơn Giản (Minimalist)
+- Mai Vàng Sân Vườn (Garden)
+- Mai Vàng Modern Fusion
+
+**Đào Hồng Theme (5):**
+- Đào Miền Bắc ⭐ (Northern peach)
+- Đào Hồng Thắm (Deep pink)
+- Đào Nhạt Thanh Tao (Soft blush)
+- Đào Sân Thượng (Rooftop)
+- Đào Modern Chic
+
+**Tết Combo Theme (5):**
+- Mai Đào Song Hỷ ⭐ (Double blessing)
+- Tết Truyền Thống Đầy Đủ (Full traditional)
+- Tết Đồng Quê Việt (Rural countryside)
+- Tết Phố Hội Náo Nhiệt (Market street)
+- Tết Sang Trọng VIP (Luxury)
+
+### Váy Cưới / Wedding Dress (10 styles) 👰 NEW
+- Chapel Elegance ⭐ (Church window)
+- Garden Romance (Garden arch, roses)
+- Royal Ballroom (Chandelier, gold)
+- Minimalist Pure White (Cyclorama)
+- Vintage Manor (Victorian vanity)
+- Sunset Terrace (Golden hour terrace)
+- French Château (French window, sage)
+- Dreamy Cloud (Tulle, fairy lights)
+- Rustic Barn (Wooden, countryside)
+- Coastal Breeze (Beach, driftwood)
+
+### Sườn Xám / Cheongsam (10 styles) 🥻 NEW
+- Thượng Hải Cổ Điển ⭐ (1930s Shanghai)
+- Phòng Trà Trung Hoa (Chinese tea room)
+- Modern Oriental (Contemporary East-West)
+- Hoa Mẫu Đơn (Peony elegance)
+- Nhà Cổ Hội An (Hoi An ancient house)
+- Phòng Đọc Sách Á Đông (Asian study)
+- Sân Vườn Trúc (Bamboo garden)
+- Đêm Trăng Rằm (Mid-autumn night)
+- Tiệm Vàng Cổ (Antique gold shop)
+- Studio Đỏ Sang Trọng (Luxury red)
+
+### Evening / Đầm Váy (12 styles) - Phong cách cổ điển sang trọng
+- Phòng Khách Cổ Điển ⭐ (Classic European living room)
+- Salon Pháp Nhẹ Nhàng (Soft French salon)
+- Góc Thư Viện Sang Trọng (Luxury library corner)
+- Phòng Tiếp Khách Châu Âu (European drawing room)
+- Không Gian Minimalist Thanh Lịch (Elegant minimalist)
+- Góc Phòng Ngủ Cổ Điển (Classic bedroom corner)
+- Phòng Ăn Hoàng Gia (Royal dining room)
+- Lâu Đài Cổ Tích (Fairy tale castle)
+- Penthouse Đêm (Penthouse night)
+- Sảnh Khách Sạn 5 Sao (5-star hotel lobby)
+- Phòng Nhạc Cổ Điển (Classical music room)
+- Ban Công Đêm Hè (Summer balcony night)
 
 ### Professional (7 styles)
 - Corporate Minimal ⭐
@@ -176,13 +506,6 @@ Studio = Backdrop + Minimal props, NOT full realistic room
 - Coastal Beach
 - Coffee Shop
 
-### Evening (6 styles)
-- Glamorous Bokeh ⭐
-- Art Deco Glam
-- Modern Elegance
-- Red Carpet
-- Garden Party
-- Ballroom Classic
 
 ### Sportswear (6 styles)
 - Clean Active ⭐

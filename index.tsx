@@ -99,6 +99,9 @@ const App = () => {
    const [productHighlights, setProductHighlights] = useState<string>('');
    const [availableSizes, setAvailableSizes] = useState<string>('S-XXL');
 
+   // Product Color for Studio Color Contrast validation
+   const [productColor, setProductColor] = useState<string>('');
+
    // Additional Description - User custom notes
    const [additionalDescription, setAdditionalDescription] = useState<string>('');
 
@@ -322,8 +325,8 @@ const App = () => {
       return studioVault.map(item => item.studio);
    };
 
-   // Get random studios from category (excluding used ones)
-   const getRandomStudios = (category: string, count: number = 5) => {
+   // Get random studios from category (excluding used ones and filtering by color contrast)
+   const getRandomStudios = (category: string, count: number = 5, productColorInput?: string) => {
       const usedStudios = getStudioBlocklist();
 
       if (category === 'auto') {
@@ -336,13 +339,18 @@ const App = () => {
          });
 
          // Filter used studios
-         const available = allStudios.filter(studio => {
+         let available = allStudios.filter(studio => {
             const studioShort = studio.split(' | ')[0].toLowerCase();
             return !usedStudios.some(used =>
                used.toLowerCase().includes(studioShort) ||
                studioShort.includes(used.toLowerCase().slice(0, 30))
             );
          });
+
+         // Apply color contrast filter if product color is provided
+         if (productColorInput) {
+            available = filterStudiosByColorContrast(available, productColorInput);
+         }
 
          // Fisher-Yates shuffle
          const shuffled = [...available];
@@ -357,13 +365,18 @@ const App = () => {
       const categoryData = STUDIO_CATEGORIES.find(c => c.value === category);
       if (!categoryData || !categoryData.studios) return [];
 
-      const available = categoryData.studios.filter(studio => {
+      let available = categoryData.studios.filter(studio => {
          const studioShort = studio.split(' | ')[0].toLowerCase();
          return !usedStudios.some(used =>
             used.toLowerCase().includes(studioShort) ||
             studioShort.includes(used.toLowerCase().slice(0, 30))
          );
       });
+
+      // Apply color contrast filter if product color is provided
+      if (productColorInput) {
+         available = filterStudiosByColorContrast(available, productColorInput);
+      }
 
       // Fisher-Yates shuffle
       const shuffled = [...available];
@@ -381,6 +394,87 @@ const App = () => {
          localStorage.removeItem('studio_vault');
       }
    };
+
+   // ================================================
+   // 🎨 STUDIO COLOR CONTRAST VALIDATION
+   // ================================================
+   const WARM_COLORS = ['red', 'đỏ', 'pink', 'hồng', 'orange', 'cam', 'yellow', 'vàng', 'coral', 'rose', 'gold', 'burgundy', 'magenta', 'salmon', 'peach'];
+   const COOL_COLORS = ['blue', 'xanh dương', 'green', 'xanh lá', 'purple', 'tím', 'teal', 'navy', 'sage', 'mint', 'lavender', 'cyan', 'turquoise', 'emerald', 'olive'];
+   const NEUTRAL_COLORS = ['black', 'đen', 'white', 'trắng', 'gray', 'xám', 'cream', 'beige', 'ivory', 'brown', 'nâu', 'taupe', 'charcoal'];
+
+   // Filter studios by color contrast with product
+   const filterStudiosByColorContrast = (studios: string[], productColor: string): string[] => {
+      if (!productColor || productColor === 'auto') return studios;
+
+      const colorLower = productColor.toLowerCase();
+      const isProductWarm = WARM_COLORS.some(c => colorLower.includes(c));
+      const isProductCool = COOL_COLORS.some(c => colorLower.includes(c));
+      const isProductBlack = colorLower.includes('black') || colorLower.includes('đen');
+      const isProductWhite = colorLower.includes('white') || colorLower.includes('trắng');
+
+      return studios.filter(studio => {
+         const studioLower = studio.toLowerCase();
+
+         // If product is WARM, reject studios with dominant WARM backdrop
+         if (isProductWarm) {
+            const hasWarmBackdrop = WARM_COLORS.some(c =>
+               studioLower.includes(`backdrop ${c}`) ||
+               studioLower.includes(`${c} backdrop`) ||
+               studioLower.includes(`${c} gradient`) ||
+               studioLower.includes(`deep ${c}`) ||
+               (studioLower.includes(c) && studioLower.indexOf(c) < 50) // Color in studio name
+            );
+            if (hasWarmBackdrop) return false;
+         }
+
+         // If product is COOL, reject studios with dominant COOL backdrop
+         if (isProductCool) {
+            const hasCoolBackdrop = COOL_COLORS.some(c =>
+               studioLower.includes(`backdrop ${c}`) ||
+               studioLower.includes(`${c} backdrop`) ||
+               studioLower.includes(`${c} gradient`) ||
+               studioLower.includes(`deep ${c}`)
+            );
+            if (hasCoolBackdrop) return false;
+         }
+
+         // If product is BLACK, reject dark backdrops
+         if (isProductBlack) {
+            if (studioLower.includes('charcoal') || studioLower.includes('dark') || studioLower.includes('black backdrop')) {
+               return false;
+            }
+         }
+
+         // If product is WHITE, reject pure white backdrops
+         if (isProductWhite) {
+            if (studioLower.includes('pure white') || studioLower.includes('white infinity') || studioLower.includes('white cyclorama')) {
+               return false;
+            }
+         }
+
+         return true;
+      });
+   };
+
+   // Color contrast rules for AI prompt injection
+   const COLOR_CONTRAST_STUDIO_RULES = `
+🎨 STUDIO COLOR CONTRAST RULE (BẮT BUỘC):
+Khi chọn studio, PHẢI đảm bảo màu backdrop TƯƠNG PHẢN với màu sản phẩm:
+
+| Màu sản phẩm | ✅ Chọn backdrop | ❌ Tránh backdrop |
+|--------------|------------------|-------------------|
+| Đỏ/Hồng/Cam | Cream, trắng, xám, xanh lá nhạt | Đỏ, hồng, cam |
+| Xanh dương/Tím | Cream, beige, vàng nhạt | Xanh, navy, tím |
+| Vàng/Gold | Xám, navy, lavender | Vàng, gold, cam |
+| Đen | Trắng, cream, pastel | Đen, xám đậm |
+| Trắng | Xám, màu có texture | Trắng thuần |
+
+LOGIC: 
+- Sản phẩm WARM → Backdrop COOL hoặc NEUTRAL
+- Sản phẩm COOL → Backdrop WARM hoặc NEUTRAL  
+- Sản phẩm NEUTRAL → Backdrop có màu/texture nhẹ
+`;
+
 
    // Add new location to vault
    const addToLocationVault = (location: string, region: string, productType?: string) => {
@@ -1144,16 +1238,35 @@ Các kiểu combo phổ biến:
             : '';
 
          // Studio Mode flag - Professional themed backgrounds with random studio suggestions
-         const studioSuggestions = studioMode ? getRandomStudios(studioCategory, 5) : [];
+         // 🎨 COLOR CONTRAST: Pass productColor to filter out studios with same color as product
+         const studioSuggestions = studioMode ? getRandomStudios(studioCategory, 5, productColor || undefined) : [];
          const studioModeText = studioMode
             ? `\n\n🎬 STUDIO_MODE: ON (Category: ${studioCategory === 'auto' ? 'AI Auto' : STUDIO_CATEGORIES.find(c => c.value === studioCategory)?.label || studioCategory})
 Use professional themed studio backgrounds instead of real-world locations.
 
-📐 SELECTION LOGIC:
-1. Analyze outfit/product from reference image
-2. Match to category: aodai, professional, casual, evening, sportswear, sleepwear, accessories
-3. ${studioSuggestions.length > 0 ? 'SELECT FROM SUGGESTED STUDIOS BELOW' : 'Select appropriate studio from database'}
-4. Build environment using studio specs
+⚠️ CRITICAL: STUDIO ≠ REAL LOCATION (QUAN TRỌNG NHẤT)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STUDIO = Phòng chụp ảnh + BACKDROP (phông nền) + PROPS (đạo cụ mô phỏng)
+KHÔNG PHẢI = Địa điểm thật, căn phòng thật, bối cảnh siêu thực
+
+❌ TUYỆT ĐỐI KHÔNG TẠO RA (Real Location Terms):
+- "Actual ballroom/château/palace interior"
+- "Real marble floors with golden pillars"
+- "Living room with real fireplace and windows"
+- "Actual hotel lobby/restaurant interior"
+→ Đây là BỐI CẢNH SIÊU THỰC của địa điểm thật!
+
+✅ PHẢI TẠO RA (Studio Terms):
+- "Professional photography studio with [BACKDROP TYPE] backdrop"
+- "Props in background (out of focus): [1-3 items to evoke theme]"
+- "[Warm/Cool] diffused lighting at [temperature]K"
+- "[Studio floor type]. - STUDIO FIXED"
+
+📐 TEMPLATE CHUẨN:
+"Professional photography studio. [9ft seamless/muslin/canvas] backdrop [color]. 
+Props (background only): [chair edge], [vase with flowers], [frame]. 
+Warm diffused [3000-5000]K studio lighting. [Wood/vinyl/carpet] studio floor. 
+[Theme] aesthetic professional studio. - STUDIO FIXED"
 
 🎯 SUGGESTED STUDIOS (RANDOM - TRÁNH TRÙNG LẶP):
 ${studioSuggestions.length > 0
@@ -1163,12 +1276,19 @@ ${studioSuggestions.length > 0
 ⚠️ CRITICAL RULES:
 - PHẢI CHỌN 1 STUDIO từ danh sách trên (hoặc từ database nếu hết)
 - Props MUST be minimal (1-3 max) and in BACKGROUND (out of focus)
-- Lighting is SIMULATED (say "golden hour simulation" not "golden hour")
+- LIGHTING: Describe EFFECT only (warm glow, diffused light) - NOT equipment
 - End with "- STUDIO FIXED" tag
-- NO realistic room names (living room/bedroom) - use "studio with [aesthetic]"
+- NO realistic room/location descriptions
 - Same studio throughout all keyframes (no changes)
 
-📚 REFERENCE: See studio_mode_guide.txt for complete 103-studio database.`
+📷 EQUIPMENT MUST BE INVISIBLE:
+- ❌ KHÔNG để lộ: camera, tripod, đèn studio, softbox, strobe, reflector
+- ❌ KHÔNG mô tả: "softbox visible", "lighting equipment at edge"
+- ✅ CHỈ thấy: BACKDROP + PROPS + MODEL
+
+${COLOR_CONTRAST_STUDIO_RULES}
+
+📚 REFERENCE: See studio_mode_guide.txt for complete 151-studio database.`
             : '';
 
          // Aspect Ratio flag
@@ -2186,6 +2306,22 @@ AI PHẢI output định dạng JSON để tối ưu workflow Image-to-Video.`;
                                                 </div>
                                              </div>
                                           )}
+                                          {/* 🎨 Product Color for Color Contrast */}
+                                          <div className="p-2 bg-gradient-to-r from-pink-900/10 to-orange-900/10 border border-pink-500/20 rounded">
+                                             <div className="flex items-center gap-2 mb-1.5">
+                                                <span className="text-[9px] text-pink-300 font-medium">🎨 Màu sản phẩm (Studio Contrast)</span>
+                                             </div>
+                                             <input
+                                                type="text"
+                                                value={productColor}
+                                                onChange={(e) => setProductColor(e.target.value)}
+                                                placeholder="VD: đỏ, xanh navy, vàng gold..."
+                                                className="w-full px-2 py-1.5 bg-zinc-900/50 border border-zinc-700 rounded text-[9px] text-white placeholder:text-zinc-600 focus:border-pink-500/50 focus:outline-none"
+                                             />
+                                             <p className="mt-1 text-[7px] text-pink-300/50">
+                                                Nhập màu để lọc studio tương phản (để trống = AI tự detect)
+                                             </p>
+                                          </div>
                                        </div>
                                     )}
 
