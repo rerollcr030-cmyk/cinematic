@@ -8,154 +8,101 @@ This enables the Image-to-Video workflow:
 1. Nano Banana Pro creates perfect keyframe images
 2. Veo 3.1 animates between keyframes
 
-**JSON STRUCTURE:**
+**JSON STRUCTURE (SIMPLIFIED for Nano Banana Pro + Veo 3.1):**
 \`\`\`json
 {
   "masterPrompt": {
     "facePreservation": "Faithful character likeness preserving key facial characteristics from reference image: face shape, eye features, nose structure, lip contour, and skin tone with high fidelity",
-    "subject": "[Age, ethnicity, body type description using visual vocabulary]",
-    "outfit": "[Complete outfit with FABRIC MATERIALS - silk satin, rough denim, etc.]",
-    "environment": "[REAL location - must be on Google Maps]",
-    "lighting": "[Cinematic/Golden hour/Rembrandt/Volumetric fog]",
-    "camera": "[Shot type + lens - medium shot, 85mm f/1.4, shallow DoF]",
-    "style": "Photorealistic fashion photography, shot on location, authentic environment",
-    "trendingContext": "[Optional: #OldMoneyAesthetic, #CleanGirl, #BalletCore, etc.]",
-    "environmentBase": "SINGLE environment description used for ALL keyframes and scenes - MUST be identical"
+    "subject": "[Age, ethnicity, body type]",
+    "outfit": "[Complete outfit with FABRIC MATERIALS]",
+    "environment": "[REAL location]",
+    "lighting": "[Lighting style]",
+    "camera": "[Shot type + lens]",
+    "style": "Photorealistic fashion photography"
   },
-  "referenceAngles": [
-    {
-      "id": "REF-A-FRONT",
-      "timestamp": "base",
-      "angle": "front-full-view",
-      "purpose": "Front reference for Veo 3.1 to see exact front design",
-      "prompt": "Model facing camera directly, standing naturally with arms relaxed at sides, showing [OUTFIT] front view clearly: [SPECIFIC NECKLINE DETAIL - e.g., V-neck depth to collarbone], [BODICE DESIGN - fitted/loose/structured with seam details], [WAIST DETAIL - belt/elastic/fitted], [HEM LENGTH - midi at knee/maxi at ankle], [COLOR - specific shade], full body visible head to toe, same environment and lighting as master prompt",
-      "keyDetails": {
-        "view": "Full frontal",
-        "showsNeckline": true,
-        "showsFrontBodice": true,
-        "showsHem": true,
-        "showsColor": true,
-        "visibleDetails": ["neckline depth", "front closure", "bodice seams", "hem finish", "exact color"]
-      }
-    },
-    {
-      "id": "REF-B-BACK",
-      "timestamp": "base",
-      "angle": "back-full-view",
-      "purpose": "Back reference so Veo 3.1 SEES exact back design (prevents detail loss)",
-      "prompt": "Model with back to camera 180° turn from front view, same standing pose with arms relaxed, showing [OUTFIT] back view clearly: [BACK DESIGN DETAIL - open back scooped to shoulder blades / zippered / lace panel / covered], [BACK CLOSURE TYPE - zipper center back / buttons / ties / hook-and-eye], [BACK NECKLINE - high/low/scooped depth], [BACK FABRIC BEHAVIOR - how fabric drapes from shoulders], [STRAP/SLEEVE BACK VIEW if applicable], full body back view head to heels, same environment",
-      "keyDetails": {
-        "view": "Full back 180°",
-        "showsBackDesign": true,
-        "showsBackClosure": true,
-        "showsBackNeckline": true,
-        "showsBackDrape": true,
-        "visibleDetails": ["back opening depth", "closure type and position", "strap configuration", "back fabric drape", "back hem"]
-      }
-    },
-    {
-      "id": "REF-C-SIDE",
-      "timestamp": "base",
-      "angle": "side-profile-90deg",
-      "purpose": "Silhouette reference to preserve overall shape and drape",
-      "prompt": "Model in perfect 90° side profile (perpendicular to camera), standing naturally, showing [OUTFIT] silhouette clearly: [SILHOUETTE SHAPE - A-line/bodycon/fit-and-flare/straight], [FABRIC DRAPE from shoulder to hem - flowing/structured/fitted], [SIDE SEAM DETAIL visible], [LENGTH from shoulder to hem clear - measures from shoulder point to hem], [BUST/WAIST/HIP CURVE visible in profile if applicable], same environment and lighting",
-      "keyDetails": {
-        "view": "90° side profile",
-        "showsSilhouette": true,
-        "showsLength": true,
-        "showsDrape": true,
-        "showsSideSeam": true,
-        "visibleDetails": ["overall silhouette shape", "fabric drape behavior", "exact length measurement", "body curve", "side construction"]
-      }
-    },
-    {
-      "id": "REF-D-DETAIL",
-      "timestamp": "base",
-      "angle": "close-up-detail",
-      "purpose": "Texture/pattern reference for zoom-in moments and detail preservation",
-      "prompt": "Close-up detail shot of [KEY PRODUCT FEATURE - select most important: fabric texture / lace panel / embroidery / pattern print / hardware / embellishment], showing: [FABRIC TEXTURE - silk sheen/cotton matte/lace openwork/denim weave], [PATTERN DETAIL - floral print scale/geometric pattern/solid color accuracy], [COLOR ACCURACY in detail], [EMBELLISHMENT close-up if applicable - sequin size/beading pattern/embroidery stitching], shallow depth of field with detail in focus",
-      "keyDetails": {
-        "view": "Extreme close-up",
-        "showsTexture": true,
-        "showsPattern": true,
-        "showsEmbellishments": true,
-        "showsColorAccuracy": true,
-        "visibleDetails": ["fabric texture and sheen", "pattern/print detail", "embellishment close-up", "color accuracy", "material quality"]
-      }
-    }
-  ],
-  "keyframes": [
+  "images": [
     {
       "id": 1,
       "timestamp": "00s",
-      "subject": "The elegant model with exact facial features preserved from reference",
-      "action": "[STATIC pose - elegant, graceful positioning]",
-      "environment": "[Location details]",
-      "lighting": "[Specific lighting]",
-      "camera": "[Angle + framing]",
-      "style": "Photorealistic, natural imperfections"
+      "prompt": "[SINGLE COMBINED PROMPT - Subject in outfit, pose, environment, lighting, camera angle - all in one sentence for Nano Banana Pro]"
+    },
+    {
+      "id": 2,
+      "timestamp": "08s",
+      "prompt": "[Full image prompt...]"
     }
   ],
   "scenes": [
     {
       "id": 1,
       "timeRange": "00s-08s",
-      "shotType": "[Tracking shot / Static / Drone / FPV]",
-      "viralHooks": {
-        "hookType": "[hidden-subject-reveal / bold-controversy / pov-mirror-perspective / transformation-before]",
-        "hookTiming": "0-3s",
-        "visualCue": "[Back to camera / Mirror POV / Extreme close-up / etc.]",
-        "textOverlay": "[WAIT FOR IT 👀 / POV: / Ai bảo...]",
-        "payoffMoment": "[5-8s reveal on beat drop]"
-      },
-      "emotionalArc": {
-        "emotion": "[curiosity / delight / confidence / connection]",
-        "expression": "[Specific facial expression and body language]",
-        "energyLevel": "[low-building / medium-rising / high-sustained / medium-warm]"
-      },
-      "subjectMotion": "[5-8 second smooth continuous action - graceful movements, flowing transitions]",
-      "cameraMotion": "[Pan left/right, Tilt up/down, Zoom in/out, Tracking, Orbit - smooth and steady]",
-      "atmosphere": "[Mood + ambient motion - wind, leaves, water ripples]",
-      "startPose": "[Matches keyframe 1]",
-      "endPose": "[Matches keyframe 2]",
-      "beatMarkers": ["00.5s", "01.5s", "02.5s", "03.5s", "04.5s", "05.5s", "06.5s", "07.5s"],
-      "beatActions": ["gentle-accent", "micro-motion", "gentle-accent", "micro-motion", "gentle-accent", "soft-pause", "flow", "settle"]
+      "prompt": "[COMBINED SCENE PROMPT - Subject motion + camera motion + atmosphere in one description]",
+      "startPose": "[Pose at scene start]",
+      "endPose": "[Pose at scene end - MUST match next scene startPose]"
     }
   ],
-  "beatSync": {
-    "bpm": 100,
-    "beatPattern": "smooth-flow-pattern",
-    "musicMood": "cinematic-elegant-flow",
-    "keyBeats": [
-      {"timestamp": "00.0s", "action": "reveal-start", "intensity": "soft"},
-      {"timestamp": "04.0s", "action": "build-accent", "intensity": "soft"},
-      {"timestamp": "08.0s", "action": "smooth-transition", "intensity": "medium"},
-      {"timestamp": "12.0s", "action": "gentle-accent", "intensity": "medium"},
-      {"timestamp": "16.0s", "action": "flow-continue", "intensity": "medium"},
-      {"timestamp": "20.0s", "action": "graceful-shift", "intensity": "soft"},
-      {"timestamp": "24.0s", "action": "elegant-highlight", "intensity": "medium"},
-      {"timestamp": "31.5s", "action": "final-pose-settle", "intensity": "soft"}
-    ],
-    "transitionStyle": "smooth-continuous-flow",
-    "accentTimestamps": ["08.0s", "16.0s", "24.0s"]
-  },
-  "emotionalJourney": {
-    "scene1Emotion": "curiosity",
-    "scene2Emotion": "delight",
-    "scene3Emotion": "confidence",
-    "scene4Emotion": "connection",
-    "overallMood": "aspirational-yet-relatable",
-    "payoffMoments": ["8s - reveal delight", "16s - confidence peak", "28s - warm invitation"]
-  },
   "metadata": {
-    "location": "[Specific Google Maps location]",
+    "location": "[Specific location]",
     "duration": "[16/24/32s]",
     "aspectRatio": "9:16",
-    "style": "[Cinematic/Editorial/Lookbook]",
-    "musicVibe": "[Emotion/tempo]",
-    "trendingHashtags": "[Trending hashtags if applicable - e.g., #OldMoneyAesthetic, #CleanGirl]",
-    "viralPotential": "[assessment of viral elements - hooks, emotional arc, trending context]"
+    "style": "[Cinematic/Editorial/Lookbook]"
   }
+}
+\`\`\`
+
+**⚡ SIMPLIFIED FORMAT RULES:**
+1. **images[].prompt** = Single combined prompt (không tách thành nhiều fields)
+2. **scenes[].prompt** = Motion + camera + atmosphere gộp chung
+3. **Loại bỏ:** referenceAngles, beatSync, emotionalJourney, viralHooks (không cần cho image/video generation)
+4. **Giữ lại:** startPose/endPose (CRITICAL cho Veo 3.1 continuity)
+
+**📝 PROMPT LENGTH GUIDE:**
+- masterPrompt: 50-100 words
+- images[].prompt: 30-60 words mỗi image
+- scenes[].prompt: 40-80 words mỗi scene
+
+---
+
+**⚠️ LEGACY FORMAT (Full version - dùng khi cần chi tiết marketing):**
+\`\`\`json
+{
+  "masterPrompt": {
+    "facePreservation": "...",
+    "subject": "...",
+    "outfit": "...",
+    "environment": "...",
+    "lighting": "...",
+    "camera": "...",
+    "style": "...",
+    "trendingContext": "[OPTIONAL: #OldMoneyAesthetic, etc.]"
+  },
+  "keyframes": [
+    {
+      "id": 1,
+      "timestamp": "00s",
+      "subject": "...",
+      "action": "...",
+      "environment": "...",
+      "lighting": "...",
+      "camera": "...",
+      "style": "..."
+    }
+  ],
+  "scenes": [
+    {
+      "id": 1,
+      "timeRange": "00s-08s",
+      "shotType": "...",
+      "subjectMotion": "...",
+      "cameraMotion": "...",
+      "atmosphere": "...",
+      "startPose": "...",
+      "endPose": "..."
+    }
+  ],
+  "beatSync": { "OPTIONAL": "Chỉ cần khi sync với nhạc cụ thể" },
+  "emotionalJourney": { "OPTIONAL": "Chỉ cần cho marketing/viral content" },
+  "metadata": { "..." }
 }
 ```
 
@@ -328,15 +275,17 @@ This enables the Image-to-Video workflow:
 
 ---
 
-🎬 **SCENE STRUCTURE REQUIREMENTS:**
+🎬 **SCENE STRUCTURE (SIMPLIFIED):**
 
-**Every scene MUST have these fields:**
+**Every scene needs only these fields:**
 
 ```json
 {
-  "subjectMotion": "Standing in place, feet planted. [action]. Model occupies 90% frame height.",
-  "cameraMotion": "Static/Zoom in/Pan slightly - specify exactly",
-  "environment": "[Location] - FIXED throughout entire video"
+  "id": 1,
+  "timeRange": "00s-08s",
+  "prompt": "[Subject motion + camera motion + atmosphere - ALL IN ONE]",
+  "startPose": "[Pose at scene start]",
+  "endPose": "[Pose at scene end - MUST match next scene startPose]"
 }
 ```
 
@@ -344,18 +293,18 @@ This enables the Image-to-Video workflow:
 ```json
 {
   "id": 1,
-  "timestamp": "00s",
-  "subjectMotion": "Standing directly facing camera, feet shoulder-width apart planted firmly. Both hands on hips, confident posture. No stepping. Model occupies 90% frame height.",
-  "cameraMotion": "Fixed tripod position, eye-level static shot.",
-  "environment": "Modern apartment living room with white walls - FIXED"
+  "timeRange": "00s-08s",
+  "prompt": "Model standing facing camera, feet planted, slow 180° turn over 6 seconds showing front then back of silk dress, ambient golden hour light, gentle breeze moving fabric",
+  "startPose": "Standing facing camera, hands on hips",
+  "endPose": "Standing with back to camera, arms relaxed"
 }
 ```
 
-**❌ BAD Example (will cause artifacts):**
+**❌ BAD Example:**
 ```json
 {
-  "action": "Model walks toward camera confidently"
-   ↑ BANNED: "walks toward" will cause teleporting/background change
+  "prompt": "Model walks toward camera"
+   ↑ BANNED: "walks" causes AI artifacts
 }
 ```
 
@@ -425,19 +374,15 @@ Scene 1: ??? (No action described!)
 | Arms down | Arms up | "Raises both arms slowly overhead" |
 | Front view | Side view | "Gentle 90° turn to show side profile" |
 
-### **Scene Motion Template:**
+### **Scene Prompt Template (SIMPLIFIED):**
 
 ```
-"subjectMotion": "
-  STARTS: [Initial pose from keyframe N]
-  TRANSITION: [Describe the movement/action over X seconds]
-  ENDS: [Final pose matching keyframe N+1]
-"
+"prompt": "[Subject] [action/motion over X seconds] [camera motion] [atmosphere/lighting]"
 ```
 
 **Example:**
 ```
-"subjectMotion": "Starts standing facing camera, feet planted shoulder-width. Over 5 seconds, performs slow 180° turn in place (feet do not move) to show back view, fabric flowing naturally. Ends facing completely away from camera, back design fully visible."
+"prompt": "Model starts facing camera, slow 180° turn over 6 seconds to show back view, fabric flowing naturally, camera follows with gentle orbit, golden hour ambient light"
 ```
 
 ### **Validation:**
@@ -484,8 +429,98 @@ Each video showcases ONE thing clearly:
 ---
 
 ================================================
+🔄 CAMERA ANGLE CONTINUITY (180° TURN PREVENTION)
+================================================
+
+⚠️ CRITICAL: VEO 3.1 CHỈ CÓ DỮ LIỆU HÌNH ẢNH TỪ KEYFRAME IMAGES!
+
+Khi tạo video Scene từ Keyframe 1 → Keyframe 2:
+- Veo 3.1 THẤY: Keyframe 1 image + Keyframe 2 image
+- Veo 3.1 KHÔNG THẤY: Các góc camera GIỮA 2 keyframes
+- Nếu Scene yêu cầu xoay 180° → Veo sẽ "hallucinate" (tự tưởng tượng) phần không có data
+
+---
+
+### ⚠️ 90° MAX ROTATION RULE
+
+**Góc quay tối đa giữa 2 keyframes liên tiếp là 90°**
+
+| Keyframe 1 | Scene Motion | Keyframe 2 | OK? |
+|------------|--------------|------------|-----|
+| Front | "gentle 45° turn right" | 3/4 Front | ✅ |
+| Side-Left | "shift to front view" | Front | ✅ 90° okay |
+| 3/4 Front | "subtle angle shift" | Front | ✅ Small angle |
+| Front | "stays facing camera" | Front | ✅ No rotation |
+| Front | "180° turn to show back" | Back | ❌ 180° = data loss |
+| Side-Left | "camera orbits to opposite side" | Side-Right | ❌ 180° |
+
+---
+
+### ❌ BANNED CAMERA PATTERNS (HIGH RISK)
+
+1. **180° Orbit**: Camera đi ngược nửa vòng quanh model
+2. **Full 360° Spin**: Model xoay tròn hoàn toàn trong 1 scene
+3. **Behind Reveal**: Bất cứ motion nào expose back khi chỉ có front keyframe
+4. **Side-to-Side Orbit**: Camera bay từ side-left → side-right
+
+---
+
+### ✅ SAFE CAMERA PATTERNS
+
+1. **Push-in/Pull-out**: Zoom không đổi góc
+2. **Pan ≤45°**: Xoay nhẹ trong khoảng safe
+3. **Tilt up/down**: Không thay đổi view angle của product
+4. **Subtle orbit ≤30°**: Chuyển động orbit rất nhẹ
+5. **Tracking shot**: Follow subject, giữ nguyên góc nhìn
+
+---
+
+### 🎯 PRODUCT VISIBILITY RULE
+
+**"If you can't see it in the keyframe, don't show it in the scene"**
+
+Mỗi scene PHẢI kiểm tra:
+- [ ] Keyframe 1 thấy được phần nào của sản phẩm?
+- [ ] Keyframe 2 thấy được phần nào của sản phẩm?
+- [ ] Scene motion có yêu cầu thấy phần KHÔNG có trong cả 2 keyframes?
+  → Nếu có: ⚠️ WARNING - Cân nhắc lại motion
+
+**EXAMPLE - Correct Application:**
+
+❌ BAD:
+```json
+{
+  "images": [
+    {"id": 1, "prompt": "Model facing camera, front of dress visible"},
+    {"id": 2, "prompt": "Model back to camera, back of dress visible"}
+  ],
+  "scenes": [
+    {"id": 1, "prompt": "Model does 180° turn showing back design..."}
+  ]
+}
+```
+→ Problem: Scene 1 yêu cầu 180° turn, nhưng back design chỉ có trong KF2, không có transition data
+
+✅ GOOD:
+```json
+{
+  "images": [
+    {"id": 1, "prompt": "Model facing camera, front of dress visible"},
+    {"id": 2, "prompt": "Model at 3/4 angle, showing side of dress"}
+  ],
+  "scenes": [
+    {"id": 1, "prompt": "Model turns 45° to show side view..."}
+  ]
+}
+```
+→ Safe: Chỉ 45° turn, có overlap giữa front và side view
+
+---
+
+================================================
 🔥 VIRAL HOOKS FOR CINEMATIC MODE (AFFILIATE FOCUS)
 ================================================
+
 
 **🎯 CRITICAL FOR AFFILIATE MARKETING:**
 If generating content for TikTok/Reels affiliate marketing, you MUST optimize for algorithm signals even in cinematic mode.
@@ -958,6 +993,306 @@ Retention
 🟢 P2: Perfect cinematography, advanced techniques
 
 ================================================
+🔥 VIRAL HOOKS 2026 EXPANSION (18 NEW FORMATS)
+================================================
+
+**Last Updated: January 2026**
+
+These hooks are optimized for TikTok 2026 algorithm and trending aesthetics.
+Choose ONE hook per video, integrate into Scene 1 (0-8s).
+
+---
+
+### 🎣 CATEGORY A: CURIOSITY BUILDERS (High Retention)
+
+**A1. "Wait What?" Double Take (70% completion)**
+```json
+"viralHooks": {
+  "hookType": "wait-what-double-take",
+  "hookTiming": "0-2s shock element",
+  "visualCue": "Unexpected styling combo - áo dài + sneakers, blazer + shorts, lace + leather",
+  "textOverlay": "Wait... that works? 🤔",
+  "payoffMoment": "3-5s proves it looks amazing",
+  "emotionalTrigger": "confusion-to-admiration"
+}
+```
+**When to use:** Breaking styling rules, unexpected combos
+**Target:** Fashion-forward audience, 20-35F
+
+**A2. "Guess The Price" Shock (85% completion, max comments)**
+```json
+"viralHooks": {
+  "hookType": "guess-price-shock",
+  "hookTiming": "0-3s luxury presentation",
+  "visualCue": "Product styled like high-end editorial",
+  "textOverlay": "Bạn đoán bao nhiêu? 💸",
+  "payoffMoment": "End reveal - shockingly affordable",
+  "commentBait": true
+}
+```
+**When to use:** Affordable luxury, budget fashion
+**Target:** Budget-conscious shoppers
+
+**A3. "This vs That" Split Decision (65% completion, max comments)**
+```json
+"viralHooks": {
+  "hookType": "this-vs-that",
+  "hookTiming": "0-3s split comparison",
+  "visualCue": "Two outfit options side by side OR quick A/B cuts",
+  "textOverlay": "Left OR Right? 🔀",
+  "commentBait": "Forces audience to vote",
+  "structure": "8s option A → 8s option B → 8s winner reveal"
+}
+```
+**When to use:** Color choices, styling options, product comparison
+
+**A4. "Secret Only 1% Know" (75% completion, high saves)**
+```json
+"viralHooks": {
+  "hookType": "secret-styling-hack",
+  "hookTiming": "0-2s whisper energy, intimate",
+  "visualCue": "Close-up, finger to lips, sharing secret gesture",
+  "textOverlay": "Bí mật chỉ fashionista biết 🤫",
+  "payoffMoment": "5s - Reveal styling trick or hack",
+  "emotionalTrigger": "exclusive-insider-knowledge"
+}
+```
+**When to use:** Styling tips, hidden features, insider tricks
+
+**A5. "Zoom Reveal" Texture Focus (72% completion)**
+```json
+"viralHooks": {
+  "hookType": "zoom-reveal-texture",
+  "hookTiming": "0-3s extreme macro on fabric/detail",
+  "visualCue": "Extreme close-up of texture, stitching, or pattern",
+  "textOverlay": "Guess the outfit 🔍",
+  "payoffMoment": "3-6s gradual zoom out to full look",
+  "emotionalTrigger": "curiosity-to-satisfaction"
+}
+```
+**When to use:** Luxury fabrics, unique textures, detailed craftsmanship
+
+---
+
+### 🎣 CATEGORY B: EMOTIONAL TRIGGERS (High Shares)
+
+**B1. "Finally Found It" Relief (80% completion, relatable shares)**
+```json
+"viralHooks": {
+  "hookType": "finally-found-relief",
+  "hookTiming": "0-3s relatable frustration",
+  "visualCue": "Frustrated searching expression → solution appears",
+  "textOverlay": "Tìm MÃI váy che được bụng dưới... 😫",
+  "payoffMoment": "4-8s - THE perfect item appears, relief smile",
+  "emotionalTrigger": "frustration-to-relief"
+}
+```
+**When to use:** Problem-solving products, specific body concerns
+**Target:** Relatable everyday shoppers
+
+**B2. "Main Character Energy" Entrance (70% completion, aspirational saves)**
+```json
+"viralHooks": {
+  "hookType": "main-character-entrance",
+  "hookTiming": "0-3s dramatic build",
+  "visualCue": "Slow-mo entrance, wind in hair, confident walk, dramatic lighting",
+  "textOverlay": "Khi outfit đúng mood 💅",
+  "audioSync": "Beat drop at reveal moment",
+  "emotionalTrigger": "awe-aspiration"
+}
+```
+**When to use:** Statement pieces, confidence boosters
+**Target:** Aspirational audience, want-to-be fashionistas
+
+**B3. "Reaction" Social Proof (75% completion, family shares)**
+```json
+"viralHooks": {
+  "hookType": "reaction-social-proof",
+  "hookTiming": "0-2s reaction setup",
+  "visualCue": "Split screen OR off-camera voice reacting",
+  "textOverlay": "Mẹ thấy outfit mới: 👀" OR "BFF react be like...",
+  "payoffMoment": "Positive surprised reaction validates choice",
+  "emotionalTrigger": "validation-warmth"
+}
+```
+**When to use:** Gift ideas, family-friendly content
+**Target:** Community content, relatable moments
+
+**B4. "Mirror Confidence Journey" (78% completion)**
+```json
+"viralHooks": {
+  "hookType": "mirror-confidence-journey",
+  "hookTiming": "0-3s self-doubt moment",
+  "visualCue": "Uncertain mirror look → gradually more confident poses",
+  "textOverlay": "Lúc đầu không chắc... 🥹",
+  "payoffMoment": "Final confident smile at mirror",
+  "emotionalTrigger": "self-love-growth"
+}
+```
+**When to use:** Body positivity, trying new styles
+
+---
+
+### 🎣 CATEGORY C: 2026 TREND-SPECIFIC HOOKS
+
+**C1. "Coquette Era" Soft Girl (Gen-Z, feminine aesthetic)**
+```json
+"viralHooks": {
+  "hookType": "coquette-aesthetic-2026",
+  "hookTiming": "0-3s soft pink palette established",
+  "visualCue": "Ribbons, bows, soft pastel lighting, gentle dreamy movements",
+  "textOverlay": "Coquette era check 🎀",
+  "atmosphere": "Dreamy, romantic, lo-fi music",
+  "aesthetic": "Soft pink, blush, cream, lace details, ribbons"
+}
+```
+**Trending elements:** Bows, ribbons, pearls, ruffles, pink everything
+**Target:** Gen-Z, 18-28F feminine aesthetic lovers
+
+**C2. "Office Siren" Transform (Working women, 25-35)**
+```json
+"viralHooks": {
+  "hookType": "office-siren-glow-up",
+  "hookTiming": "0-3s conservative office look",
+  "visualCue": "Modest office outfit → same pieces styled daringly",
+  "textOverlay": "9-5 me vs 6pm me 💋",
+  "payoffMoment": "Same outfit, completely different energy",
+  "structure": "Day: professional → Night: siren confidence"
+}
+```
+**Trending elements:** Blazer off-shoulder, pencil skirt slit reveal, statement heels
+**Target:** Corporate women who want dual identity
+
+**C3. "Quiet Luxury" No Logo Flex (Premium segment, 28-40)**
+```json
+"viralHooks": {
+  "hookType": "quiet-luxury-flex",
+  "hookTiming": "0-3s subtle quality focus",
+  "visualCue": "Close-up on fabric quality, minimal jewelry, no visible logos",
+  "textOverlay": "When quality speaks louder than logos ✨",
+  "atmosphere": "Editorial calm, muted tones, soft natural light",
+  "aesthetic": "Beige, cream, navy, cashmere, silk, gold minimal"
+}
+```
+**Trending elements:** High-quality fabrics, minimal accessories, understated elegance
+**Target:** Affluent taste, quality over quantity
+
+**C4. "Y2K Is Back" Nostalgia (18-28, nostalgic millennials)**
+```json
+"viralHooks": {
+  "hookType": "y2k-revival-2026",
+  "hookTiming": "0-3s sparkle and nostalgia",
+  "visualCue": "Butterfly clips, low-rise hints, shimmer tops, glossy lips",
+  "textOverlay": "2000s called, they want credit 💫",
+  "audioSync": "Early 2000s pop remix or slowed nostalgic track",
+  "aesthetic": "Sparkle, metallics, baby blue, hot pink, butterfly"
+}
+```
+**Trending elements:** Butterfly clips, layered jewelry, sparkle, mini everything
+**Target:** Nostalgic millennials, Gen-Z discovering Y2K
+
+**C5. "Lace Layer" Romantic Edge (20-35F feminine)**
+```json
+"viralHooks": {
+  "hookType": "lace-layer-romantic",
+  "hookTiming": "0-3s delicate lace close-up",
+  "visualCue": "Sheer lace details, romantic layering, soft textures",
+  "textOverlay": "Lace làm mềm mọi thứ 🤍",
+  "atmosphere": "Romantic, soft lighting, dreamy",
+  "aesthetic": "White, cream, black lace, sheer panels"
+}
+```
+**Trending elements:** Lace panels, sheer overlays, romantic details
+
+**C6. "Poet Core" Creative (22-32F artistic)**
+```json
+"viralHooks": {
+  "hookType": "poet-core-creative",
+  "hookTiming": "0-3s vintage artistic vibe",
+  "visualCue": "Flowy fabrics, layered textures, romantic accessories",
+  "textOverlay": "Main character in a romance novel 📖",
+  "atmosphere": "Moody, artistic, vintage cafe or library",
+  "aesthetic": "Cape, silk ties, corduroy, lace, frills"
+}
+```
+**Trending elements:** Capes, triangle scarves, frilly blouses, vintage vibes
+
+---
+
+### 🎣 CATEGORY D: ACTION HOOKS (High Saves, Shopping Intent)
+
+**D1. "3 Ways To Style" Tutorial (High saves, educational)**
+```json
+"viralHooks": {
+  "hookType": "three-ways-styling",
+  "hookTiming": "0-2s promise value",
+  "visualCue": "Single item held up prominently",
+  "textOverlay": "1 chiếc váy, 3 cách mặc 👗",
+  "structure": "Quick cuts between 3 complete different looks",
+  "duration": "Each look 6-8s for rewatch value"
+}
+```
+**When to use:** Versatile pieces, capsule wardrobe content
+
+**D2. "Under [Price] Challenge" (High engagement, shopping intent)**
+```json
+"viralHooks": {
+  "hookType": "budget-challenge",
+  "hookTiming": "0-2s price anchor shock",
+  "visualCue": "Full outfit showcase looking expensive",
+  "textOverlay": "Full outfit UNDER 500K 💰",
+  "payoffMoment": "Itemized price breakdown at end",
+  "commentBait": "Where to buy questions"
+}
+```
+**When to use:** Affordable fashion, TikTok Shop integration
+
+**D3. "Pack With Me" Journey (High saves, travel audience)**
+```json
+"viralHooks": {
+  "hookType": "pack-with-me",
+  "hookTiming": "0-3s suitcase/capsule wardrobe POV",
+  "visualCue": "Curated outfit selection, organized packing",
+  "textOverlay": "Đi Đà Lạt mang gì? 🧳",
+  "payoffMoment": "All outfits laid out aesthetically, OOTD preview",
+  "structure": "Selection → Packing → Preview of looks"
+}
+```
+**When to use:** Travel content, capsule wardrobes, destination occasions
+
+---
+
+### 📊 2026 HOOK EFFECTIVENESS METRICS (EXPANDED)
+
+| Hook Type | Completion | Comments | Saves | Shares | Best For |
+|-----------|------------|----------|-------|--------|----------|
+| Guess Price | 85% | ⭐⭐⭐ | ⭐⭐ | ⭐⭐ | Budget fashion |
+| Finally Found | 80% | ⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐ | Problem solving |
+| Mirror Confidence | 78% | ⭐⭐ | ⭐⭐⭐ | ⭐⭐ | Body positive |
+| Coquette Era | 75% | ⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐ | Gen-Z feminine |
+| Secret Hack | 75% | ⭐⭐ | ⭐⭐⭐ | ⭐⭐ | Tips content |
+| Reaction Proof | 75% | ⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐ | Family content |
+| Zoom Reveal | 72% | ⭐ | ⭐⭐⭐ | ⭐ | Luxury texture |
+| Main Character | 70% | ⭐ | ⭐⭐⭐ | ⭐⭐ | Aspirational |
+| Wait What | 70% | ⭐⭐⭐ | ⭐⭐ | ⭐⭐ | Rule breaking |
+| Office Siren | 70% | ⭐⭐ | ⭐⭐⭐ | ⭐⭐ | Working women |
+| This vs That | 65% | ⭐⭐⭐ | ⭐ | ⭐ | Engagement bait |
+
+---
+
+### ✅ 2026 HOOK INTEGRATION CHECKLIST
+
+□ Selected ONE hook from Categories A-D above?
+□ Hook matches target audience (Gen-Z/Millennial/Premium)?
+□ Aesthetic aligns with 2026 trends (Coquette/Office Siren/Quiet Luxury)?
+□ Text overlay is concise and emoji-enhanced?
+□ Payoff moment is defined (usually 3-8s)?
+□ Comment bait potential considered?
+□ Structure supports rewatch value?
+
+---
+
+================================================
 👤 DEFAULT FACE (NO FACE REFERENCE UPLOADED)
 ================================================
 
@@ -1021,6 +1356,292 @@ with high fidelity"
 ```
 "Extreme close-up, hand and collar detail fills 85% of vertical 9:16 frame"
 ```
+
+================================================
+🎨 TATTOO / BODY MARKING RULES (PREVENTS DUPLICATION)
+================================================
+
+**⚠️ PROBLEM 1:** Khi user yêu cầu "model có hình xăm vai trái" trong Custom Notes:
+- AI lặp lại mô tả tattoo ở MỌI keyframe/scene
+- Mỗi góc camera khác → AI hiểu là tattoo khác → Tạo NHIỀU tattoo
+
+**⚠️ PROBLEM 2: MIRROR EFFECT (Trái ↔ Phải bị đảo)**
+- User yêu cầu "vai trái" → AI tạo ở vai phải (hoặc ngược lại)
+- Nguyên nhân: AI confuse giữa "subject's left" vs "camera's left"
+
+---
+
+### 🔄 LEFT/RIGHT PERSPECTIVE RULES (CRITICAL)
+
+**⚠️ LUÔN SỬ DỤNG SUBJECT'S PERSPECTIVE (Góc nhìn của MODEL):**
+
+```
+Khi nói "LEFT" = Bên TRÁI của MODEL (như model tự nhìn xuống cơ thể mình)
+Khi nói "RIGHT" = Bên PHẢI của MODEL
+```
+
+**MANDATORY CLARIFICATION IN PROMPTS:**
+
+**❌ SAI (Mơ hồ, dễ bị mirror):**
+```
+"Tattoo on left shoulder"
+"Birthmark on right cheek"
+```
+
+**✅ ĐÚNG (Rõ ràng, không bị đảo):**
+```
+"Tattoo on MODEL'S left shoulder (viewer's right when facing camera)"
+"Birthmark on MODEL'S right cheek (appears on left side of frame when facing camera)"
+```
+
+**📐 PERSPECTIVE DIAGRAM (Model facing camera):**
+```
+        CAMERA VIEW
+    ┌─────────────────┐
+    │                 │
+    │   [R]     [L]   │  ← Viewer sees: R on left, L on right
+    │      👤        │
+    │    MODEL       │
+    │                 │
+    └─────────────────┘
+    
+MODEL'S own view (như soi gương):
+- MODEL's LEFT arm = Appears on RIGHT side of camera frame
+- MODEL's RIGHT arm = Appears on LEFT side of camera frame
+```
+
+**📝 TEMPLATE WITH PERSPECTIVE:**
+
+**User request:** "Hình xăm vai trái"
+
+**masterPrompt (CORRECT):**
+```json
+"subject": "Young woman with rose tattoo on MODEL'S LEFT shoulder blade (appears on right side of frame when her back faces camera)"
+```
+
+**Keyframe (CORRECT):**
+```json
+// Back to camera
+"pose": "Back facing camera, rose tattoo visible on her left shoulder blade (right side of frame)"
+
+// Front facing
+"pose": "Facing camera, tattoo not visible (on her left shoulder which is now on viewer's right)"
+```
+
+---
+
+### 🧭 POSE DIRECTION TERMINOLOGY (PREVENTS WRONG DIRECTION)
+
+**⚠️ PROBLEM 3:** Yêu cầu "turn right" nhưng model lại xoay trái
+
+**VISUAL DIAGRAM - 8 STANDARD POSES:**
+```
+                    CAMERA
+                       │
+                       ▼
+    ┌──────────────────────────────────────┐
+    │                                      │
+    │    ┌───────┐  ┌───────┐  ┌───────┐  │
+    │    │  3/4  │  │ FRONT │  │  3/4  │  │
+    │    │ LEFT  │  │ FACING│  │ RIGHT │  │
+    │    │FRONT  │  │CAMERA │  │ FRONT │  │
+    │    │  ↗👤  │  │  ↑👤  │  │  👤↖  │  │
+    │    └───────┘  └───────┘  └───────┘  │
+    │                                      │
+    │    ┌───────┐              ┌───────┐  │
+    │    │ LEFT  │              │ RIGHT │  │
+    │    │PROFILE│              │PROFILE│  │
+    │    │  →👤  │              │  👤←  │  │
+    │    └───────┘              └───────┘  │
+    │                                      │
+    │    ┌───────┐  ┌───────┐  ┌───────┐  │
+    │    │  3/4  │  │ BACK  │  │  3/4  │  │
+    │    │ LEFT  │  │FACING │  │ RIGHT │  │
+    │    │ BACK  │  │ AWAY  │  │ BACK  │  │
+    │    │  ↘👤  │  │  ↓👤  │  │  👤↙  │  │
+    │    └───────┘  └───────┘  └───────┘  │
+    │                                      │
+    └──────────────────────────────────────┘
+```
+
+**📐 POSE DEFINITIONS (Use EXACTLY these terms):**
+
+| Pose Name | Model's Body Direction | What Camera Sees | Frame Position |
+|-----------|----------------------|------------------|----------------|
+| **FRONT FACING** | Chest toward camera | Full face, chest, front body | Center |
+| **BACK FACING** | Back toward camera | Back of head, spine, back body | Center |
+| **LEFT PROFILE** | Left shoulder toward camera | Left side of face, left arm | Model's LEFT fills frame |
+| **RIGHT PROFILE** | Right shoulder toward camera | Right side of face, right arm | Model's RIGHT fills frame |
+| **3/4 LEFT FRONT** | Body angled 45° left, face to camera | Left cheek prominent, left shoulder forward | Left side emphasized |
+| **3/4 RIGHT FRONT** | Body angled 45° right, face to camera | Right cheek prominent, right shoulder forward | Right side emphasized |
+| **3/4 LEFT BACK** | Back angled 45° left, glance over left shoulder | Left shoulder blade, left glance | Left back visible |
+| **3/4 RIGHT BACK** | Back angled 45° right, glance over right shoulder | Right shoulder blade, right glance | Right back visible |
+
+---
+
+**🔑 KEY CLARIFICATION:**
+
+**"LEFT" and "RIGHT" = Which shoulder is TOWARD the camera**
+
+```
+3/4 LEFT FRONT:
+- Model's LEFT shoulder is CLOSER to camera
+- Model's RIGHT shoulder is FARTHER from camera
+- Model's face angled showing LEFT cheek more prominently
+- Model's LEFT arm more visible in frame
+
+3/4 RIGHT FRONT:
+- Model's RIGHT shoulder is CLOSER to camera
+- Model's LEFT shoulder is FARTHER from camera
+- Model's face angled showing RIGHT cheek more prominently
+- Model's RIGHT arm more visible in frame
+```
+
+---
+
+**✅ MANDATORY PROMPT FORMAT:**
+
+**❌ SAI (Mơ hồ, AI hiểu sai):**
+```
+"Model turns right"  // Xoay sang phải? Hay nhìn về phải?
+"Facing left"        // Mặt quay trái? Hay body hướng trái?
+"Side view"          // Bên nào? Trái hay phải?
+```
+
+**✅ ĐÚNG (Rõ ràng, consistent):**
+```
+"Model in 3/4 RIGHT FRONT pose (right shoulder toward camera, face angled showing right cheek)"
+"LEFT PROFILE pose (left side of body facing camera, only left arm visible)"
+"BACK FACING pose, glancing over LEFT shoulder (right shoulder blade more visible in frame)"
+```
+
+---
+
+**📝 TURN DIRECTION CLARIFICATION:**
+
+**When describing MOTION between poses:**
+
+| Motion Command | Meaning | Result |
+|----------------|---------|--------|
+| "Turn LEFT" | Rotate counter-clockwise (viewer perspective) | Left shoulder moves TOWARD camera |
+| "Turn RIGHT" | Rotate clockwise (viewer perspective) | Right shoulder moves TOWARD camera |
+| "Turn to show back" | 180° rotation either direction | Back now faces camera |
+| "Turn 45° left" | Slight counter-clockwise | From FRONT → 3/4 LEFT FRONT |
+| "Turn 45° right" | Slight clockwise | From FRONT → 3/4 RIGHT FRONT |
+
+**Example sequence:**
+```
+KF1: FRONT FACING
+KF2: "Turn 90° LEFT" → LEFT PROFILE
+KF3: "Turn 90° LEFT more" → BACK FACING
+KF4: "Turn 90° LEFT more" → RIGHT PROFILE
+KF5: "Turn 90° LEFT more" → FRONT FACING (full 360°)
+```
+
+---
+
+**🚨 CHECKLIST FOR POSE DIRECTION:**
+
+□ Using exact pose terminology from table above?
+□ Specifying which shoulder is toward camera?
+□ Including face direction for 3/4 poses?
+□ Clarifying turn direction for motion scenes?
+□ Consistent left/right throughout all keyframes?
+
+---
+
+**✅ SOLUTION: ONE-TIME PLACEMENT + VISIBILITY LOGIC**
+
+**1. CHỈ MÔ TẢ TATTOO TRONG masterPrompt:**
+```json
+"masterPrompt": {
+  "subject": "Young woman with small rose tattoo on LEFT shoulder blade",
+  ...
+}
+```
+
+**2. TRONG KEYFRAMES/SCENES - CHỈ MENTION KHI VISIBLE:**
+
+**❌ SAI (Lặp lại → nhiều tattoo):**
+```json
+"keyframes": [
+  {"id": 1, "pose": "Facing camera, tattoo on left shoulder"},  // Không thấy lưng!
+  {"id": 2, "pose": "Side view, small rose tattoo visible"},     // OK
+  {"id": 3, "pose": "Back view, showing rose tattoo on left shoulder"},  // OK
+  {"id": 4, "pose": "Facing camera again, rose tattoo on shoulder"}  // Lặp lại lỗi!
+]
+```
+**Kết quả:** AI tạo 4 tattoo khác nhau
+
+**✅ ĐÚNG (Một tattoo, chỉ mention khi thấy):**
+```json
+"keyframes": [
+  {"id": 1, "pose": "Facing camera, confident stance"},  // Front = không thấy shoulder blade
+  {"id": 2, "pose": "3/4 side view, left shoulder blade slightly visible with rose tattoo"},
+  {"id": 3, "pose": "Back facing camera, rose tattoo on left shoulder blade clearly visible"},
+  {"id": 4, "pose": "Turning back to front, relaxed pose"}  // Không nhắc lại
+]
+```
+**Kết quả:** 1 tattoo consistent, thấy rõ khi góc phù hợp
+
+---
+
+**📐 VISIBILITY LOGIC BY POSE:**
+
+| Pose/Angle | Left Shoulder Blade Tattoo | Right Arm Tattoo | Chest Tattoo |
+|------------|---------------------------|------------------|--------------|
+| Front facing | ❌ Not visible | ✅ Visible | ✅ Visible |
+| Back facing | ✅ Visible | ❌ Not visible | ❌ Not visible |
+| Left 3/4 | ✅ Slightly visible | ❌ Hidden | ✅ Partial |
+| Right 3/4 | ❌ Hidden | ✅ Clearly visible | ✅ Partial |
+| Left profile | ❌ Hidden | ❌ Hidden | ❌ Hidden |
+| Right profile | ❌ Hidden | ✅ Visible | ❌ Hidden |
+
+---
+
+**📝 TEMPLATE FOR CUSTOM REQUIREMENT WITH BODY MARKINGS:**
+
+**User request:** "Model có hình xăm hoa hồng nhỏ vai trái"
+
+**masterPrompt:**
+```json
+"subject": "Young Asian woman, slender frame, small delicate rose tattoo (3cm) on left shoulder blade"
+```
+
+**Keyframe prompts:**
+```json
+// KF1 (Front) - KHÔNG mention tattoo vì không thấy
+"pose": "Standing facing camera, hands on hips, confident smile"
+
+// KF2 (3/4 left) - Mention vì THẤY RÕ
+"pose": "Turning 45° showing left side, rose tattoo on shoulder blade visible as she looks over shoulder"
+
+// KF3 (Back) - Mention với detail vì FOCUS
+"pose": "Back to camera, delicate rose tattoo on left shoulder blade clearly visible, hand touching neck"
+
+// KF4 (Return front) - KHÔNG mention lại
+"pose": "Turning back to face camera, warm smile, relaxed arms"
+```
+
+---
+
+**🚨 CRITICAL CHECKLIST FOR BODY MARKINGS:**
+
+□ Tattoo/marking ONLY in masterPrompt.subject (ONE TIME)?
+□ Each keyframe checked: Is marking VISIBLE from this angle?
+□ Only mention in keyframe IF anatomically visible?
+□ NOT repeating description = NOT creating duplicates?
+□ Consistent size/location across all mentions?
+
+---
+
+**APPLIES TO:**
+- Tattoos (hình xăm)
+- Birthmarks (nốt ruồi, vết chàm)
+- Scars (sẹo) 
+- Piercings (khuyên tai, khuyên mũi)
+- Body jewelry (anklet, arm cuff)
+- Temporary features (body paint, henna)
 
 ================================================
 📸 REFERENCE ANGLE USAGE (CRITICAL FOR VEO 3.1)
@@ -1473,7 +2094,7 @@ Scene Structure:
 - "Sitting on edge of chair, hands resting on lap, upper body leaning slightly forward, facing camera, relaxed posture"
 - "Right hand on right hip, left hand touching fabric at waist level, weight shifted to right leg, body facing 30° right of camera"
 
-**CONTINUITY TEMPLATE WITH ALL 4 SCENES:**
+**CONTINUITY TEMPLATE (SIMPLIFIED - 4 SCENES):**
 
 \`\`\`json
 {
@@ -1481,38 +2102,30 @@ Scene Structure:
     {
       "id": 1,
       "timeRange": "00s-08s",
-      "startPose": "Standing with weight on left leg, right hand on hip, left hand at side, facing camera, confident stance",
-      "endPose": "Standing centered, both hands at sides, body turned 90° right showing profile, head still facing camera",
-      "subjectMotion": "Slowly rotating 90° right while lowering right hand from hip over 6 seconds",
-      "environment": "Park Hyatt lobby, chandelier overhead",
-      "atmosphere": "Gentle indoor AC breeze, minimal fabric movement, soft ambient lighting"
+      "prompt": "Model rotating 90° right over 6 seconds, lowering right hand from hip, Park Hyatt lobby with chandelier, gentle AC breeze moving fabric",
+      "startPose": "Standing facing camera, right hand on hip, weight on left leg",
+      "endPose": "Standing profile showing right side, both hands at sides"
     },
     {
       "id": 2,
       "timeRange": "08s-16s",
-      "startPose": "Standing centered, both hands at sides, body turned 90° right showing profile, head facing camera",  // EXACT COPY from Scene 1 end
-      "endPose": "Standing facing camera directly, hands on waist, weight balanced, upright posture",
-      "subjectMotion": "Continuing rotation back to face camera while raising hands to waist over 6 seconds",
-      "environment": "Same Park Hyatt lobby, chandelier visible",
-      "atmosphere": "Same gentle AC breeze, consistent minimal movement, maintained soft lighting"
+      "prompt": "Continuing rotation to face camera, raising hands to waist over 6 seconds, same lobby setting, consistent soft lighting",
+      "startPose": "Standing profile showing right side, both hands at sides",
+      "endPose": "Standing facing camera, hands on waist"
     },
     {
       "id": 3,
       "timeRange": "16s-24s",
-      "startPose": "Standing facing camera directly, hands on waist, weight balanced, upright posture",  // EXACT COPY from Scene 2 end
-      "endPose": "Standing with left hand touching hair, right hand on hip again, slight S-curve, elegant pose",
-      "subjectMotion": "Left hand raising from waist to touch hair over 4 seconds, body shifting to subtle S-curve",
-      "environment": "Still in Park Hyatt lobby",
-      "atmosphere": "Continued gentle breeze, same soft ambient, consistent atmosphere"
+      "prompt": "Left hand raising to touch hair over 4 seconds, shifting into S-curve pose, Park Hyatt lobby, gentle breeze",
+      "startPose": "Standing facing camera, hands on waist",
+      "endPose": "S-curve pose, left hand touching hair, right hand on hip"
     },
     {
       "id": 4,
       "timeRange": "24s-32s",
-      "startPose": "Standing with left hand touching hair, right hand on hip, slight S-curve, elegant pose",  // EXACT COPY from Scene 3 end
-      "endPose": "Standing centered, both hands at sides, facing camera, neutral relaxed final pose",
-      "subjectMotion": "Lowering hands to sides over 5 seconds, straightening from S-curve, settling into calm ending",
-      "environment": "Park Hyatt lobby throughout",
-      "atmosphere": "Gentle breeze subsiding, soft lighting, peaceful conclusion"
+      "prompt": "Lowering hands to sides over 5 seconds, relaxing from S-curve to neutral pose, peaceful conclusion",
+      "startPose": "S-curve pose, left hand touching hair, right hand on hip",
+      "endPose": "Standing neutral, both hands at sides, relaxed"
     }
   ]
 }

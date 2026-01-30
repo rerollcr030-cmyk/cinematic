@@ -396,6 +396,67 @@ const App = () => {
    };
 
    // ================================================
+   // 🎯 POSE DIRECTION VAULT (Video Mode Only)
+   // ================================================
+   // Tracks used camera angles to avoid pose direction repetition
+   type PoseDirection = 'front' | 'back' | '3/4-front' | '3/4-back' | 'side-left' | 'side-right';
+
+   const [poseDirectionVault, setPoseDirectionVault] = useState<{
+      id: string;
+      direction: PoseDirection;
+      keyframeIndex: number;
+      productType?: string;
+      timestamp: number;
+   }[]>(() => {
+      if (typeof window !== 'undefined') {
+         try {
+            const saved = localStorage.getItem('pose_direction_vault');
+            return saved ? JSON.parse(saved) : [];
+         } catch (e) {
+            return [];
+         }
+      }
+      return [];
+   });
+
+   // Persist Pose Direction Vault
+   useEffect(() => {
+      localStorage.setItem('pose_direction_vault', JSON.stringify(poseDirectionVault));
+   }, [poseDirectionVault]);
+
+   // Add pose direction to vault
+   const addToPoseVault = (direction: PoseDirection, keyframeIndex: number, productType?: string) => {
+      const newEntry = {
+         id: Date.now().toString(),
+         direction,
+         keyframeIndex,
+         timestamp: Date.now(),
+         productType
+      };
+      setPoseDirectionVault(prev => [newEntry, ...prev].slice(0, 30)); // Keep last 30
+   };
+
+   // Clear pose direction vault
+   const clearPoseVault = () => {
+      if (confirm("Xóa lịch sử hướng pose? AI có thể tái sử dụng các góc camera cũ.")) {
+         setPoseDirectionVault([]);
+         localStorage.removeItem('pose_direction_vault');
+      }
+   };
+
+   // Get pose direction blocklist (for AI prompt)
+   const getPoseBlocklist = (): string[] => {
+      return poseDirectionVault.map(item => item.direction);
+   };
+
+   // Get unique used directions for display
+   const getUsedPoseDirections = (): PoseDirection[] => {
+      return [...new Set(poseDirectionVault.map(item => item.direction))] as PoseDirection[];
+   };
+
+
+   // ================================================
+
    // 🎨 STUDIO COLOR CONTRAST VALIDATION
    // ================================================
    const WARM_COLORS = ['red', 'đỏ', 'pink', 'hồng', 'orange', 'cam', 'yellow', 'vàng', 'coral', 'rose', 'gold', 'burgundy', 'magenta', 'salmon', 'peach'];
@@ -668,7 +729,23 @@ LOGIC:
 
             // Build Scenes string from JSON array
             const scenesContent = jsonData.scenes ? jsonData.scenes.map((sc: any) => {
-               let sceneText = `Scene ${sc.id} (${sc.timeRange}): ${sc.shotType}. ${sc.subjectMotion}. Camera: ${sc.cameraMotion}. Atmosphere: ${sc.atmosphere}. START_POSE: ${sc.startPose}. END_POSE: ${sc.endPose}.`;
+               // PRIORITY 1: Simplified format with single prompt field
+               if (sc.prompt) {
+                  let sceneText = `Scene ${sc.id} (${sc.timeRange}): ${sc.prompt}`;
+                  if (sc.startPose) sceneText += `\nSTART_POSE: ${sc.startPose}`;
+                  if (sc.endPose) sceneText += `\nEND_POSE: ${sc.endPose}`;
+                  if (sc.script) sceneText += `\nSCRIPT: "${sc.script}"`;
+                  return sceneText;
+               }
+
+               // PRIORITY 2: Legacy format with separate fields
+               let sceneText = `Scene ${sc.id} (${sc.timeRange}):`;
+               if (sc.shotType) sceneText += ` ${sc.shotType}.`;
+               if (sc.subjectMotion) sceneText += ` ${sc.subjectMotion}.`;
+               if (sc.cameraMotion) sceneText += ` Camera: ${sc.cameraMotion}.`;
+               if (sc.atmosphere) sceneText += ` Atmosphere: ${sc.atmosphere}.`;
+               if (sc.startPose) sceneText += `\nSTART_POSE: ${sc.startPose}`;
+               if (sc.endPose) sceneText += `\nEND_POSE: ${sc.endPose}`;
                if (sc.script) {
                   sceneText += `\nSCRIPT: "${sc.script}"`;
                }
@@ -1301,7 +1378,23 @@ ${COLOR_CONTRAST_STUDIO_RULES}
             ? `\n\nPREVIOUSLY USED SCRIPTS (BLOCKLIST - DO NOT USE SIMILAR HOOKS):\n${scriptVault.slice(0, 15).map(s => `- "${s.hook}"`).join('\n')}`
             : '';
 
+         // Prepare Pose Direction Blocklist (Video Mode only - NOT Lookbook)
+         const poseBlocklistText = !lookbookMode && poseDirectionVault.length > 0
+            ? `\n\n🎯 POSE DIRECTION HISTORY (TRÁNH LẶP LẠI):
+PREVIOUSLY USED POSES: ${getUsedPoseDirections().join(', ')}
+⚠️ TRY TO USE DIFFERENT ANGLES for variety. Prioritize angles NOT in this list.
+
+📐 180° TURN PREVENTION (WARNING):
+Khi tạo scene transitions, LƯU Ý:
+- Keyframe images chỉ có data cho góc được chụp
+- Nếu Scene yêu cầu xoay 180° (front → back), Veo 3.1 sẽ "hallucinate" phần không có image data
+- ⚠️ MAX ROTATION: 90° giữa 2 keyframes liên tiếp
+- ✅ SAFE: front→3/4, side→front, 3/4-front→3/4-back (có overlap)
+- ❌ AVOID: front→back (180°), side-left→side-right (180°)`
+            : '';
+
          // Keyframe count reminder based on duration
+
          const keyframeCountText = `\n\n⚠️ KEYFRAME COUNT REQUIREMENT:\n- Video ${finalDuration}s = ${Math.floor(finalDuration / 8) + 1} KEYFRAMES bắt buộc\n- Timestamps: ${Array.from({ length: Math.floor(finalDuration / 8) + 1 }, (_, i) => `${i * 8}s`).join(', ')}\n- PHẢI OUTPUT ĐỦ ${Math.floor(finalDuration / 8) + 1} KEYFRAMES, KHÔNG ĐƯỢC THIẾU!`;
 
          // Real-World Photography Mode (ALWAYS ON)
@@ -1345,7 +1438,8 @@ AI PHẢI output định dạng JSON để tối ưu workflow Image-to-Video.`;
 → Use DEFAULT DOUYIN/DOLL STYLE FACE (see instructions for full description)`;
 
          const parts = [
-            { text: `Mode: ${appMode.toUpperCase()}\nGender: ${gender}\n${bodyDataString}${shopModelInfo}${userAdditionalDescText}\n\nTarget Duration: ${finalDuration}s (${scenes} scenes).\nAspect Ratio: ${aspectRatio}${keyframeCountText}${realWorldPhotoText}${locationPreferenceText}${editorialModeText}${wallpaperModeText}${lookbookModeText}${seductiveModeText}${sexyModeText}${studioModeText}${aspectRatioText}\n\nPREVIOUSLY USED LOCATIONS (COLLISION AVOIDANCE ACTIVATED):\n${historyBlocklist}${scriptBlocklist}\n\n🎯 OUTPUT FORMAT: JSON (Nano Banana Pro & Veo 3.1 optimized)\nCreative Brief:\n${brief}${faceReferenceText}` },
+            { text: `Mode: ${appMode.toUpperCase()}\nGender: ${gender}\n${bodyDataString}${shopModelInfo}${userAdditionalDescText}\n\nTarget Duration: ${finalDuration}s (${scenes} scenes).\nAspect Ratio: ${aspectRatio}${keyframeCountText}${realWorldPhotoText}${locationPreferenceText}${editorialModeText}${wallpaperModeText}${lookbookModeText}${seductiveModeText}${sexyModeText}${studioModeText}${aspectRatioText}${poseBlocklistText}\n\nPREVIOUSLY USED LOCATIONS (COLLISION AVOIDANCE ACTIVATED):\n${historyBlocklist}${scriptBlocklist}\n\n🎯 OUTPUT FORMAT: JSON (Nano Banana Pro & Veo 3.1 optimized)\nCreative Brief:\n${brief}${faceReferenceText}` },
+
             // Face Reference image FIRST (with label)
             ...(faceImage ? [{ text: '\n\n📸 IMAGE 1 - FACE REFERENCE (Use this face):' }, { inlineData: { mimeType: faceData.mimeType, data: faceData.data } }] : []),
             // Outfit Reference image SECOND (with label)

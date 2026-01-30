@@ -270,3 +270,79 @@ When generating CINEMATIC MODE videos (NOT lookbook), detect product category fr
 - Fast enough pacing (no dead time)
 - Clear product benefits visible
 - Professional aesthetic maintained
+
+---
+
+## 🔥 2026 AESTHETIC INTEGRATION (NEW)
+
+**Match Product Type → 2026 Aesthetic:**
+
+| Product Type | Best 2026 Aesthetics | Hook Recommendation |
+|--------------|---------------------|---------------------|
+| Dress (Formal) | Office Siren, Quiet Luxury | Office Siren Transform, Quiet Luxury Flex |
+| Dress (Casual) | Coquette Core, Soft Pastel | Coquette Era, Mirror Confidence |
+| Dress (Party) | Y2K Revival, Lace Layer | Main Character Energy, Hidden Reveal |
+| Blazer | Office Siren, Quiet Luxury | Office Siren Transform, 3 Ways Styling |
+| Top (Feminine) | Coquette Core, Poet Core | Coquette Era, Finally Found Relief |
+| Top (Casual) | Oversized Era, Athleisure | Wait What Double Take, Budget Challenge |
+| Outerwear | Quiet Luxury, Poet Core | Zoom Texture Reveal, Pack With Me |
+| Accessories | Y2K Revival, Lace Layer | Guess Price Shock, This vs That |
+| Áo Dài | Heritage Modernism, Quiet Luxury | Hidden Subject Reveal, Main Character |
+
+**2026 Aesthetic → Scene Atmosphere:**
+
+```
+Coquette Core: 
+- Lighting: Soft pink/warm golden hour
+- Props: Ribbons, bows, flowers in background
+- Vibe: Dreamy, romantic, soft movements
+
+Office Siren:
+- Lighting: Strong, confident, dramatic
+- Setting: Modern office, city backdrop
+- Vibe: Powerful, assertive, transformation
+
+Quiet Luxury:
+- Lighting: Natural, soft, editorial
+- Setting: Minimalist, high-end texture focus
+- Vibe: Calm, understated, quality focus
+
+Y2K Revival:
+- Lighting: Bright, colorful, pop
+- Props: Metallics, butterfly, sparkle
+- Vibe: Nostalgic, playful, energetic
+```
+
+**Scene 1 Hook + Aesthetic Combo Example:**
+
+```json
+{
+  "scene1": {
+    "viralHooks": {
+      "hookType": "office-siren-glow-up",
+      "textOverlay": "9-5 me vs 6pm me 💋"
+    },
+    "aesthetic": "Office Siren 2026",
+    "atmosphere": "Corporate daytime → dramatic evening lighting",
+    "productFocus": "blazer, pencil skirt"
+  }
+}
+```
+
+---
+
+## 📊 HOOK → PRODUCT MATCHING (2026 UPDATE)
+
+| Hook Type | Best Products | Avoid For |
+|-----------|--------------|-----------|
+| Guess Price Shock | Budget luxury, quality finds | Premium brands |
+| This vs That | Color options, styling choices | Single item |
+| 3 Ways Styling | Versatile pieces, basics | Statement one-look |
+| Office Siren Transform | Workwear, blazers, pencil skirts | Casual wear |
+| Coquette Era | Dresses, bows, pink items | Sporty items |
+| Y2K Revival | Accessories, mini items | Traditional pieces |
+| Finally Found Relief | Problem-solving items | Generic basics |
+| Quiet Luxury Flex | Premium quality, no-logo items | Budget finds |
+| Pack With Me | Mix items, capsule pieces | Single accessories |
+
+Last Updated: January 2026

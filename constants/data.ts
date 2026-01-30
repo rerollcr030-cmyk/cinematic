@@ -350,6 +350,63 @@ export const VIDEO_STYLES = [
       desc: 'Mỗi ngày 1 outfit theo concept - series content, CÓ voice',
       hot: false
    },
+   // === 🔥 VIRAL HOOKS 2026 - NEW STYLES ===
+   {
+      value: 'cinematic_hook_reveal',
+      label: 'Cinematic Reveal',
+      emoji: '🎬',
+      desc: 'Mystery build → dramatic reveal trên beat drop - max retention',
+      hot: true
+   },
+   {
+      value: 'aesthetic_grwm',
+      label: 'Aesthetic GRWM',
+      emoji: '✨',
+      desc: 'Get Ready With Me aesthetic 2026 - soft girl/coquette vibe',
+      hot: true
+   },
+   {
+      value: 'outfit_challenge',
+      label: 'Outfit Challenge',
+      emoji: '🔥',
+      desc: '3 ways to style / budget challenge / this vs that format',
+      hot: true
+   },
+   {
+      value: 'reaction_reveal',
+      label: 'Reaction Reveal',
+      emoji: '😱',
+      desc: 'BFF/Mẹ react outfit mới - social proof viral',
+      hot: true
+   },
+   {
+      value: 'coquette_aesthetic',
+      label: 'Coquette Style',
+      emoji: '🎀',
+      desc: 'Soft girl energy, bows, pastels, romantic 2026',
+      hot: true
+   },
+   {
+      value: 'office_siren',
+      label: 'Office Siren',
+      emoji: '💼',
+      desc: '9-5 me vs 6pm me - công sở → quyến rũ transform',
+      hot: true
+   },
+   {
+      value: 'quiet_luxury',
+      label: 'Quiet Luxury',
+      emoji: '🤍',
+      desc: 'No logo, chất liệu cao cấp, editorial calm - premium',
+      hot: true
+   },
+   {
+      value: 'trend_mashup',
+      label: 'Trend Mashup',
+      emoji: '🔀',
+      desc: 'Mix nhiều trend 2026: Y2K + Coquette + Athleisure',
+      hot: true
+   },
    // === GIA DỤNG THÔNG MINH & TIỆN ÍCH VIDEO STYLES ===
    {
       value: 'unbox_demo',
@@ -2280,14 +2337,14 @@ export const STUDIO_CATEGORIES = [
       productMatch: ['dress', 'evening', 'gala', 'tet'],
       studios: [
          'Vũ Hội Xuân ⭐ | Champagne gold-to-ivory gradient with soft glitter shimmer. Props: Ornate candelabra candles (background center), flower garland draped elegantly, grand piano corner hint, champagne flutes table, silk drapes framing, decorative columns, crystal chandelier above, rose petals scattered. Elegant ballroom chandelier simulation (3500K) with gala glow. Polished white marble ballroom dance floor gold inlay. Spring gala theatrical stage, elegant ball editorial. - STUDIO FIXED',
-         'Hoa Hậu Tết | Royal blue-to-silver gradient with star pattern. Props: Ornate crown velvet pedestal (background center), stage spotlight stands, winner bouquet, pageant sash display, trophy table, red carpet edge, photographer backdrop, stage curtain draping. Bright stage (5000K) with dramatic spotlights. Runway black glossy competition stage, red carpet accent. Beauty contest Tet theatrical stage, crown competition editorial. - STUDIO FIXED',
+
          'Đám Cưới Xuân | Romantic blush-to-white gradient with watercolor floral pattern. Props: Floral arch elaborate (background center), wedding guest book stand, candles holders, white rose bouquets, satin ribbon decorations, unity candle set, wedding bells hanging, love letters display. Soft romantic (4000K) wedding day glow. White carpet runner wedding aisle, rose petals scattered. Spring wedding theatrical stage, romantic union editorial. - STUDIO FIXED',
          'Dạ Hội Từ Thiện | Deep emerald-to-black gradient with subtle charity theme. Props: Auction item display stand (background left), elegant donation box, charity program booklets, fundraising thermometer, champagne service, silk banners cause, plush seating, flower arrangements luxury. Sophisticated dim (3000K) charity event elegance. Black marble gala venue, emerald carpet runner. Philanthropic celebration theatrical stage, giving spirit editorial. - STUDIO FIXED',
          'Tiệc Champagne Tết | Sparkling gold-to-champagne gradient with bubble effects. Props: Champagne tower elaborate (background center), celebration crystal glasses, ice bucket bottles, gold confetti scatter, party poppers, champagne cork collection, bar cart elegant, cheese platter display. Bright festive (4500K) with gold highlights sparkle. Gold-veined marble luxury party. Upscale Tet toast theatrical stage, champagne celebration editorial. - STUDIO FIXED',
          'Nhạc Hội Mùa Xuân | Deep purple-to-magenta gradient with sound wave pattern. Props: Music stand sheet music (background left), stage curtain elegant, microphone stand, stage monitors, concert posters, instrument cases, stage lights rigging, sound equipment. Concert stage (4000K) with color gel wash. Stage wood concert venue. Spring concert theatrical stage, musical celebration editorial. - STUDIO FIXED',
          'Liên Hoan Phim Tết | Classic red velvet curtain texture gradient with film reel pattern. Props: Film reel decoration large (background center), vintage movie poster frames, director chair, clapperboard prop, film camera vintage, popcorn stand classic, red carpet ropes, movie tickets display. Theater warm (3200K) cinema premiere atmosphere. Velvet carpet film festival red carpet. Movie premiere Tet theatrical stage, cinematic glamour editorial. - STUDIO FIXED',
          'Triển Lãm Nghệ Thuật | Gallery white-to-cream gradient with subtle art pattern. Props: Artwork frames wall (background various sizes), exhibition labels, sculpture pedestal, gallery lighting tracks, champagne service art opening, artist palette, easel painting, museum catalog. Museum gallery (5000K) art showcase bright. Polished concrete contemporary gallery. Art opening Tet theatrical stage, cultural sophistication editorial. - STUDIO FIXED',
-         'Thời Trang Đỉnh Cao | Dramatic black-to-charcoal gradient with fashion sketches. Props: Fashion sketch easel (background left), fabric swatches pinned, dress form mannequin, designer tools, fashion magazine covers, luxury brand boxes, sewing machine vintage, runway backdrop. Edgy fashion (4500K) with dramatic shadows. Glossy black fashion week runway. Fashion month Tet theatrical stage, haute couture editorial. - STUDIO FIXED',
+
          'Khiêu Vũ Xã Giao | Elegant cream-to-peach gradient with dance motif pattern. Props: Grand piano silhouette (background corner), music sheet stand elegant, dance trophy, ballroom chandelier hint, velvet ropes, dance floor markers, mirror ball hanging, dance card display. Warm ballroom (3300K) waltz atmosphere. Parquet dance floor classic ballroom pattern. Ballroom dancing Tet theatrical stage, elegant partnering editorial. - STUDIO FIXED',
          'Lễ Trao Giải Cuối Năm | Prestigious gold-to-bronze gradient with award emblem. Props: Award trophy podium (background center), winner plaque display, envelope results, microphone stand, cameras filming, press backdrop, flower bouquets winner, champagne congratulations. Award show (5000K) with dramatic spotlight. Dark wood stage ceremony platform. Achievement celebration theatrical stage, winner recognition editorial. - STUDIO FIXED',
          'Dạ Tiệc Sân Vườn | Twilight indigo-to-lavender gradient with garden silhouette. Props: String lights elaborate hanging (background overhead), potted topiaries shaped, garden lanterns, outdoor furniture elegant, flower arrangements wild, bird bath decorative, garden arch, candles outdoor. Warm evening (3000K) with fairy lights twinkle. Stone patio garden venue moss accent. Outdoor gala theatrical stage, garden romance editorial. - STUDIO FIXED',
@@ -2297,7 +2354,7 @@ export const STUDIO_CATEGORIES = [
          'Đêm Hội Ánh Sáng | Deep blue-to-black gradient with colorful bokeh light effects. Props: Lantern installation art elaborate (background multiple levels), LED light sculptures, projection mapping backdrop, illuminated orbs, neon signs artistic, light tubes, festival banners, reflection panels. Colorful LED (4000K) with rainbow gel effects. Reflective dark surface night festival. Light festival night theatrical stage, modern celebration editorial. - STUDIO FIXED',
          'Gala Từ Thiện Unicef | Pure white-to-light blue gradient with hope symbol. Props: Charity logo backdrop large (background center), fundraising display thermometer, children art displayed, donation boxes elegant, charity pamphlets, humanitarian awards, hope candles, volunteer banners. Bright hopeful (5000K) giving atmosphere. White carpet charity event. Humanitarian gala theatrical stage, children charity editorial. - STUDIO FIXED',
          'Hòa Nhạc Giao Hưởng | Classic burgundy-to-black gradient with musical notes. Props: Orchestra chair hint (background left), music notation decor elegant, conductor stand, music stands multiple, cello case, violin stand, symphony program booklets, roses performers. Concert hall (3500K) classical sophistication. Polished stage wood symphony venue. Classical music Tet theatrical stage, symphony elegance editorial. - STUDIO FIXED',
-         'Fashion Show Finale | Vibrant gradient changing rainbow colors. Props: Photographer cameras flash (background multiple), runway edge marked, fashion show backdrop, designer recognition, confetti cannons, model lineup area, fashion press, show finale banner. Runway bright (6000K) with flash bursts dramatic. White runway fashion show peak. Fashion show climax theatrical stage, designer triumph editorial. - STUDIO FIXED',
+
          'Tiệc Mask Bí Ẩn | Mysterious deep violet-to-black gradient with mask motifs. Props: Ornate masks stands (background multiple styles), masquerade decorations feathered, candelabra gothic, velvet drapes purple, mystery boxes, champagne service, invitation cards elegant, venetian props. Dim mysterious (2500K) with dramatic shadows. Dark parquet mystery ball, purple runner. Masquerade Tet theatrical stage, mysterious elegance editorial. - STUDIO FIXED'
       ]
    }
