@@ -310,7 +310,116 @@ This enables the Image-to-Video workflow:
 
 ---
 
-## ⚠️ SCENES MUST DESCRIBE TRANSITIONS
+================================================
+⏱️ 8-SECOND MOTION DISTRIBUTION (CRITICAL)
+================================================
+
+**⚠️ VẤN ĐỀ:** Motion quá nhanh, kết thúc sớm → Khoảng trống "dead time" cuối scene!
+
+**❌ SAI:**
+```
+Scene 8s: "180° turn over 4 seconds" ← Chỉ 4s motion, còn 4s đứng yên = AI artifact!
+```
+
+**✅ ĐÚNG:**
+```
+Scene 8s: Motion phải DÀNG TRẢI FULL 8 GIÂY, không có khoảng trống!
+```
+
+---
+
+### 📋 8-SECOND SCENE BREAKDOWN TEMPLATE
+
+| Phase | Time | Content | Speed |
+|-------|------|---------|-------|
+| **Entry/Build** | 0s-2s | Pose settle, micro-movements, breath | SLOW |
+| **Main Action 1** | 2s-4s | Primary motion (turn/gesture/transition) | MEDIUM |
+| **Main Action 2** | 4s-6s | Secondary motion continuation or variation | MEDIUM |
+| **Exit/Settle** | 6s-8s | Final pose refinement, fabric settle, hair settle | SLOW |
+
+---
+
+### 🎯 GOLDEN RULES - FILL THE 8 SECONDS
+
+**Rule 1: SLOW EVERYTHING DOWN**
+- ❌ "quick turn" → "fast" = ends in 2s
+- ✅ "gradual turn", "slow deliberate turn" = spans 4-6s
+
+**Rule 2: LAYER MULTIPLE MICRO-MOTIONS**
+Instead of ONE motion, layer CONTINUOUS micro-movements:
+```
+✅ "Model performs slow turn (4s) while arms naturally sway,
+    fingers trail along fabric (2s), settling with hip shift and
+    gentle head tilt (2s), fabric continues flowing..."
+```
+
+**Rule 3: ADD SETTLE TIME**
+Every motion needs 1-2s at END for natural deceleration:
+```
+✅ "...turn completes, body settles, fabric flows to rest, 
+    hair strands fall back into place, subtle breathing visible"
+```
+
+**Rule 4: USE CONTINUOUS VOCABULARY**
+Add words that imply ONGOING motion:
+- **English:** "continues", "maintains", "gradually", "throughout", "sustained", "ongoing"
+- **Timing:** "over the full duration", "spanning 8 seconds", "from start to end"
+
+---
+
+### 📝 8-SECOND PROMPT TEMPLATES
+
+**Template A: Turn/Rotate Scene**
+```
+"Model begins with subtle weight shift and breath (0-1s), 
+ initiates slow 180° turn leading with hips (1-4s), 
+ continuing rotation while arms flow naturally (4-6s), 
+ completes turn, body settles into stance, fabric flows to rest (6-8s)"
+```
+
+**Template B: Gesture/Display Scene**
+```
+"Model's hands begin slow rise from sides (0-2s),
+ fingers trace along fabric texture showcasing details (2-4s),
+ hands reposition to highlight neckline while body sways subtly (4-6s),
+ arms gradually lower with controlled grace, pose settles (6-8s)"
+```
+
+**Template C: Static Hold with Micro-Motion**
+```
+"Model holds pose commanding camera attention (0-2s),
+ subtle weight shifts between feet maintaining dynamism (2-4s),
+ gentle sway as if responding to ambient breeze (4-6s),
+ final micro-adjustments, expression shifts slightly, pose crystallizes (6-8s)"
+```
+
+---
+
+### ⚠️ TIMING VALIDATION CHECKLIST
+
+Before outputting any scene, verify:
+
+- [ ] **Motion spans FULL 8s** - Not finishing at 4s or 6s
+- [ ] **No dead static time** - Always micro-movement continuing
+- [ ] **Fabric/hair settle time** - 1-2s at scene end for physics
+- [ ] **Smooth scene-to-scene** - endPose connects naturally to next startPose
+- [ ] **Pacing phrases included** - "gradually", "slowly", "over X seconds"
+
+**FORBIDDEN (Causes Dead Time):**
+- ❌ "quick spin" (too fast)
+- ❌ "turns 180° then holds" (motion stops, dead time)
+- ❌ "rapidly gestures" (ends too soon)
+- ❌ Single motion without continuation
+
+**REQUIRED (Fills Time):**
+- ✅ "gradual rotation throughout scene"
+- ✅ "slow continuous motion with settling"
+- ✅ "layered movements spanning full duration"
+- ✅ "sustained subtle sway even during stillness"
+
+---
+
+
 
 **CRITICAL RULE:** Scenes describe MOVEMENT between keyframe poses!
 
@@ -398,6 +507,139 @@ Before outputting scenes, check:
 
 ---
 
+================================================
+🪑 STANDING ↔ SITTING TRANSITION MECHANICS
+================================================
+
+⚠️ CRITICAL: Chuyển đổi đứng↔ngồi là MAJOR POSE CHANGE!
+
+### 📋 TIMING REQUIREMENTS
+
+| Transition | Min Time | Recommended |
+|------------|----------|-------------|
+| Standing → Sitting (chair) | 3s | 4-5s |
+| Standing → Sitting (floor) | 4s | 5-6s |
+| Sitting → Standing | 2.5s | 3-4s |
+
+### 🎬 STANDING → SITTING PHASES
+
+**Phase 1: Preparation (0.5-1s)** → Weight shifts back, hands reach for support
+**Phase 2: Descent (2-3s)** → Knees bend, hips lower, torso tilts forward
+**Phase 3: Settling (1s)** → Weight to seat, back straightens, hands reposition
+
+### 🎬 SITTING → STANDING PHASES
+
+**Phase 1: Preparation (0.5s)** → Weight forward, hands press for push
+**Phase 2: Rise (2-2.5s)** → Push through legs, hips first, torso follows
+**Phase 3: Stabilization (0.5-1s)** → Full upright, weight centers
+
+---
+
+================================================
+🎬 SCENE TRANSITION EFFECTS (PROP APPEARANCE)
+================================================
+
+Khi PROPS (ghế, bàn) xuất hiện/biến mất giữa các scenes:
+
+---
+
+### 🎥 TECHNIQUE 1: CAMERA CUT (Jump Cut)
+
+**Dùng khi:** Fast-paced, prop cần xuất hiện ngay
+
+```
+Scene 1 END: Close-up on face/shoulders (lower body off-frame, no chair visible)
+Scene 2 START: "JUMP CUT to wide shot: model now seated on chair..."
+```
+
+---
+
+### 🎭 TECHNIQUE 2: MODEL BLOCKS VIEW
+
+**Dùng khi:** Smooth transition, natural reveal
+
+```
+Scene 1: "Model standing front-facing, body centered (blocking seat area behind)"
+Scene 2: "Model turns 90° to sit - chair REVEALS as body rotates away from camera"
+```
+
+---
+
+### ✨ TECHNIQUE 3: AMBIENT TRANSITION
+
+**Dùng khi:** Dreamy/cinematic aesthetic
+
+```
+Scene 1 END: "...fabric sweeps across camera / wind blows hair covering frame"
+Scene 2 START: "As fabric settles, reveals model now seated in new setup..."
+```
+
+---
+
+### 📐 TECHNIQUE 4: FRAMING SHIFT
+
+**Dùng khi:** Editorial/lookbook style
+
+```
+Keyframe 1: "Tight crop, waist-up only (floor/chair not visible)"
+Keyframe 2: "Wide shot, full body seated with chair visible"
+```
+
+---
+
+### 🔄 TRANSITION VOCABULARY
+
+| Technique | English Prompt |
+|-----------|----------------|
+| Jump Cut | "JUMP CUT to..." |
+| Body Block | "model rotates, revealing [prop] behind" |
+| Fabric Cover | "fabric sweeps frame, then reveals..." |
+| Zoom Reveal | "camera pulls back revealing seated position" |
+
+---
+
+### ✅ COMPLETE EXAMPLE
+
+**Requirement:** Standing (no chair) → Sitting (chair appears)
+
+```json
+{
+  "images": [
+    {"id": 1, "prompt": "Model standing facing camera, no furniture visible"},
+    {"id": 2, "prompt": "Model seated on velvet chair, hands on lap"}
+  ],
+  "scenes": [
+    {
+      "id": 1,
+      "prompt": "Model standing facing camera (body blocking where chair will be). 
+                Over 3s, turns 90° right - vintage chair REVEALS as body rotates. 
+                At 3-6s, controlled descent: knees bend, hips lower to chair. 
+                Final 2s: settles into seat, hands to lap, dress smooths. 
+                Camera tilts down and pulls back to frame seated position",
+      "motion": {
+        "primary": "turn 90° then sit (6s total)",
+        "arms": "reach for chair, settle on lap",
+        "legs": "knees bend during descent",
+        "torso": "turns, tilts forward, straightens when seated",
+        "head": "follows turn, maintains camera connection",
+        "hair": "swings with turn, settles when seated"
+      }
+    }
+  ]
+}
+```
+
+---
+
+### ⚠️ KEY RULES
+
+1. **NEVER show prop "appearing from nothing"** - always use technique
+2. **Tight crop hides props** - wide shot reveals props
+3. **Body as natural blocker** - model hides/reveals through movement
+4. **Movement covers change** - turn, fabric sweep, hair flip masks transitions
+
+---
+
 🎯 **ONE VIDEO = ONE FOCAL POINT:**
 
 Each video showcases ONE thing clearly:
@@ -429,8 +671,191 @@ Each video showcases ONE thing clearly:
 ---
 
 ================================================
+🎭 NATURAL BODY MOTION VOCABULARY (VEO 3.1 OPTIMIZED)
+================================================
+
+**Mô tả chi tiết chuyển động từng phần cơ thể để tạo video tự nhiên như người thật.**
+
+Khi viết scene prompts, PHẢI mô tả chuyển động của các bộ phận cơ thể một cách cụ thể:
+
+---
+
+### 💪 ARM MOTION (Chuyển động tay)
+
+| Motion Type | English Prompt | Time |
+|-------------|----------------|------|
+| **Raise slowly** | "right arm lifts gradually to shoulder height over 2s, elbow soft" | 2s |
+| **Touch hair** | "left hand rises smoothly to touch hair near temple" | 1.5s |
+| **Rest on hip** | "right hand settles naturally on hip, fingers relaxed, thumb back" | 1s |
+| **Cross arms** | "arms fold across chest softly, elbows relaxed" | 2s |
+| **Gesture outward** | "arm extends gracefully outward, palm up, fingers spread" | 1.5s |
+| **Drop to side** | "arm lowers slowly to rest by side, slight swing" | 1.5s |
+| **Behind back** | "both hands clasp gently behind lower back" | 2s |
+| **Adjust outfit** | "fingers brush collar/hem/strap lightly" | 1s |
+
+**TEMPLATE:**
+```
+"[which arm] [action verb] [to where] over [X]s, [detail about elbow/wrist/fingers]"
+```
+
+---
+
+### 🦵 LEG MOTION (Chuyển động chân)
+
+| Motion Type | English Prompt | Effect |
+|-------------|----------------|--------|
+| **Weight shift** | "weight transfers smoothly from left to right leg over 1.5s" | Hip movement |
+| **Knee pop** | "right knee bends slightly, creating S-curve silhouette" | Feminine pose |
+| **Hip sway** | "hips sway gently left-right-center in 2s cycle" | Dynamic feel |
+| **Stance widen** | "feet slide apart 6 inches to confident stance" | Power pose |
+| **Cross ankles** | "right ankle crosses in front of left" | Elegant |
+| **Point toe** | "right toe extends forward, heel lifted" | Ballet influence |
+
+**⚠️ BANNED:** step, walk, stride, move forward (gây AI artifacts)
+
+**TEMPLATE:**
+```
+"[body part] [motion] over [X]s, [resulting silhouette change]"
+```
+
+---
+
+### 🧍 TORSO MOTION (Chuyển động thân mình)
+
+| Motion Type | English Prompt |
+|-------------|----------------|
+| **Subtle lean** | "torso leans 5-10° to right, spine stays elegant" |
+| **Chest rotation** | "chest rotates 15° right while hips remain static, creating twist" |
+| **Spine undulation** | "gentle wave through spine from base to shoulders" |
+| **Shoulder drop** | "right shoulder drops slightly lower than left, relaxed asymmetry" |
+| **Shoulder roll** | "shoulders roll back slowly, opening chest" |
+| **Forward lean** | "upper body tilts forward 10°, emphasizing neckline" |
+| **Arch back** | "slight arch in lower back, chest opens upward" |
+
+**COORDINATION RULE:**
+- Torso leads rotation → Hips follow 0.3s later
+- Weight shifts → Torso responds naturally
+- Always maintain "S-curve" or "C-curve" silhouette
+
+---
+
+### 🗣️ HEAD & NECK MOTION (Chuyển động đầu cổ)
+
+| Motion Type | English Prompt |
+|-------------|----------------|
+| **Chin lift** | "chin tilts up 10° with confident expression, neck elongates" |
+| **Head turn** | "head rotates slowly 45° left, eyes follow, jawline visible" |
+| **Neck stretch** | "neck extends elegantly, chin forward, creating long line" |
+| **Look over shoulder** | "head turns 90° back, glancing over right shoulder, eyes meet camera" |
+| **Slight tilt** | "head tilts 5° right, creating soft asymmetry" |
+| **Nod acknowledge** | "subtle single nod downward 3° then back" |
+
+**COORDINATION:**
+- Face rotates with head (eyes can lead by 0.2s)
+- Neck shows tendons when turned
+- Jaw and neck visible = good angle
+
+---
+
+### 💇 HAIR PHYSICS (Vật lý tóc - CRITICAL for realism)
+
+| Hair Type | Motion Description |
+|-----------|---------------------|
+| **Long straight** | "hair flows behind with movement, individual strands separate and catch light, 0.5s momentum delay" |
+| **Long wavy/curly** | "waves bounce with each movement, volume shifts side to side, natural spring return" |
+| **Ponytail/Bun** | "ponytail swings in arc following head movement, settles with gentle oscillation" |
+| **Short hair** | "hair shifts slightly with head, maintains overall shape, bangs flutter" |
+| **Side part** | "hair sweeps across following turn direction, reveals/hides alternate sides" |
+
+**HAIR MOTION TRIGGERS:**
+- Head turn → Hair follows with 0.3s delay
+- Wind → Hair streams in wind direction
+- Body spin → Hair fans out, then wraps around on stop
+- Sudden stop → Hair continues momentum briefly
+
+**WIND VOCABULARY:**
+```
+"gentle breeze from [direction] lifts hair strands"
+"wind catches hair, flowing [direction] naturally"  
+"hair settles after movement with soft bounce"
+```
+
+---
+
+### 🤚 HAND & FINGER DETAILS (Chi tiết bàn tay)
+
+| Motion Type | English Prompt |
+|-------------|----------------|
+| **Fingers spread** | "fingers extend gracefully, spacing even, showing rings/nails" |
+| **Touch fabric** | "fingertips brush fabric lightly at [location], testing texture" |
+| **Adjust collar** | "thumb and forefinger pinch collar edge, small adjustment" |
+| **Rest naturally** | "hands hang relaxed at sides, fingers curved naturally inward" |
+| **Clasp in front** | "hands meet at waist level, fingers interlaced loosely" |
+| **One hand gesture** | "palm faces camera, fingers together, gentle wave motion" |
+| **Pick at hem** | "fingertips pluck hem edge, showing fabric drape" |
+
+**HAND REALISM:**
+- Fingers rarely fully straight (slight natural curl)
+- Wrist follows arm motion smoothly
+- Visible tendons when fingers extend
+- Nails catch light = added realism
+
+---
+
+### 🎬 COMBINED MOTION EXAMPLES (Scene Prompts)
+
+**Example 1: Elegant Turn**
+```
+"Model starts facing camera, right hand on hip. Over 3 seconds, head turns first 45° left, 
+hair follows with 0.3s delay sweeping across shoulders. Weight shifts to right leg creating 
+S-curve. Left arm rises slowly to touch hair at temple. Torso rotates 90° following head direction, 
+hips follow last. End pose: 3/4 left profile, left hand in hair, weight on right leg."
+```
+
+**Example 2: Confident Pose Transition**
+```
+"From arms crossed pose, right arm drops slowly to rest on hip over 2s while left arm remains
+at chest level. Weight transfers to left leg, right knee pops creating hip asymmetry. 
+Head tilts slightly right 5°, chin lifts with confident expression. Hair settles naturally 
+after movement. End pose: asymmetric power stance, one hand on hip."
+```
+
+**Example 3: Fabric Interaction**
+```
+"Standing still, right hand rises to adjust collar with thumb and forefinger, fingertips visible. 
+Then hand trails down front of dress, fingertips brushing fabric, showing texture. Hair catches 
+gentle side breeze from left, strands lift and separate. Weight shifts subtly during gesture. 
+End pose: standing, hands naturally at sides, hair settling."
+```
+
+---
+
+### ⚡ QUICK REFERENCE CARD
+
+**ALWAYS DESCRIBE:**
+1. **Arms**: Which arm + action + destination + duration
+2. **Legs**: Weight distribution + knee position + stance width
+3. **Torso**: Lean direction + rotation + spine curve
+4. **Head**: Turn angle + chin position + where eyes look
+5. **Hair**: Type + motion response + delay time
+6. **Hands**: Finger position + what they're doing + visibility
+
+**TIMING GUIDE:**
+| Movement | Duration |
+|----------|----------|
+| Small gesture | 1-1.5s |
+| Arm movement | 1.5-2.5s |
+| Full body turn (45°) | 2-3s |
+| Full body turn (90°) | 3-4s |
+| Weight shift | 1-2s |
+| Hair settle after motion | 0.5-1s |
+
+---
+
+================================================
 🔄 CAMERA ANGLE CONTINUITY (180° TURN PREVENTION)
 ================================================
+
 
 ⚠️ CRITICAL: VEO 3.1 CHỈ CÓ DỮ LIỆU HÌNH ẢNH TỪ KEYFRAME IMAGES!
 

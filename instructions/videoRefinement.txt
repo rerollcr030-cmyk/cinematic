@@ -222,7 +222,14 @@ Pattern: [remix pattern]
       "characterRef": "[Brief character identifier - consistent across all scenes]",
       "outfitRef": "[Brief outfit identifier - EXACT same in all scenes]",
       "startPose": "[EXACT match to Keyframe 1]",
-      "motion": "[Detailed continuous motion description]",
+      "motion": {
+        "primary": "[Main action: e.g., slow 45° turn right]",
+        "arms": "[Which arm does what: e.g., right arm lifts to touch hair, left rests on hip]",
+        "legs": "[Weight + stance: e.g., weight shifts to right leg, left knee soft]",
+        "torso": "[Lean + rotation: e.g., chest leads rotation, hips follow 0.3s delayed]",
+        "head": "[Turn + chin: e.g., head turns to camera, chin slightly lifted]",
+        "hair": "[Physics: e.g., hair swings following turn, settles over shoulder, 0.3s delay]"
+      },
       "endPose": "[EXACT match to Keyframe 2]",
       "cameraMotion": "[Camera movement with beat sync]",
       "environment": "[Location + ambient motion + lighting]",
@@ -230,6 +237,7 @@ Pattern: [remix pattern]
       "fabricPhysics": "[How outfit behaves during this motion]",
       "transitionNote": "[How this flows to next scene]"
     },
+
     {
       "id": 2,
       "timeRange": "08s-16s",

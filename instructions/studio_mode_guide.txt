@@ -977,7 +977,229 @@ Both are FIXED (no drift) but studio is controlled/themed, real is actual place.
 
 ---
 
+### 🌸 FLORAL DRESS STUDIOS (25 Studios - By Dress Type)
+
+**Hướng dẫn chọn:** AI tự động match studio dựa trên loại váy được detect từ outfit image.
+
+---
+
+#### 🌼 MINI DRESS / ĐẦM NGẮN (5 Studios)
+*Cho váy ngắn, playful, năng động*
+
+**1. Daisy Fresh ⭐** (Default for Mini)
+- Background: Fresh white-yellow gradient cheerful
+- Props: Daisy bouquet in mason jar (background), picnic blanket edge
+- Lighting: Bright summer daylight (5500K)
+- Floor: Fresh grass texture
+- Vibe: Youthful, casual chic, summer fresh, picnic ready
+
+**2. Poppy Pop**
+- Background: Vibrant coral-cream gradient bold
+- Props: Red poppy arrangement (background), woven basket
+- Lighting: Bright warm (5000K)
+- Floor: Rustic wood
+- Vibe: Bold summer, vibrant energy, statement mini
+
+**3. Cherry Blossom Party**
+- Background: Soft pink-white K-beauty gradient
+- Props: Sakura branch in cute vase (background), pastel accessories
+- Lighting: Soft flattering (4500K) Korean style
+- Floor: Light pink tile
+- Vibe: Sweet playful, K-fashion, idol aesthetic, spring party
+
+**4. Sunflower Festival**
+- Background: Warm golden-cream gradient summer
+- Props: Tall sunflower stems (background), straw hat
+- Lighting: Bright golden (5000K)
+- Floor: Rustic wood planks
+- Vibe: Festival fun, boho summer, sunshine happy
+
+**5. Wildflower Picnic**
+- Background: Soft green-cream meadow gradient
+- Props: Mixed wildflower bunch in basket (background), vintage blanket
+- Lighting: Natural afternoon (4500K)
+- Floor: Grass with scattered petals
+- Vibe: Cottagecore, casual romantic, meadow picnic
+
+---
+
+#### 🌷 MIDI DRESS / A-LINE (5 Studios)
+*Cho váy midi, thanh lịch, office-friendly*
+
+**6. Rose Garden Office ⭐** (Default for Midi)
+- Background: Soft blush-cream gradient professional
+- Props: Elegant rose arrangement (background), minimalist desk
+- Lighting: Bright clean (5000K)
+- Floor: Light wood professional
+- Vibe: Professional feminine, office chic, meeting ready
+
+**7. Tulip Elegance**
+- Background: Soft coral-white gradient Dutch spring
+- Props: Tulip arrangement in glass vase (background), art book
+- Lighting: Bright spring (5000K) editorial
+- Floor: White marble
+- Vibe: Dutch elegance, spring editorial, sophisticated casual
+
+**8. Peony Business**
+- Background: Soft pink-gray gradient refined
+- Props: Lush peony in ceramic vase (background), leather portfolio
+- Lighting: Professional daylight (5000K)
+- Floor: Polished marble
+- Vibe: Sophisticated meeting, feminine power, refined elegance
+
+**9. Magnolia Grace**
+- Background: Warm cream-white Southern gradient
+- Props: Magnolia branch in tall vase (background), vintage frame
+- Lighting: Warm natural (4200K)
+- Floor: Aged wood elegant
+- Vibe: Southern charm, graceful elegance, classic feminine
+
+**10. Hydrangea Tea**
+- Background: Soft blue-lavender-cream gradient
+- Props: Blue hydrangea in porcelain vase (background), tea cup
+- Lighting: Soft afternoon (4500K)
+- Floor: Light marble
+- Vibe: Afternoon tea elegant, garden party, refined casual
+
+---
+
+#### 🌺 MAXI DRESS / FLOWING (5 Studios)
+*Cho váy dài xòe, romantic, resort*
+
+**11. Lavender Fields ⭐** (Default for Maxi)
+- Background: Soft purple-cream Provence gradient
+- Props: Dried lavender bundles in basket (background), rustic chair
+- Lighting: Warm French afternoon (4000K)
+- Floor: Rustic stone
+- Vibe: French Provence, lavender dreamy, romantic flowing
+
+**12. Tropical Hibiscus**
+- Background: Warm coral-teal gradient tropical
+- Props: Hibiscus arrangement (background), palm leaf, rattan
+- Lighting: Warm tropical (4200K)
+- Floor: White sand texture
+- Vibe: Island paradise, resort luxury, tropical romance
+
+**13. Wisteria Cascade**
+- Background: Soft purple-pink Japanese gradient
+- Props: Wisteria vine hanging (background), zen stones
+- Lighting: Soft diffused (4500K) dreamy
+- Floor: Light stone path
+- Vibe: Japanese garden, romantic cascade, ethereal flowing
+
+**14. Meadow Breeze**
+- Background: Soft green-gold meadow gradient
+- Props: Wild grass and flowers (background), wooden fence hint
+- Lighting: Golden hour (4000K)
+- Floor: Natural grass
+- Vibe: Boho flowing, free spirit, meadow romance
+
+**15. Bougainvillea Sunset**
+- Background: Warm magenta-coral-cream Mediterranean gradient
+- Props: Bougainvillea branch (background), terracotta pot
+- Lighting: Warm sunset (3800K)
+- Floor: Terracotta tile
+- Vibe: Mediterranean romance, sunset flowing, Greek island
+
+---
+
+#### 💃 BODYCON / ĐẦM ÔM (5 Studios)
+*Cho váy ôm body, sexy, night out*
+
+**16. Red Rose Noir ⭐** (Default for Bodycon)
+- Background: Deep burgundy-black dramatic gradient
+- Props: Dark red roses in black vase (background), velvet drape
+- Lighting: Warm dramatic (3200K) with rim light
+- Floor: Dark marble
+- Vibe: Seductive dramatic, red carpet, femme fatale
+
+**17. Black Orchid**
+- Background: Deep purple-black mysterious gradient
+- Props: Dark orchid in minimalist pot (background), candle
+- Lighting: Moody warm (3500K) dramatic
+- Floor: Black marble
+- Vibe: Mysterious luxury, dark elegance, enigmatic night
+
+**18. Calla Lily Glam**
+- Background: Sleek white-silver modern gradient
+- Props: White calla lilies in tall vase (background), mirror
+- Lighting: Bright clean (5000K) editorial
+- Floor: White marble polished
+- Vibe: Sleek modern, minimalist glam, gallery opening
+
+**19. Dark Dahlia**
+- Background: Deep plum-charcoal artistic gradient
+- Props: Dark dahlia arrangement (background), art frame
+- Lighting: Warm moody (3500K)
+- Floor: Dark wood
+- Vibe: Bold artistic, gallery night, creative edge
+
+**20. Velvet Peony**
+- Background: Rich burgundy-cream gradient luxe
+- Props: Deep pink peonies in velvet setting (background), silk
+- Lighting: Warm romantic (3500K)
+- Floor: Rich carpet
+- Vibe: Rich romantic, date night, sophisticated sensual
+
+---
+
+#### 👰 ROMANTIC / WEDDING GUEST (5 Studios)
+*Cho váy dự tiệc, wedding guest, dreamy*
+
+**21. Peony Blush ⭐** (Default for Romantic)
+- Background: Soft blush-cream bridal gradient
+- Props: Blush peony arrangement (background), sheer drape
+- Lighting: Soft romantic (4000K) glowing
+- Floor: White marble
+- Vibe: Wedding guest, romantic feminine, celebration ready
+
+**22. White Rose Dream**
+- Background: Pure white-cream classic gradient
+- Props: White roses in silver vase (background), pearl accents
+- Lighting: Soft bright (4500K) dreamy
+- Floor: White marble
+- Vibe: Classic wedding, timeless elegance, bridal party
+
+**23. Cherry Blossom Romance**
+- Background: Soft pink-lavender spring gradient
+- Props: Sakura branches (background), silk ribbon
+- Lighting: Soft spring (4500K)
+- Floor: Light wood with petals
+- Vibe: Spring wedding, romantic dreamy, cherry blossom season
+
+**24. Garden Party Roses**
+- Background: Soft mixed pastels garden gradient
+- Props: Mixed rose arrangement (background), garden arch hint
+- Lighting: Natural bright (5000K) outdoor feel
+- Floor: Stone garden path
+- Vibe: Outdoor wedding, garden party, celebration elegance
+
+**25. French Cottage Florals**
+- Background: Soft cream with subtle floral wallpaper hint
+- Props: Vintage flower bucket (background), lace curtain
+- Lighting: Soft morning (4500K) romantic
+- Floor: Aged wood planks
+- Vibe: Provence wedding, vintage romantic, cottage charm
+
+---
+
+### 🌸 FLORAL STUDIO AUTO-DETECTION
+
+**AI tự động chọn studio dựa trên:**
+
+| Dress Type Detected | Category | Default Studio |
+|---------------------|----------|----------------|
+| Mini/Short dress | Mini Dress | Daisy Fresh |
+| Midi/A-line dress | Midi Dress | Rose Garden Office |
+| Maxi/Flowing dress | Maxi Dress | Lavender Fields |
+| Bodycon/Fitted dress | Bodycon | Red Rose Noir |
+| Formal/Party dress | Romantic | Peony Blush |
+| Floral pattern (any) | Match dress length | By length category |
+
+---
+
 ### 👚 TOP / ÁO STUDIOS (10 Studios - Street to Office)
+
 
 **1. Street Style ⭐** (Default)
 - Background: Urban gray concrete texture seamless
