@@ -1,0 +1,304 @@
+# 🪄 TRANSFORMATION MODE - BIẾN HÌNH VIDEO SCENES
+
+## OVERVIEW
+
+Transformation videos show AI-generated "BEFORE" outfit morphing into user's uploaded "AFTER" outfit.
+
+**Duration:** 32 seconds
+**Effect:** Viral TikTok sparkle/swoosh transitions
+
+---
+
+## 32-SECOND SCENE STRUCTURE
+
+| Phase | Time | Nội dung |
+|-------|------|----------|
+| **BEFORE** | 0s-8s | AI-generated casual/home outfit |
+| **TRANSITION** | 8s-16s | Transformation effect (sparkle/swoosh/spin) |
+| **AFTER** | 16s-32s | User's uploaded outfit showcase |
+
+---
+
+## 🎬 SCENE BREAKDOWN BY CATEGORY
+
+### 👗 DRESSES (Đầm/Váy)
+
+**Đầm Dạ Hội / Evening Dress (32s):**
+```
+Scene 1 (0s-8s): BEFORE
+- Model in cozy pajamas/loungewear at home
+- Sitting casually, scrolling phone, messy hair vibe
+- AI generates: Áo phông oversize + quần pyjama
+
+Scene 2 (8s-16s): TRANSFORMATION
+- Sparkles begin emanating from outfit edges
+- Light intensifies, model begins slow spin
+- Outfit morphs through magic particles
+
+Scene 3 (16s-24s): AFTER REVEAL
+- Model emerges in stunning evening dress
+- Full body turn to showcase silhouette
+- Hair now styled, makeup complete
+
+Scene 4 (24s-32s): SHOWCASE
+- Elegant poses, fabric flowing
+- Camera slow orbit, luxury lighting
+- Final confident pose
+```
+
+**Đầm Công Sở / Office Dress (32s):**
+```
+Scene 1 (0s-8s): BEFORE
+- Model in bed, alarm going off vibe
+- Messy morning, stretching, yawning
+- AI generates: Đồ ngủ cute morning
+
+Scene 2 (8s-16s): TRANSFORMATION
+- Mirror reflection effect
+- Split screen morph: sleepy → polished
+
+Scene 3 (16s-24s): AFTER REVEAL
+- Professional office dress revealed
+- Hair styled, confident smile
+- Adjusting accessories
+
+Scene 4 (24s-32s): SHOWCASE
+- Power poses, briefcase grab
+- Walking out door energy
+- Final professional stance
+```
+
+---
+
+### 👚 TOPS (Áo)
+
+**Blazer / Vest (32s):**
+```
+Scene 1 (0s-8s): BEFORE
+- Casual hoodie, relaxed posture
+- Working from home lazy vibe
+- AI generates: Hoodie baggy + messy bun
+
+Scene 2 (8s-16s): TRANSFORMATION  
+- Blazer "slides on" from behind
+- Power pose emerges as blazer appears
+- Professional lighting shift
+
+Scene 3 (16s-24s): AFTER REVEAL
+- Sharp blazer fully visible
+- Shoulder pads, clean lines showcase
+- Boss lady energy materializes
+
+Scene 4 (24s-32s): SHOWCASE
+- Arms crossed power pose
+- Low angle CEO shot
+- Final confident look
+```
+
+**Áo Sơ Mi / Blouse (32s):**
+```
+Scene 1 (0s-8s): BEFORE
+- Basic white tee, ponytail
+- Too casual for meeting vibe
+- AI generates: Áo thun trắng basic
+
+Scene 2 (8s-16s): TRANSFORMATION
+- Button-up animation effect
+- Fabric transforms from basic to elegant
+
+Scene 3 (16s-24s): AFTER REVEAL
+- Crisp blouse showcase
+- Collar detail, cuff buttons
+- Polished professional look
+
+Scene 4 (24s-32s): SHOWCASE
+- Tucked/styled variations
+- Office-ready final pose
+```
+
+---
+
+### 👖 BOTTOMS (Quần)
+
+**Quần Jean (32s):**
+```
+Scene 1 (0s-8s): BEFORE
+- Wearing old joggers/sweatpants
+- Comfy but not chic
+- AI generates: Quần jogger nhà
+
+Scene 2 (8s-16s): TRANSFORMATION
+- Walk-through transition
+- Fabric morphs mid-stride
+
+Scene 3 (16s-24s): AFTER REVEAL
+- Perfect-fit jeans showcase
+- Front/side/back angle check
+- Hip and waist fit highlight
+
+Scene 4 (24s-32s): SHOWCASE
+- Street style poses
+- Confident walk-in-place
+- Final flattering angle
+```
+
+---
+
+### ✨ SPECIAL CATEGORIES
+
+**Áo Dài (32s):**
+```
+Scene 1 (0s-8s): BEFORE
+- Modern casual Vietnamese outfit
+- Blouse + trousers combination
+- AI generates: Áo kiểu + quần Tây
+
+Scene 2 (8s-16s): TRANSFORMATION
+- Golden Vietnamese pattern particles
+- Cultural magic reveal effect
+- Áo dài fabric unfurls elegantly
+
+Scene 3 (16s-24s): AFTER REVEAL
+- Full áo dài silhouette
+- Side profile showing flow
+- Traditional elegance revealed
+
+Scene 4 (24s-32s): SHOWCASE
+- Graceful standing poses
+- Fabric flow with gentle movement
+- Final traditional beauty pose
+```
+
+**Đồ Thể Thao / Sportswear (32s):**
+```
+Scene 1 (0s-8s): BEFORE
+- Office clothes, tired from work
+- Slumped posture, exhausted vibe
+- AI generates: Áo sơ mi mệt mỏi
+
+Scene 2 (8s-16s): TRANSFORMATION
+- Energy burst effect
+- Dynamic motion blur morph
+- Colors become vibrant
+
+Scene 3 (16s-24s): AFTER REVEAL
+- Athletic wear fully visible
+- Power pose, energized
+- Ready to workout vibe
+
+Scene 4 (24s-32s): SHOWCASE
+- Athletic poses (not exercises!)
+- Dynamic stance, confident
+- Final sporty look
+```
+
+---
+
+## 🎭 TRANSFORMATION EFFECT VOCABULARY
+
+### Effect 1: Sparkle Magic (Default)
+```
+"Golden sparkles emanate from outfit edges (8s), 
+ particles intensify wrapping the body in light (10s),
+ sparkles dissipate revealing transformed outfit (12s),
+ new look crystallizes with final sparkle burst (16s)"
+```
+
+### Effect 2: Fabric Swoosh
+```
+"Fabric billows upward like ocean wave (8s),
+ material wraps model in flowing motion (10s),
+ fabric settles down in new configuration (12s),
+ transformed outfit revealed beneath (16s)"
+```
+
+### Effect 3: Spin Blur
+```
+"Model initiates slow rotation (8s),
+ spin accelerates, motion blur intensifies (10s),
+ peak blur moment, outfit details obscured (12s),
+ rotation slows revealing new look (16s)"
+```
+
+### Effect 4: Mirror Split
+```
+"Screen splits vertically down center (8s),
+ left side shows before, right shows after (10s),
+ split line moves across body left to right (12s),
+ complete transformation as line exits frame (16s)"
+```
+
+---
+
+## 🤖 AI "BEFORE" OUTFIT GENERATION LOGIC
+
+**Based on AFTER outfit type:**
+
+| AFTER Outfit | AI Generates BEFORE |
+|--------------|---------------------|
+| Evening dress | Pyjamas/loungewear cozy |
+| Office dress | Morning sleepwear messy |
+| Party dress | Casual home clothes |
+| Blazer | Hoodie baggy |
+| Blouse | Basic white tee |
+| Jeans | Joggers/sweatpants |
+| Áo dài | Modern casual Vietnamese |
+| Sportswear | Office clothes tired |
+| Bikini | Cover-up/pareo beach |
+
+---
+
+## ⚠️ TRANSFORMATION RULES
+
+**DO:**
+- Keep same model pose angle for seamless morph
+- Use consistent lighting throughout
+- BEFORE should look "real" and relatable
+- AFTER should be aspirational, glamorous
+
+**DON'T:**
+- Jump cut between before/after (must morph)
+- Change model's position during transition
+- Make BEFORE look unrealistically bad
+- Rush the transformation (needs full 8s)
+
+---
+
+## PROMPT TEMPLATE
+
+For transformation videos, use this scene prompt format:
+
+```json
+{
+  "scenes": [
+    {
+      "id": 1,
+      "timeRange": "00s-08s",
+      "prompt": "[BEFORE outfit description - AI generated casual/home look]. Model in relaxed pose, everyday casual environment, comfortable but not styled",
+      "phase": "BEFORE"
+    },
+    {
+      "id": 2,
+      "timeRange": "08s-16s", 
+      "prompt": "[TRANSFORMATION effect]. Sparkles/fabric/spin effect begins, outfit edges start glowing, magical particles swirl around body, transformation builds to peak, new outfit emerges",
+      "phase": "TRANSITION"
+    },
+    {
+      "id": 3,
+      "timeRange": "16s-24s",
+      "prompt": "[AFTER outfit full reveal]. Model in [user uploaded outfit], styled hair and makeup, confident posture, camera showcases full silhouette",
+      "phase": "AFTER_REVEAL"
+    },
+    {
+      "id": 4,
+      "timeRange": "24s-32s",
+      "prompt": "[AFTER outfit showcase]. Elegant poses highlighting outfit details, fabric flow, final confident stance, aspirational ending",
+      "phase": "SHOWCASE"
+    }
+  ]
+}
+```
+
+---
+
+Last Updated: January 2026

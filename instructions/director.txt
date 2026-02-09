@@ -163,6 +163,13 @@ This enables the Image-to-Video workflow:
 - Teleporting subjects (position jumps)
 - Perspective distortion (warped frames)
 
+📝 **EXCEPTION - FASHION WALK-IN MODE:**
+> Khi video style = `fashion_walkin` hoặc `fashion_walkin_beauty`:
+> - Model được phép BƯỚC ĐI về phía camera
+> - Camera BẮT BUỘC CỐ ĐỊNH (tripod/gimbal) - đây là key để tránh artifacts
+> - Walking được phép vì: Camera static + Subject motion = Safe pattern
+> - Áp dụng rules từ "FASHION WALK-IN MODE" trong tiktokShop.txt
+
 ---
 
 ✅ **REQUIRED: Static Showcase Movements**
@@ -208,16 +215,36 @@ This enables the Image-to-Video workflow:
 📐 **90% FRAME HEIGHT RULE (MANDATORY):**
 
 **Every keyframe/scene MUST specify:**
-"Model occupies 90% of frame HEIGHT"
+```
+"Full-body model visible from head to toe, centered in frame, 
+occupying approximately 90% of the frame height"
+```
+
+**⚠️ EXPLICIT REQUIREMENT:**
+- ✅ "Full-body model visible from head to toe" - TOÀN THÂN từ đầu đến chân
+- ✅ "centered in frame" - Model ở GIỮA khung hình
+- ✅ "occupying approximately 90% of the frame height" - Chiếm ~90% chiều CAO
+- ✅ Head fully visible with ~5% margin at top
+- ✅ Feet/shoes fully visible with ~5% margin at bottom
+- ❌ NO cropping at head or feet
+- ❌ NO zoomed-in shots (unless specifically requested)
+- ❌ NO wide shots where model is small
 
 **Frame Composition:**
 ```
-┌─────────────┐ ← 5% margin (head space)
-│   👤 HEAD   │
+┌─────────────┐ ← 5% margin (head space - DO NOT CUT HEAD)
+│   👤 HEAD   │ ← MUST be fully visible
 │   👕 BODY   │ ← 90% frame height
 │   👖 LEGS   │
-│   👠 FEET   │
-└─────────────┘ ← 5% margin (feet space)
+│   👠 FEET   │ ← MUST be fully visible (shoes included)
+└─────────────┘ ← 5% margin (feet space - DO NOT CUT FEET)
+```
+
+**EN Prompt Template:**
+```
+"Full-body model visible from head to toe, centered in frame, 
+occupying approximately 90% of the frame height, 
+[pose description], [outfit visible in full], [environment]"
 ```
 
 **Camera Settings:**
@@ -226,7 +253,7 @@ This enables the Image-to-Video workflow:
 - Height: Eye level or slightly below
 - NO zoom unless specified as "camera zooms"
 
-**Why mandatory:** Prevents AI from randomly zooming out, changing framing, losing subject consistency
+**Why mandatory:** Prevents AI from randomly zooming out, changing framing, cropping head/feet, or losing subject consistency
 
 ---
 
@@ -416,6 +443,679 @@ Before outputting any scene, verify:
 - ✅ "slow continuous motion with settling"
 - ✅ "layered movements spanning full duration"
 - ✅ "sustained subtle sway even during stillness"
+
+---
+
+
+================================================
+😊 MANDATORY LIVELY EXPRESSION RULES (BẮT BUỘC BIỂU CẢM VUI VẺ)
+================================================
+
+⚠️ **VẤN ĐỀ:** AI thường tạo MẶT ĐƠ, thiếu sức sống, trông như robot!
+✅ **GIẢI PHÁP:** BẮT BUỘC biểu cảm TƯƠI VUI và SỐN ĐỘNG trong MỌI keyframe/image!
+
+---
+
+### 🚫 BANNED EXPRESSIONS (CẤM DÙNG - SẼ GÂY MẶT ĐƠ)
+
+| ❌ BANNED TERM | Vấn đề | ✅ THAY BẰNG |
+|----------------|--------|--------------|
+| "neutral expression" | Mặt đơ, không cảm xúc | "relaxed gentle smile" |
+| "blank face" | Như robot, không sống động | "soft pleasant expression" |
+| "stoic" | Lạnh lùng, không thân thiện | "calm confident smile" |
+| "expressionless" | Cứng nhắc, boring | "natural warm expression" |
+| "poker face" | Không ai muốn xem | "approachable smile" |
+| "serious look" | Đáng sợ, không relatable | "poised with soft smile" |
+| "stern expression" | Unfriendly, repelling | "elegant smile" |
+| "no expression" | Robot vibes | "genuine happy expression" |
+| "looking at camera" | THIẾU biểu cảm! | "smiling warmly at camera" |
+| "facing front" | THIẾU cảm xúc! | "facing front with gentle smile" |
+
+**⚠️ RULE: Nếu thấy các từ trên trong output → PHẢI SỬA ngay!**
+
+---
+
+### 🌟 DEFAULT EXPRESSIONS (Mặc định khi KHÔNG chỉ định)
+
+**NẾU prompt KHÔNG có từ khóa expression → AI PHẢI TỰ ĐỘNG THÊM:**
+
+```
+DEFAULT: "natural genuine smile, eyes bright with warmth, 
+approachable and confident expression, lively engaging presence"
+```
+
+**5 Mức Độ Smile:**
+
+| Level | EN Description | Khi Nào Dùng |
+|-------|----------------|--------------|
+| **Soft smile** | "Lips gently curved up, eyes relaxed and peaceful" | Elegant, luxury, quiet luxury |
+| **Warm smile** | "Friendly genuine smile, eyes crinkling slightly with warmth" | Casual, relatable, everyday |
+| **Bright smile** | "Wide genuine smile showing joy, sparkling lively eyes" | Energetic, youthful, fun |
+| **Confident smile** | "Self-assured smile with direct warm eye contact, powerful yet warm" | Professional, power dressing |
+| **Playful smile** | "Mischievous smile with a hint of fun, sparkling eyes" | Streetwear, Gen Z, trendy |
+
+---
+
+### 👗 EXPRESSIONS BY PRODUCT TYPE (Biểu Cảm Theo Loại Sản Phẩm)
+
+**AI PHẢI áp dụng đúng expression theo product type:**
+
+| Product Type | Default Expression | Vibe/Năng Lượng |
+|--------------|-------------------|-----------------|
+| **Áo Dài** | "Gentle serene smile, peaceful elegant expression, soft warm eyes" | Thanh lịch, dịu dàng, văn hóa |
+| **Công Sở/Office** | "Confident smile, professional yet warm, assured engaged expression" | Tự tin, thân thiện, capable |
+| **Streetwear** | "Playful energetic smile, eyes sparkling with fun, cool confident vibe" | Năng động, vui vẻ, Gen Z |
+| **Dạ Hội/Evening** | "Glamorous confident smile, alluring yet elegant, captivating warm gaze" | Quyến rũ, sang trọng |
+| **Casual** | "Natural relaxed smile, friendly approachable happy expression" | Thoải mái, thân thiện, relatable |
+| **Sportswear** | "Bright energetic smile, determined yet happy, active joyful energy" | Khỏe khoắn, vui tươi, powerful |
+| **Bohemian/Maxi** | "Free-spirited joyful smile, dreamy happy expression, carefree energy" | Tự do, bay bổng, boho |
+| **Swimwear/Bikini** | "Radiant happy smile, confident relaxed sunny expression" | Tự tin, tươi tắn, beach vibes |
+| **Sleepwear/Loungewear** | "Soft warm cozy smile, comfortable happy expression" | Ấm áp, dễ thương, relaxed |
+| **Váy Cưới/Wedding** | "Radiant blissful smile, dreamy joyful expression, pure happiness" | Hạnh phúc, rạng rỡ |
+
+---
+
+### 🎬 EXPRESSION PROGRESSION (Biểu Cảm Thay Đổi Qua 4 Scenes)
+
+**⚠️ CRITICAL: Expression PHẢI THAY ĐỔI qua các scenes - KHÔNG GIỮ NGUYÊN!**
+
+| Scene | Timing | Emotion Stage | Expression Description |
+|-------|--------|---------------|------------------------|
+| **1** | 00-08s | Curious → Intrigued | "Soft intrigued smile forming, eyes curious and inviting" |
+| **2** | 08-16s | Delighted → Happy | "Genuine happy smile blooming, eyes brightening with delight" |
+| **3** | 16-24s | Confident → Powerful | "Full confident radiant smile, direct engaging warm gaze" |
+| **4** | 24-32s | Warm → Inviting | "Warm friendly approachable smile, soft inviting eyes" |
+
+**❌ SAI: Cùng 1 biểu cảm ("neutral") cả 4 scenes → BORING, MẶT ĐƠ!**
+**✅ ĐÚNG: Biểu cảm progression theo emotional arc → ENGAGING!**
+
+---
+
+### 📸 EXPRESSION KEYWORD LIBRARY (Từ Vựng Biểu Cảm)
+
+**SMILE Keywords (Ưu tiên sử dụng):**
+```
+• "genuine smile" - cười thật, chân thành
+• "natural smile" - cười tự nhiên
+• "warm smile" - cười ấm áp
+• "soft smile" - mỉm cười nhẹ nhàng
+• "bright smile" - cười tươi rạng rỡ
+• "radiant smile" - cười tỏa sáng
+• "confident smile" - cười tự tin
+• "playful smile" - cười tinh nghịch
+• "gentle smile" - cười dịu dàng
+• "happy smile" - cười vui vẻ
+• "joyful smile" - cười rạng ngời
+• "friendly smile" - cười thân thiện
+```
+
+**EYE Expression Keywords (Mắt Sống Động):**
+```
+• "sparkling eyes" - mắt long lanh
+• "bright lively eyes" - mắt sáng sống động
+• "warm engaging gaze" - ánh mắt ấm áp, cuốn hút
+• "friendly eyes" - mắt thân thiện
+• "eyes crinkling with smile" - mắt cười theo môi (rất quan trọng!)
+• "soft kind eye contact" - giao mắt nhẹ nhàng, dịu dàng
+• "engaging welcoming look" - ánh nhìn thu hút, chào đón
+• "lively expression in eyes" - biểu cảm sống động trong mắt
+```
+
+**BODY Language (Hỗ Trợ Expression - LÀM MẶT SỐNG ĐỘNG HƠN):**
+```
+• "slight head tilt" - nghiêng đầu nhẹ (cute, friendly, approachable)
+• "chin slightly lifted" - ngẩng cằm nhẹ (confident, elegant)
+• "relaxed natural shoulders" - vai thả lỏng tự nhiên (comfortable)
+• "open inviting body language" - ngôn ngữ cơ thể cởi mở
+• "slight lean toward camera" - nghiêng nhẹ về phía camera (engaging)
+```
+
+---
+
+### ✅ EXPRESSION VALIDATION CHECKLIST
+
+**Trước khi output, KIỂM TRA MỌI image/keyframe:**
+
+```
+☐ Có expression rõ ràng trong prompt? (KHÔNG được thiếu!)
+☐ KHÔNG dùng: "neutral", "blank", "expressionless", "stoic"?
+☐ CÓ từ "smile" hoặc "happy/warm/joyful"?
+☐ CÓ mô tả mắt (eyes sparkling/bright/warm)?
+☐ Expression PHÙ HỢP product type? (Áo Dài = gentle, Streetwear = playful)
+☐ Expression THAY ĐỔI qua các scenes? (progression, not static)
+☐ Tạo cảm giác THÂN THIỆN, DỄ GẦN, VUI VẺ?
+☐ Model nhìn ENGAGING, không như robot?
+```
+
+**❌ FAIL any checkbox → REWRITE expression!**
+
+---
+
+### 📝 EXPRESSION TEMPLATE (Copy-Paste Format)
+
+**Standard Format:**
+```
+"[SMILE TYPE] smile, [EYE DESCRIPTION], [ENERGY/VIBE]"
+```
+
+**✅ GOOD Examples:**
+```
+"Gentle warm smile, eyes soft and friendly with slight crinkle, relaxed confident energy"
+"Bright genuine smile, sparkling eyes full of joy, playful happy vibe"
+"Soft serene smile, peaceful warm gaze, elegant graceful presence"
+"Confident radiant smile, engaging eye contact, powerful yet approachable"
+"Natural relaxed smile, friendly welcoming eyes, comfortable happy expression"
+```
+
+**❌ BAD Examples (KHÔNG DÙNG):**
+```
+"neutral expression" → MẶT ĐƠ!
+"looking at camera" → THIẾU smile!
+"model posing" → KHÔNG CÓ expression!
+"facing front" → CHỈ có hướng, KHÔNG có cảm xúc!
+"standing" → Mô tả body, KHÔNG có face expression!
+```
+
+---
+
+### 🎯 QUICK EXPRESSION SELECTOR (Chọn Nhanh)
+
+| Vibe Muốn | Expression To Use |
+|-----------|-------------------|
+| **Thanh lịch** | "Gentle elegant smile, serene peaceful expression" |
+| **Tự tin** | "Confident assured smile, direct warm engaging gaze" |
+| **Vui tươi** | "Bright joyful smile, sparkling happy eyes" |
+| **Quyến rũ** | "Alluring confident smile, captivating warm gaze" |
+| **Thân thiện** | "Warm friendly smile, approachable welcoming expression" |
+| **Năng động** | "Energetic bright smile, lively enthusiastic expression" |
+| **Dịu dàng** | "Soft warm smile, gentle peaceful expression" |
+| **Mạnh mẽ** | "Powerful confident smile, determined warm eyes" |
+| **Dreamy** | "Soft dreamy smile, wistful happy expression" |
+| **Relatable** | "Natural genuine smile, friendly approachable expression" |
+
+---
+
+### 🔄 EXPRESSION IN MOTION (Biểu Cảm Khi Di Chuyển)
+
+**Khi model thực hiện action, expression PHẢI đi kèm:**
+
+| Action | Expression Accompaniment |
+|--------|-------------------------|
+| **Turn/Rotate** | "Smile maintained throughout turn, eyes follow camera" |
+| **Hand on hip** | "Confident playful smile with the power pose" |
+| **Fabric touch** | "Soft appreciative smile, eyes glancing at detail" |
+| **Hair touch** | "Natural gentle smile, soft expression" |
+| **Walk toward** | "Warm engaging smile growing as approaching camera" |
+| **Look over shoulder** | "Mysterious soft smile, inviting glance" |
+| **Final pose** | "Full warm smile, friendly engaging eye contact" |
+
+---
+
+⭐ **FINAL REMINDER:**
+> MẶT ĐƠ = VIDEO FAIL! 
+> SMILE + LIVELY EYES = VIDEO SUCCESS!
+> Mọi keyframe PHẢI có expression vui vẻ, thân thiện, sống động!
+
+---
+
+================================================
+📐 3/4 ANGLE DIRECTION GUIDE (Hướng Dẫn Góc 3/4 Chống Nhầm Lẫn)
+================================================
+
+⚠️ **VẤN ĐỀ:** AI (Nano Banana Pro) thường NHẦM LEFT ↔ RIGHT khi tạo góc 3/4!
+✅ **GIẢI PHÁP:** Dùng BODY LANDMARKS thay vì chỉ nói "left/right"
+
+---
+
+### 🌟 UNIVERSAL LEFT/RIGHT RULE (QUY TẮC CHUNG - ÁP DỤNG CHO TẤT CẢ)
+
+**⚠️ CRITICAL: PHÂN BIỆT 2 LOẠI LEFT/RIGHT**
+
+| Loại mô tả | Góc nhìn sử dụng | Ví dụ |
+|------------|------------------|-------|
+| **BODY PARTS** (tay, vai, chân) | MODEL's anatomical | "right hand" = tay phải CỦA MODEL |
+| **FRAME POSITION** (vị trí khung hình) | CAMERA/VIEWER | "left side of frame" = bên trái MÀN HÌNH |
+
+---
+
+**📝 QUY TẮC CHO BODY PARTS:**
+
+> **"left/right" + body part → MODEL'S OWN BODY (anatomical)**
+> Think: Model looking at herself in a mirror.
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  VIEWER sees on screen:     │     MODEL's actual body:         │
+│                             │                                  │
+│   ← LEFT of screen          │        Model's RIGHT side →      │
+│   → RIGHT of screen         │        ← Model's LEFT side       │
+│                             │                                  │
+│  "right hand on hip" ────────────→  MODEL's right hand         │
+│  (will appear on LEFT       │      (HER right, not viewer's)   │
+│   side of screen)           │                                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**✅ Khi viết `"right hand on hip"`:**
+- AI PHẢI đặt TAY PHẢI của MODEL lên hông
+- TAY PHẢI của model xuất hiện ở **PHÍA TRÁI của màn hình** (vì cô ấy đối diện camera)
+
+---
+
+**📝 QUY TẮC CHO FRAME POSITION:**
+
+> **"left/right" + "of frame/screen" → CAMERA/VIEWER perspective**
+
+```
+✅ "hand on hip at LEFT SIDE OF FRAME" → tay ở bên TRÁI màn hình (viewer's left)
+✅ "standing at RIGHT SIDE OF FRAME" → đứng bên PHẢI màn hình (viewer's right)
+```
+
+---
+
+**📝 FACING DIRECTION METHOD (⭐ PHƯƠNG PHÁP TỐI ƯU NHẤT):**
+
+> **Dùng "Body angled 45° facing..." cho 3/4 pose, "Full side profile facing..." cho 90°**
+> **Hand position MUST MATCH facing direction!**
+
+| Pose Type | Hướng | Cách mô tả | Shoulder | Tay ở |
+|-----------|--------|-----------|----------|-------|
+| **3/4 (45°)** | Phải | "Body **angled 45°** facing towards RIGHT side of frame" | LEFT forward | LEFT side |
+| **3/4 (45°)** | Trái | "Body **angled 45°** facing towards LEFT side of frame" | RIGHT forward | RIGHT side |
+| **Side (90°)** | Phải | "**Full side profile** facing RIGHT side of frame" | Full LEFT side visible | LEFT side |
+| **Side (90°)** | Trái | "**Full side profile** facing LEFT side of frame" | Full RIGHT side visible | RIGHT side |
+
+**⚠️ QUAN TRỌNG: Hand position là ANCHOR mạnh nhất!**
+Nếu hand position và shoulder description không khớp, AI sẽ ưu tiên theo hand position!
+
+---
+
+**🎯 PROMPT INJECTION (Thêm vào đầu prompt):**
+```
+"RULE: 'left/right hand' = model's anatomical body. 'left/right of frame' = viewer's screen position."
+```
+
+---
+
+### 🎯 TERMINOLOGY ĐỊNH NGHĨA RÕ RÀNG (PHÂN BIỆT 3/4 vs SIDE PROFILE)
+
+**Quy ước mới: Thêm góc độ để tránh xung đột!**
+
+| Pose | Cách mô tả cho AI | Shoulder gần | Hand action ở |
+|------|-------------------|--------------|---------------|
+| **3/4 Hướng 1** | "Body **angled 45°** facing towards RIGHT side of frame" | LEFT shoulder forward | LEFT side of frame |
+| **3/4 Hướng 2** | "Body **angled 45°** facing towards LEFT side of frame" | RIGHT shoulder forward | RIGHT side of frame |
+| **Side Profile 1** | "**Full side profile** (90°) facing RIGHT" | Full LEFT side visible | LEFT side of frame |
+| **Side Profile 2** | "**Full side profile** (90°) facing LEFT" | Full RIGHT side visible | RIGHT side of frame |
+| **Back 3/4 Hướng 1** | "Back to camera, torso **angled 45°** towards RIGHT" | LEFT blade visible | LEFT side of frame |
+| **Back 3/4 Hướng 2** | "Back to camera, torso **angled 45°** towards LEFT" | RIGHT blade visible | RIGHT side of frame |
+
+---
+
+### 📸 VISUAL REFERENCE (Facing Direction Method)
+
+```
+                         CAMERA 📷
+                            |
+                            ▼
+    ←─── LEFT side of frame         RIGHT side of frame ───→
+┌──────────────────────────────────────────────────────────────────┐
+│                                                                  │
+│   FACING RIGHT                        FACING LEFT                │
+│   (Body → Right side)               (Body → Left side)          │
+│   ┌─────────────────┐               ┌─────────────────┐          │
+│   │     ◢◤   →     │               │   ←     ◥◣     │          │
+│   │    / \         │               │         / \    │          │
+│   │   L   R        │               │        L   R   │          │
+│   │   ↓            │               │            ↓   │          │
+│   │ LEFT shoulder  │               │  RIGHT shoulder│          │
+│   │ forward        │               │  forward       │          │
+│   │                │               │                │          │
+│   │ Hand action at │               │  Hand action at│          │
+│   │ LEFT of frame  │               │  RIGHT of frame│          │
+│   └─────────────────┘               └─────────────────┘          │
+│                                                                  │
+└──────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+### ✅ EXPLICIT PROMPT FORMAT (Format Chống Nhầm - FACING DIRECTION)
+
+**❌ SAI (Dễ nhầm - KHÔNG DÙNG):**
+```
+"3/4 Front Left pose" → mơ hồ!
+"Left shoulder closest" + "hand at RIGHT side" → conflict!
+```
+
+**✅ ĐÚNG (Rõ ràng - LUÔN DÙNG):**
+```
+"Body angled facing towards RIGHT SIDE OF FRAME. 
+ The LEFT shoulder is forward and closest to the lens. 
+ Her left hand is resting on hip at LEFT SIDE OF FRAME."
+```
+
+---
+
+### 📋 COPY-PASTE TEMPLATES (Facing Direction Method)
+
+**⭐ HƯớNG 1 - FACING RIGHT (Model nhìn sang PHẢI frame):**
+```
+"Full-body model visible head to toe, centered, 90% frame height.
+ Body angled facing towards RIGHT SIDE OF FRAME.
+ The LEFT shoulder is forward and closest to the lens.
+ Her left hand on hip at LEFT SIDE OF FRAME.
+ Warm gentle smile, head-to-toe visible."
+```
+
+**⭐ HƯớNG 2 - FACING LEFT (Model nhìn sang TRÁI frame - ĐỐI LẬP):**
+```
+"Full-body model visible head to toe, centered, 90% frame height.
+ Body angled facing towards LEFT SIDE OF FRAME.
+ The RIGHT shoulder is forward and closest to the lens.
+ Her right hand on hip at RIGHT SIDE OF FRAME.
+ Warm gentle smile, head-to-toe visible."
+```
+
+**BACK HƯớNG 1 (Quay lưng, torso hướng phải):**
+```
+"Full-body model back to camera, torso slightly turned towards RIGHT.
+ LEFT shoulder blade visible from behind.
+ Head turned over left shoulder toward camera."
+```
+
+**BACK HƯớNG 2 (Quay lưng, torso hướng trái):**
+```
+"Full-body model back to camera, torso slightly turned towards LEFT.
+ RIGHT shoulder blade visible from behind.
+ Head turned over right shoulder toward camera."
+```
+
+**FRONT (Thẳng mặt):**
+```
+"Full-body model facing camera directly, both shoulders equally visible, 
+body square to camera, centered in frame, warm smile with eye contact,
+head-to-toe visible, 90% frame height"
+```
+
+**BACK (Quay lưng):**
+```
+"Full-body model with back to camera, both shoulder blades visible equally,
+body square away from camera, head turned slightly over shoulder,
+head-to-toe visible, 90% frame height"
+```
+
+---
+
+### 🚫 ANTI-CONFUSION RULES (Quy Tắc Chống Nhầm)
+
+**1. LUÔN mô tả VAI NÀO gần camera:**
+```
+✅ "LEFT shoulder closer to camera"
+✅ "RIGHT shoulder closer to camera"
+❌ "turned left" (không rõ ràng)
+```
+
+**2. LUÔN mô tả HÔNG/HIP nào visible:**
+```
+✅ "RIGHT hip visible to camera"
+✅ "partial left hip showing"
+❌ "angled" (không đủ thông tin)
+```
+
+**3. LUÔN nói rõ BODY ROTATION direction:**
+```
+✅ "body rotated 45° to model's right"
+✅ "body angled 45° away from camera on left side"
+❌ "3/4 position" (có thể là 4 hướng khác nhau)
+```
+
+**4. TRÁNH các term mơ hồ:**
+| ❌ KHÔNG DÙNG | ✅ THAY BẰNG |
+|---------------|-------------|
+| "3/4 left" | "3/4 front-left, LEFT shoulder closer to camera" |
+| "3/4 right" | "3/4 front-right, RIGHT shoulder closer to camera" |
+| "facing left" | "body turned to model's left, showing right profile" |
+| "side view" | "90° profile, LEFT side facing camera" hoặc "RIGHT side facing camera" |
+| "angled" | "45° angle with [specific shoulder] toward camera" |
+
+---
+
+### 🔄 ROTATION SEQUENCE FOR 32s VIDEO
+
+**Ví dụ 360° rotation đúng hướng (clockwise từ phía camera):**
+
+| Scene | Time | Angle | Explicit Description |
+|-------|------|-------|---------------------|
+| 1 | 0-8s | Front | "Facing camera directly, both shoulders equal, chest visible" |
+| 2 | 8-16s | 3/4 Front Right | "RIGHT shoulder and RIGHT hip closer to camera, body rotated to model's RIGHT" |
+| 3 | 16-24s | Back | "Back to camera, both shoulder blades visible, glance over shoulder" |
+| 4 | 24-32s | 3/4 Front Left | "LEFT shoulder and LEFT hip closer to camera, rotating back to front" |
+
+**Counter-clockwise:**
+| Scene | Angle | Description |
+|-------|-------|-------------|
+| 1 | Front | "Facing camera" |
+| 2 | 3/4 Front Left | "LEFT shoulder closer" |
+| 3 | Back | "Back to camera" |
+| 4 | 3/4 Front Right | "RIGHT shoulder closer" |
+
+---
+
+### ⚠️ NANO BANANA PRO + VEO 3 SPECIFIC TIPS
+
+**1. Reference Image + Text MUST match:**
+- Nếu reference image là 3/4 FRONT LEFT → text prompt PHẢI nói "LEFT shoulder closer"
+- AI sẽ ưu tiên text nếu conflict → text phải explicit
+
+**2. Nếu AI vẫn tạo sai hướng (workaround):**
+```
+Muốn 3/4 FRONT LEFT nhưng AI tạo RIGHT?
+→ Thử prompt: "3/4 FRONT RIGHT" (đảo ngược)
+→ Hoặc: "LEFT shoulder MUST be closer to camera, NOT the right"
+```
+
+**3. Negative prompting (nếu hỗ trợ):**
+```
+"3/4 front-left angle, LEFT shoulder closer to camera, 
+NOT right shoulder forward, NOT 3/4 right angle"
+```
+
+**4. Add perspective clarification:**
+```
+"From camera's perspective: model's LEFT shoulder is on the RIGHT side of frame"
+```
+
+---
+
+### 📏 QUICK REFERENCE - FACING DIRECTION METHOD (⭐ TỐI ƯU)
+
+| Hướng Nhìn | Shoulder Gần | Hand Position | Kết Quả |
+|----------|--------------|---------------|--------|
+| **Facing RIGHT** | LEFT forward | LEFT side of frame | Model quay sang PHẢI |
+| **Facing LEFT** | RIGHT forward | RIGHT side of frame | Model quay sang TRÁI |
+
+**⚠️ CRITICAL:** Hand position là ANCHOR mạnh nhất! Nếu hand position và shoulder không khớp, AI ưu tiên hand!
+
+---
+
+⭐ **FINAL RULE (QUY TẮC CUỐI CÙNG):**
+> LUÔN dùng: "Body facing towards [RIGHT/LEFT] SIDE OF FRAME"
+> LUÔN match: Shoulder + Hand position cùng hướng
+> KHÔNG dùng: "3/4 Front Left/Right" (mơ hồ, dễ nhầm)
+
+---
+
+### 🖐️ HAND/ARM POSITION GUIDE (FACING DIRECTION METHOD)
+
+⚠️ **VẤN ĐỀ ĐÃ PHÁT HIỆN:**
+> Hand position là ANCHOR mạnh nhất!
+> Nếu hand position không khớp với facing direction, AI sẽ ưu tiên theo hand position!
+
+✅ **GIẢI PHÁP:** LUÔN match hand position với facing direction!
+
+---
+
+**🎯 QUY TẮC VÀNG:**
+
+| Facing Direction | Shoulder Forward | Hand Action ở |
+|------------------|------------------|---------------|
+| **Facing RIGHT** side of frame | LEFT shoulder | **LEFT** side of frame |
+| **Facing LEFT** side of frame | RIGHT shoulder | **RIGHT** side of frame |
+
+---
+
+**📸 VISUAL:**
+
+```
+                    CAMERA 📷
+                        |
+                        ▼
+    LEFT side                      RIGHT side
+    of FRAME                       of FRAME
+
+  ┌─────────────────┐               ┌─────────────────┐
+  │   FACING RIGHT  │               │   FACING LEFT   │
+  │      →         │               │         ←      │
+  │   ┌──┬──┐     │               │     ┌──┬──┐   │
+  │   L  │  R     │               │     L  │  R   │
+  │   ↓  │       │               │       │  ↓   │
+  │  Hand here    │               │    Hand here  │
+  │  (LEFT side)  │               │  (RIGHT side) │
+  └─────────────────┘               └─────────────────┘
+```
+
+---
+
+**📋 TEMPLATE ĐÓNG ĐỔI:**
+
+**Hướng 1 - Model quay sang PHẢI:**
+```
+"Body angled facing towards RIGHT SIDE OF FRAME.
+ The LEFT shoulder is forward and closest to the lens.
+ Her left hand on hip at LEFT SIDE OF FRAME."
+```
+
+**Hướng 2 - Model quay sang TRÁI (NGƯỢC LẠI):**
+```
+"Body angled facing towards LEFT SIDE OF FRAME.
+ The RIGHT shoulder is forward and closest to the lens.
+ Her right hand on hip at RIGHT SIDE OF FRAME."
+```
+
+---
+
+**⭐ FINAL HAND RULE:**
+> LUÔN dùng: "hand at [LEFT/RIGHT] SIDE OF FRAME"
+> LUÔN match: Facing direction + Shoulder + Hand position cùng bên
+> KHÔNG bao giờ: Hand position khác hướng với facing direction!
+
+---
+
+================================================
+🪄 TRANSFORMATION MODE MECHANICS (32s Biến Hình)
+
+================================================
+
+**TRANSFORMATION VIDEOS:** AI morphs between BEFORE outfit (AI-generated) → AFTER outfit (user upload)
+**⚠️ KEY: Transformation STARTS at Scene 1 (từ giây 4), không đợi Scene 2!**
+
+---
+
+### 32-SECOND SCENE STRUCTURE (TRANSFORM FROM SCENE 1)
+
+| Scene | Time | Nội dung |
+|-------|------|----------|
+| **Scene 1** | 0s-8s | BEFORE + BẮT ĐẦU TRANSFORM - Model casual outfit, sparkle xuất hiện từ giây 4 |
+| **Scene 2** | 8s-16s | TRANSFORM ĐỈNH ĐIỂM - Particles wrapping, outfit morphing |
+| **Scene 3** | 16s-24s | AFTER REVEAL - Outfit mới hoàn toàn |
+| **Scene 4** | 24s-32s | SHOWCASE - Full showcase outfit user upload |
+
+---
+
+### 🤖 AI "BEFORE" OUTFIT GENERATION
+
+| AFTER Type | AI Creates BEFORE |
+|------------|-------------------|
+| `evening_dress` | Pyjamas/loungewear |
+| `office_dress` | Morning sleepwear |
+| `party_dress` | Casual home clothes |
+| `blazer` | Baggy hoodie |
+| `aodai` | Modern casual Vietnamese outfit |
+| `bikini` | Cover-up/pareo beach |
+
+---
+
+### 🎭 TRANSFORMATION EFFECT (STARTS AT SCENE 1)
+
+**Sparkle Magic:**
+```
+Scene 1 (0s-8s): "Model in casual outfit, relaxed pose,
+ SPARKLES BEGIN appearing from outfit edges at 4s mark,
+ magical particles start swirling gently, transformation begins"
+ 
+Scene 2 (8s-16s): "FULL TRANSFORMATION - particles intensify,
+ body wrapped in magical light, outfit morphing visible,
+ sparkles peak at 12s"
+
+Scene 3 (16s-24s): "Model REVEALED in new outfit,
+ transformation complete, confident posture,
+ sparkle dust settling"
+
+Scene 4 (24s-32s): "Full showcase - elegant poses,
+ slow turn, fabric flow, aspirational finale"
+```
+
+---
+
+ transformation builds dramatically (10s peak),
+ new silhouette emerges through effect (16s complete)"
+```
+
+**Scene 3 (AFTER REVEAL) - 16s-24s:**
+```
+"Model revealed in [user uploaded outfit],
+ styled hair and makeup complete,
+ confident posture emerging from effect,
+ camera showcases full transformed silhouette"
+```
+
+**Scene 4 (SHOWCASE) - 24s-32s:**
+```
+"Elegant poses highlighting outfit details,
+ slow turn showing fabric flow and fit,
+ aspirational styling, confident expression,
+ final impactful pose for video end"
+```
+
+---
+
+### ⚠️ TRANSFORMATION RULES
+
+**DO:**
+- ✅ Same model pose angle for seamless morph
+- ✅ Consistent lighting throughout
+- ✅ BEFORE looks relatable (real person at home)
+- ✅ AFTER looks aspirational, glamorous
+- ✅ Full 8s for transformation effect (no shortcuts!)
+
+**DON'T:**
+- ❌ Jump cut between before/after
+- ❌ Change model position during transition
+- ❌ Make BEFORE look unrealistically bad
+- ❌ Rush transformation (needs full 8s morph)
+- ❌ Show "outfit appearing from nothing"
+
+---
+
+### 🎬 VIDEO STYLE DETECTION
+
+When `videoStyle` is one of transformation modes:
+- `transform_viral` → Use Sparkle Magic effect
+- `transform_glowup` → Use Sparkle Magic + dramatic lighting shift
+- `transform_day_night` → Use lighting transition (warm→cool or vice versa)
+
+**Auto-generate BEFORE based on outfit detection in AFTER reference image.**
 
 ---
 
@@ -825,7 +1525,7 @@ after movement. End pose: asymmetric power stance, one hand on hip."
 "Standing still, right hand rises to adjust collar with thumb and forefinger, fingertips visible. 
 Then hand trails down front of dress, fingertips brushing fabric, showing texture. Hair catches 
 gentle side breeze from left, strands lift and separate. Weight shifts subtly during gesture. 
-End pose: standing, hands naturally at sides, hair settling."
+End pose: standing, right hand resting on hip, left hand touching fabric at waist, hair settling."
 ```
 
 ---
@@ -849,6 +1549,230 @@ End pose: standing, hands naturally at sides, hair settling."
 | Full body turn (90°) | 3-4s |
 | Weight shift | 1-2s |
 | Hair settle after motion | 0.5-1s |
+
+---
+
+================================================
+🚫 BANNED ARM POSES (CẤM TƯ THẾ TAY THẢ SUÔNG)
+================================================
+
+**⚠️ CRITICAL: Never generate "idle arm" poses! Both arms must ALWAYS have specific action!**
+
+### ❌ BANNED Phrases (100% NOT ALLOWED in any keyframe/scene):
+
+| Banned Phrase | Why Banned |
+|---------------|------------|
+| "arms relaxed at sides" | Boring, amateur, no personality |
+| "hands hanging down" | Lacks life, no visual interest |
+| "arms down by sides" | Static, unprofessional |
+| "arms at rest" | Dead pose, no engagement |
+| "hands naturally at sides" | Still idle - not acceptable |
+| "arms loose at sides" | No purpose, wasted opportunity |
+| "hands resting by body" | Passive, uninteresting |
+| "arms drooping" | Lifeless, amateur look |
+| "standing with arms down" | Boring default pose |
+| "hands by her sides" | No specific action |
+
+**WHY BANNED:** 
+- Creates boring, amateur-looking content
+- Lacks personality and brand appeal
+- Low engagement - viewers scroll past
+- Misses opportunity to showcase outfit details
+- Looks like mannequin, not human
+
+---
+
+================================================
+✅ MANDATORY ARM ACTIONS (BẮT BUỘC HÀNH ĐỘNG TAY)
+================================================
+
+**EVERY keyframe MUST specify WHAT BOTH ARMS ARE DOING.**
+
+**The "Both Arms Rule":**
+```
+Template: "[left arm action], [right arm action]"
+Example: "left hand on hip, right hand touching collar"
+Example: "right hand adjusting hair, left arm bent at elbow resting across waist"
+```
+
+---
+
+### 🎯 ARM POSE LIBRARY (Thư Viện Pose Tay)
+
+**CATEGORY A: TOUCH POSES (Chạm Vào Người)**
+
+| Action | English Prompt | Best For |
+|--------|----------------|----------|
+| **Hand on hip** | "right hand resting on hip, fingers splayed" | Confidence, power, casual |
+| **Hand on waist** | "left hand placed at waist level, elbow out" | Feminine, elegant, dresses |
+| **Both hands on hips** | "both hands on hips, elbows out, power stance" | Confidence, power poses |
+| **Touch neck** | "right hand gently touching neck/collarbone area" | Delicate, sensual, necklaces |
+| **Touch shoulder** | "left hand on opposite shoulder, protective pose" | Soft, introspective, cozy |
+| **Touch hair** | "hand brushing hair behind ear" | Natural, relaxed, lifestyle |
+| **Run through hair** | "fingers running through hair near temple" | Dynamic, editorial, wind |
+| **Touch chin** | "fingertips lightly touching chin, thoughtful" | Editorial, pensive, beauty |
+| **Cradle face** | "hand cradling cheek gently" | Beauty, skincare, soft |
+| **Touch chest** | "hand resting on upper chest near collarbone" | Heartfelt, sincere, emotional |
+| **Touch ear** | "fingers touching earring/ear lobe" | Jewelry focus, elegant |
+| **Touch forehead** | "hand brushing hair from forehead" | Casual, natural, wind |
+
+---
+
+**CATEGORY B: GESTURE POSES (Cử Chỉ)**
+
+| Action | English Prompt | Best For |
+|--------|----------------|----------|
+| **Arms crossed** | "arms folded across chest, relaxed but confident" | Power, authority, blazer |
+| **Arms crossed low** | "arms loosely crossed at waist level" | Casual, relaxed, cardigan |
+| **Hands clasped front** | "hands clasped loosely at waist level" | Professional, polished, formal |
+| **Behind back** | "both hands clasped behind lower back" | Confident, open, formal |
+| **One hand behind back** | "one hand tucked behind lower back" | Elegant, asymmetric |
+| **Pocket pose** | "one hand in jacket/pants pocket, casual" | Street style, relaxed, casual |
+| **Both pockets** | "both hands in pockets, relaxed stance" | Ultra casual, laid-back |
+| **Adjust sleeve** | "right hand adjusting left sleeve cuff" | Detail, refinement, blouse |
+| **Adjust collar** | "fingers adjusting collar/neckline" | Polished, attention, shirt |
+| **Hold jacket lapel** | "one hand holding blazer lapel" | Power, editorial, suit |
+| **Fingers interlaced** | "fingers interlaced in front of body" | Composed, elegant, formal |
+| **Prayer hands** | "hands pressed together at chest" | Zen, calm, spiritual |
+
+---
+
+**CATEGORY C: DYNAMIC POSES (Tư Thế Động)**
+
+| Action | English Prompt | Best For |
+|--------|----------------|----------|
+| **Arm extended** | "arm extended gracefully outward, palm down" | Guide attention, dramatic |
+| **Point elegantly** | "finger pointing gently toward camera" | CTA, engaging, viral |
+| **Raised arm** | "one arm raised near head, elbow bent softly" | High fashion, drama, dance |
+| **Hand behind head** | "hand resting behind head, casual stretch" | Relaxed, lifestyle, casual |
+| **Elbow bent pose** | "one elbow bent, forearm across waist" | Movement, energy, action |
+| **Arm across body** | "right arm crossing horizontally in front" | Protective, casual, hug |
+| **Both elbows up** | "both elbows out to sides, hands near head" | Dramatic, editorial, dance |
+| **Wave gesture** | "hand in gentle wave position near shoulder" | Friendly, approachable, fun |
+| **Frame face** | "both hands framing face gently" | Beauty, portrait, makeup |
+| **Victory pose** | "one arm raised high in celebration" | Joyful, energetic, casual |
+| **Lean on invisible** | "one arm extended as if leaning on wall" | Street style, casual, cool |
+
+---
+
+**CATEGORY D: OUTFIT INTERACTION (Tương Tác Trang Phục)**
+
+| Action | English Prompt | Best For |
+|--------|----------------|----------|
+| **Hold hem** | "hands holding dress hem, showing fabric" | Skirt/dress showcase |
+| **Lift skirt** | "one hand lifting skirt edge slightly" | Skirt flow, elegant |
+| **Hold strap** | "fingers hooked on bag/dress strap" | Accessory focus, casual |
+| **Touch fabric** | "hand touching fabric texture at hip" | Material showcase, quality |
+| **Pull jacket** | "hands pulling jacket closed slightly" | Outerwear, cozy |
+| **Open jacket** | "hands opening jacket to show inner layer" | Layered outfit, reveal |
+| **Fix belt** | "hands adjusting belt at waist" | Waist detail, fit |
+| **Brush skirt** | "hand smoothing skirt fabric down" | Skirt movement, elegant |
+| **Show sleeve** | "hand extended showing sleeve detail" | Sleeve design, detail |
+| **Adjust shoulder** | "fingers adjusting shoulder strap" | Tank top, dress straps |
+| **Hold purse** | "hand holding purse/clutch at side" | Accessory, elegant |
+| **Touch watch** | "fingers touching watch/bracelet on wrist" | Accessory, refined |
+
+---
+
+### 📐 FULL BODY POSE TEMPLATES (Copy-Paste Ready)
+
+**Template 1: Classic Confident**
+```
+"Standing in S-curve stance, right hand resting on hip with fingers splayed, 
+left hand gently touching collarbone, weight on left leg, chin slightly lifted"
+```
+
+**Template 2: Casual Chic**
+```
+"Standing with left hand tucked in front pocket, right hand adjusting 
+hair near temple, relaxed shoulders, slight body lean right"
+```
+
+**Template 3: Power Editorial**
+```
+"Standing with arms folded confidently across chest, elbows out, 
+weight centered, strong direct gaze at camera"
+```
+
+**Template 4: Soft Feminine**
+```
+"Standing with hands clasped loosely at waist level, fingers interlaced,
+slight head tilt right, shoulders softened, gentle smile"
+```
+
+**Template 5: Dynamic Movement**
+```
+"Frozen mid-gesture with right arm extended gracefully outward,
+left hand resting on waist, body angled 30 degrees right"
+```
+
+**Template 6: Street Style Cool**
+```
+"Leaning slightly with both hands in jacket pockets, one shoulder 
+higher than the other, casual confident expression"
+```
+
+**Template 7: Elegant Touch**
+```
+"Standing gracefully with right hand touching neck gently,
+left hand holding clutch at hip level, weight on right leg"
+```
+
+**Template 8: Hair Play**
+```
+"Standing with left hand running through hair near temple,
+right hand resting on hip, slight wind-blown hair effect"
+```
+
+---
+
+### 🎬 SCENE TRANSITION ARM CONTINUITY
+
+**Rule:** When arms change position between keyframes, Scene MUST describe HOW.
+
+| KF1 Arms | KF2 Arms | Scene Must Include |
+|----------|----------|-------------------|
+| Hand on hip | Arms crossed | "Hand slides from hip to fold across chest over 2s" |
+| Touching hair | Hand on waist | "Hand lowers gracefully from hair to rest at waist" |
+| Arms crossed | Touch neck | "Right arm unfolds, hand rises to touch neck gently" |
+| Both on hips | One touches fabric | "Left hand leaves hip to touch skirt fabric" |
+| Touching collar | Hands clasped | "Both hands lower to meet and clasp at waist level" |
+
+---
+
+### ⚠️ ARM POSE VALIDATION CHECKLIST
+
+**For EVERY keyframe, verify:**
+- [ ] LEFT ARM has specific action (not "at side" or "relaxed")
+- [ ] RIGHT ARM has specific action (not "down" or "hanging")
+- [ ] NO banned phrases from table above used
+- [ ] Pose fits outfit type and scene mood
+- [ ] Both arms create visual interest and balance
+- [ ] Arms have clear destination and purpose
+
+**Quick Validation Test:**
+```
+If prompt contains: "at side", "relaxed", "hanging", "down", "at rest", "loose"
+near words: "arm", "hand", "arms", "hands"
+→ REWRITE with specific action from library above ❌→✅
+```
+
+---
+
+### 🎯 ARM POSES BY PRODUCT TYPE (Quick Reference)
+
+| Product Type | Recommended Arm Poses |
+|--------------|----------------------|
+| **Dresses** | Hand on waist, touch hem, lift skirt edge, touch collar |
+| **Blazers/Suits** | Arms crossed, hold lapel, hands in pockets, adjust sleeve |
+| **Tops/Blouses** | Touch collar, adjust sleeve, hand on hip, touch neck |
+| **Skirts** | Touch fabric at hip, brush skirt, hold hem edge |
+| **Pants/Jeans** | Hands in pockets, thumbs hooked in belt, hand on hip |
+| **Accessories** | Touch jewelry, hold bag, fingers on watch, adjust strap |
+| **Evening Wear** | Touch neck, hand on chest, elegant gestures, soft touches |
+| **Casual/Street** | Pockets, crossed arms, hair touch, relaxed gestures |
+| **Áo Dài** | Hands clasped front, touch panels, elegant waist touch |
+| **Sportswear** | Hands on hips, arm stretches (standing), confident poses |
 
 ---
 
@@ -1880,7 +2804,7 @@ MODEL'S own view (như soi gương):
     │    └───────┘              └───────┘  │
     │                                      │
     │    ┌───────┐  ┌───────┐  ┌───────┐  │
-    │    │  3/4  │  │ BACK  │  │  3/4  │  │
+    │    │  3/4  │  │ BACK  │  │  3/4  │  │ 
     │    │ LEFT  │  │FACING │  │ RIGHT │  │
     │    │ BACK  │  │ AWAY  │  │ BACK  │  │
     │    │  ↘👤  │  │  ↓👤  │  │  👤↙  │  │
@@ -2514,7 +3438,7 @@ Scene Structure:
 - "Hand on hip"
 
 ✅ **SPECIFIC ENOUGH (Ensures continuity):**
-- "Standing with weight on right leg, left leg slightly forward, both hands relaxed at sides, facing camera straight on, neutral expression"
+- "Standing with weight on right leg, left leg slightly forward, both hands relaxed at sides, facing camera straight on, gentle confident smile"
 - "Body at 90° left profile to camera, head turned over left shoulder making eye contact with camera, right hand on hip, left hand at side"
 - "Sitting on edge of chair, hands resting on lap, upper body leaning slightly forward, facing camera, relaxed posture"
 - "Right hand on right hip, left hand touching fabric at waist level, weight shifted to right leg, body facing 30° right of camera"

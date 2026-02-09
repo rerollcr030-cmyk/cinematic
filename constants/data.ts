@@ -407,7 +407,45 @@ export const VIDEO_STYLES = [
       desc: 'Mix nhiều trend 2026: Y2K + Coquette + Athleisure',
       hot: true
    },
+   // === 🪄 BIẾN HÌNH / TRANSFORMATION MODES ===
+   {
+      value: 'transform_viral',
+      label: 'Biến Hình TikTok',
+      emoji: '✨',
+      desc: 'Viral transformation: Đồ nhà → Outfit sang - 32s sparkle magic',
+      hot: true
+   },
+   {
+      value: 'transform_glowup',
+      label: 'Biến Hình Glow Up',
+      emoji: '💫',
+      desc: 'Before/After glow up - từ bình thường → xinh đẹp 32s',
+      hot: true
+   },
+   {
+      value: 'transform_day_night',
+      label: 'Biến Hình Day→Night',
+      emoji: '🌙',
+      desc: '9AM office → 9PM party transformation 32s',
+      hot: true
+   },
+   // === 👗 FASHION WALK-IN MODES (Body Dress TikTok Style) ===
+   {
+      value: 'fashion_walkin',
+      label: 'Fashion Walk-In',
+      emoji: '👗',
+      desc: 'Model bước về camera - Soft daylight - Medium shot - Quiet sexy vibe',
+      hot: true
+   },
+   {
+      value: 'fashion_walkin_beauty',
+      label: 'Walk-In + Beauty Focus',
+      emoji: '✨',
+      desc: 'Walk-in shot + Focus vào makeup/skin - Ultra close kết thúc',
+      hot: true
+   },
    // === GIA DỤNG THÔNG MINH & TIỆN ÍCH VIDEO STYLES ===
+
    {
       value: 'unbox_demo',
       label: 'Unbox & Demo',
@@ -466,6 +504,302 @@ export const VIDEO_STYLES = [
    },
 ];
 
+// ================================================
+// 🌅 WALK-IN TIME OF DAY (Lighting Progression)
+// ================================================
+// For Fashion Walk-In mode: Afternoon → Golden Hour → Blue Hour → Night City
+export const WALKIN_TIME_OF_DAY = [
+   {
+      value: 'auto',
+      label: '🤖 AI Tự Chọn',
+      emoji: '✨',
+      desc: 'AI chọn thời gian phù hợp với outfit vibe'
+   },
+   {
+      value: 'golden_hour',
+      label: '🌅 Golden Hour',
+      emoji: '🌅',
+      desc: 'Hoàng hôn 5-7PM - Ánh vàng ấm, rim light quanh tóc/vai/eo'
+   },
+   {
+      value: 'blue_hour',
+      label: '🌆 Blue Hour',
+      emoji: '🌆',
+      desc: 'Chạng vạng 7-8PM - Sky xanh + city lights vàng mix'
+   },
+   {
+      value: 'night_city',
+      label: '🌃 Night City',
+      emoji: '🌃',
+      desc: 'Đêm đô thị 8PM+ - Street lights, storefront glow, luxury vibe'
+   }
+];
+
+// ================================================
+// 🎨 WALK-IN AESTHETIC VIBES (5 Vibes + Auto)
+// ================================================
+// Premium vibe system: TỰ NHIÊN, NGẪU HỨNG, KHÔNG CATWALK
+// Vibe: "Nàng thơ hiện đại" - đang sống với váy đẹp, không diễn
+export const WALKIN_AESTHETIC_VIBES = [
+   {
+      value: 'auto',
+      label: '🤖 AI Tự Chọn',
+      emoji: '✨',
+      desc: 'AI detect outfit → auto chọn vibe "đời thật" phù hợp nhất'
+   },
+   {
+      value: 'romantic',
+      label: '💕 Romantic',
+      emoji: '💕',
+      desc: 'Dạo bước mơ màng, thỉnh thoảng dừng ngắm hoa - Chiffon, Lace, Floral',
+      movement: 'dạo bước nhẹ nhàng, tiện tay vén tóc, dừng ngắm cảnh đẹp',
+      camera: 'tình cờ bắt gặp, theo dõi nhẹ nhàng, ánh sáng mềm',
+      fabric: 'váy bay theo gió tự nhiên, nếp vải mềm mại',
+      expression: ['mơ màng nhìn xa', 'phát hiện mình đẹp', 'mỉm cười hài lòng', 'bye nhẹ nhàng'],
+      bestFor: ['chiffon', 'lace', 'floral', 'maxi', 'pastel']
+   },
+   {
+      value: 'power',
+      label: '💪 Power',
+      emoji: '💪',
+      desc: 'Đi vừa đẹp vừa nhàn, tự tin vì biết mình đẹp - Blazer, Structured',
+      movement: 'bước đi tự tin không vội, dừng check mình trong kính, gật đầu hài lòng',
+      camera: 'theo dõi ổn định, medium shot tự tin',
+      fabric: 'váy structured rơi đẹp, không bay quá nhiều',
+      expression: ['cool nhìn môi trường', 'mỉm cười mãn nguyện', 'self-assured', 'done và đẹp'],
+      bestFor: ['blazer', 'structured', 'bodycon', 'formal', 'dark']
+   },
+   {
+      value: 'goddess',
+      label: '✨ Goddess',
+      emoji: '✨',
+      desc: 'Bay bổng nhưng đời thật, như đang trong MV - Satin, Silk, Gown',
+      movement: 'bước chậm như dreaming, xoay nhẹ xem váy bay, interact với ánh sáng',
+      camera: 'góc đẹp như MV, backlight đẹp, slow motion feeling',
+      fabric: 'satin chảy như nước, silk bay như mây',
+      expression: ['peaceful awakening', 'ngắm mình trong kính', 'hài lòng divine', 'bye ethereal'],
+      bestFor: ['satin', 'silk', 'gown', 'grecian', 'metallic']
+   },
+   {
+      value: 'minimal',
+      label: '◻️ Minimal',
+      emoji: '◻️',
+      desc: 'Đi bình thường nhưng đẹp vì đơn giản - Solid colors, Clean',
+      movement: 'bước đi clean không flourish, dừng tự nhiên, quay đi tiếp',
+      camera: 'framing gọn gàng, không drama, editorial',
+      fabric: 'váy rơi thẳng, không bay quá nhiều, clean lines',
+      expression: ['neutral thoải mái', 'nhận ra camera', 'subtle smile', 'đi tiếp'],
+      bestFor: ['minimal', 'solid', 'clean', 'simple', 'monochrome']
+   },
+   {
+      value: 'soft_allure',
+      label: '🌙 Soft Allure',
+      emoji: '🌙',
+      desc: 'Tự nhiên quyến rũ, không cố gắng - Slip, Figure-hugging',
+      movement: 'đi tự nhiên có rhythm, tiện tay chạm váy, turning nhẹ nhàng',
+      camera: 'intimate distance, theo dõi nhẹ, warm lighting',
+      fabric: 'váy ôm body tự nhiên, satin catch light đẹp',
+      expression: ['thoải mái tự tin', 'phát hiện được ngắm', 'mỉm cười tự nhiên', 'bye warm'],
+      bestFor: ['slip', 'bodycon', 'figure-hugging', 'satin', 'evening']
+   }
+];
+
+// ================================================
+// 👤 WALK-IN PERSONALITY SWITCH (4 Personalities + Auto)
+// ================================================
+// Model personality affects walk style, expressions, and interactions
+export const WALKIN_PERSONALITIES = [
+   {
+      value: 'auto',
+      label: '🤖 AI Tự Chọn',
+      emoji: '✨',
+      desc: 'AI detect outfit → auto chọn personality phù hợp nhất'
+   },
+   {
+      value: 'casual',
+      label: '🌸 Casual',
+      emoji: '🌸',
+      desc: 'Thoải mái, nhẹ nhàng, everyday vibe - Đi dạo bình thường',
+      energy: 'Relaxed, everyday, effortless',
+      walk: 'Natural easy pace, no deliberate sway',
+      hands: 'Relaxed, pockets, phone, bag',
+      expression: 'Easy smile, comfortable in skin',
+      eyeContact: 'Casual glances, not seeking attention',
+      bestFor: ['summer dress', 'casual midi', 'everyday wear']
+   },
+   {
+      value: 'shy',
+      label: '🌷 Shy',
+      emoji: '🌷',
+      desc: 'Nhẹ nhàng, e thẹn, dễ thương - Hơi ngại ngùng khi đẹp',
+      energy: 'Soft, demure, endearing',
+      walk: 'Smaller steps, slightly turned inward',
+      hands: 'Near body, touching collar, holding own arm',
+      expression: 'Gentle smile, looking down then up',
+      eyeContact: 'Brief, then looks away with smile',
+      bestFor: ['romantic dress', 'soft fabrics', 'pastel colors']
+   },
+   {
+      value: 'confident',
+      label: '💎 Confident',
+      emoji: '💎',
+      desc: 'Tự tin, quyến rũ, biết mình đẹp - Boss energy',
+      energy: 'Self-assured, powerful, commanding',
+      walk: 'Strong even strides, shoulders back',
+      hands: 'On hip, decisive gestures, controlled',
+      expression: 'Knowing smile, "I know I look good"',
+      eyeContact: 'Direct, unwavering, engaging',
+      bestFor: ['bodycon', 'structured dress', 'evening gown']
+   },
+   {
+      value: 'playful',
+      label: '✨ Playful',
+      emoji: '✨',
+      desc: 'Vui vẻ, tinh nghịch, năng động - Fun party energy',
+      energy: 'Fun, teasing, spirited',
+      walk: 'Light bouncy steps, hip pop moments',
+      hands: 'Tossing hair, spinning dress, animated',
+      expression: 'Bright smile, mischievous eyes',
+      eyeContact: 'Flirty glances, winks, playful looks',
+      bestFor: ['party dress', 'cocktail', 'fun prints']
+   }
+];
+
+// ================================================
+// 🎲 MICRO-VARIATION POOLS (Anti-Repetition)
+// ================================================
+export const WALKIN_MICRO_VARIATIONS = {
+   handTouch: [
+      'hair_tuck: tucking hair behind ear',
+      'collarbone_graze: fingers grazing collarbone',
+      'fabric_lift: lifting fabric hem slightly',
+      'waist_rest: hand resting on waist',
+      'ear_tuck: tucking hair with pinky extended',
+      'chin_touch: fingertips near chin',
+      'strap_adjust: adjusting dress strap gently',
+      'wrist_cross: wrists crossed elegantly in front'
+   ],
+   glanceDirection: [
+      'camera_forward: direct engaging gaze to camera',
+      'soft_left: gazing slightly to the left',
+      'subtle_right: glancing gently to the right',
+      'upward_drift: eyes drifting up briefly then back',
+      'lash_lower: lowering lashes then lifting to meet camera',
+      'over_shoulder: looking gracefully over shoulder'
+   ],
+   fabricMotion: [
+      'gentle_sway: subtle left-right fabric movement',
+      'dramatic_sweep: wide flowing fabric motion',
+      'trailing_float: fabric trailing softly behind steps',
+      'wind_lift: fabric lifted gently by breeze',
+      'body_hug: fabric following body contour naturally'
+   ],
+   smileIntensity: [
+      '20%: nearly neutral, barely-there hint of smile',
+      '35%: soft subtle natural smile',
+      '50%: warm natural friendly smile',
+      '70%: radiant genuine joyful smile'
+   ]
+};
+
+// ================================================
+// 📊 VIBE INTENSITY LEVELS
+// ================================================
+export const WALKIN_INTENSITY_LEVELS = [
+   { value: 'subtle', label: 'Subtle (30%)', energy: 'understated', gestures: 'smaller', expression: 'minimal' },
+   { value: 'medium', label: 'Medium (60%)', energy: 'balanced', gestures: 'normal', expression: 'natural' },
+   { value: 'bold', label: 'Bold (90%)', energy: 'dramatic', gestures: 'larger', expression: 'full' }
+];
+
+// ================================================
+// 👗 WALK-IN DRESS VIBES (Smart Environment Matching)
+// ================================================
+export const WALKIN_DRESS_VIBES = {
+   party: {
+      keywords: ['party', 'cocktail', 'sparkle', 'sequin', 'glitter', 'mini dress'],
+      preferredTime: 'night_city',
+      environments: ['nightlife', 'bars', 'hotel_entrance', 'shopping_street']
+   },
+   romantic: {
+      keywords: ['romantic', 'soft', 'flowing', 'floral', 'lace', 'chiffon'],
+      preferredTime: 'golden_hour',
+      environments: ['park', 'garden', 'lakeside', 'cafe_courtyard']
+   },
+   luxury: {
+      keywords: ['luxury', 'formal', 'gown', 'silk', 'satin', 'elegant', 'evening'],
+      preferredTime: 'blue_hour',
+      environments: ['hotel_entrance', 'resort', 'modern_architecture', 'plaza']
+   },
+   casual: {
+      keywords: ['casual', 'summer', 'sundress', 'cotton', 'linen', 'day dress'],
+      preferredTime: 'golden_hour',
+      environments: ['pedestrian_street', 'urban_plaza', 'cafe_terrace', 'park']
+   },
+   modern: {
+      keywords: ['modern', 'minimalist', 'bodycon', 'sleek', 'structured', 'contemporary'],
+      preferredTime: 'blue_hour',
+      environments: ['modern_architecture', 'rooftop', 'shopping_street', 'urban_square']
+   }
+};
+
+// ================================================
+// 🎭 WALK-IN EXPRESSION VIBES (4-Scene Progression)
+// ================================================
+export const WALKIN_EXPRESSION_VIBES = {
+   scene1_mystery: {
+      emotion: 'Mystery',
+      expression: 'Dreamy distant gaze, soft enigmatic smile',
+      eyeContact: 'Avoiding camera, looking past',
+      energy: 'low-building',
+      keywords: ['subtle eyebrow raise', 'quiet intrigue', 'soft mysterious energy']
+   },
+   scene2_recognition: {
+      emotion: 'Recognition',
+      expression: 'Knowing half-smile, eyes softening',
+      eyeContact: 'Side glance to camera',
+      energy: 'medium-rising',
+      keywords: ['corner of lips lifting', 'gentle acknowledgment', 'warming gaze']
+   },
+   scene3_confidence: {
+      emotion: 'Confidence',
+      expression: 'Direct warm gaze, self-assured presence',
+      eyeContact: 'Full eye contact, unwavering',
+      energy: 'high-sustained',
+      keywords: ['I know I look good energy', 'controlled subtle smile', 'magnetic presence']
+   },
+   scene4_connection: {
+      emotion: 'Connection',
+      expression: 'Inviting playful smile, friendly warmth',
+      eyeContact: 'Engaging, welcoming',
+      energy: 'medium-warm',
+      keywords: ['natural charm', 'approachable warmth', 'soft inviting gaze']
+   }
+};
+
+// Outfit-matched expression styles
+export const WALKIN_OUTFIT_EXPRESSIONS = {
+   party_cocktail: {
+      style: 'Playful, teasing, magnetic',
+      keywords: ['mischievous glint in eyes', 'playful smirk', 'sparkling energy']
+   },
+   romantic_flowing: {
+      style: 'Dreamy, soft, enchanting',
+      keywords: ['soft ethereal gaze', 'gentle wondering smile', 'romantic energy']
+   },
+   bodycon_sleek: {
+      style: 'Confident, powerful, commanding',
+      keywords: ['controlled subtle smile', 'direct powerful gaze', 'owning the moment']
+   },
+   luxury_evening: {
+      style: 'Serene, elegant, mysterious',
+      keywords: ['quiet sophistication', 'knowing half-smile', 'refined presence']
+   },
+   casual_summer: {
+      style: 'Fresh, natural, approachable',
+      keywords: ['genuine friendly smile', 'bright relaxed eyes', 'natural charm']
+   }
+};
+
 // Location Regions for smart background selection - MEGA VAULT (200+ REAL locations)
 // ⚠️ TẤT CẢ địa điểm đều là ĐỊA ĐIỂM THẬT có thể tìm trên Google Maps
 // ⚠️ AI PHẢI tạo ảnh/video như CHỤP THỰC TẾ tại địa điểm, KHÔNG phải CGI/3D render
@@ -477,6 +811,80 @@ export const LOCATION_REGIONS = [
       desc: 'AI chọn bối cảnh THẬT phù hợp với sản phẩm (không CGI)',
       locations: [],
       productMatch: ['all'] // Match all products
+   },
+   // === DRESS-SPECIFIC LOCATIONS FOR WALK-IN MODE (60+ REAL PLACES) ===
+   {
+      value: 'for_dress_walkin',
+      label: '👗 Dress Walk-In',
+      emoji: '👗',
+      desc: 'Địa điểm đa dạng cho đầm váy từ truyền thống đến hiện đại',
+      productMatch: ['dress', 'gown', 'maxi', 'midi', 'mini', 'cocktail', 'evening'],
+      locations: [
+         // === TRUYỀN THỐNG / CỔ ĐIỂN (15 địa điểm) ===
+         'Hoi An Ancient Town yellow wall morning light - vintage dress aesthetic',
+         'Hoi An Japanese Bridge area colorful lanterns - floral maxi dress',
+         'Hanoi Old Quarter Hang Dao silk street golden hour - elegant midi',
+         'French Quarter Hanoi Trang Tien street colonial architecture - lace evening gown',
+         'Saigon Central Post Office interior arched windows - classic formal dress',
+         'Saigon Opera House grand staircase marble - satin ballgown',
+         'Rex Hotel Saigon rooftop garden vintage - cocktail dress retro',
+         'Continental Hotel Saigon courtyard French colonial - vintage A-line',
+         'Sofitel Metropole Hanoi courtyard classic - elegant evening dress',
+         'Villa Song Saigon riverside colonial mansion - luxury silk gown',
+         'Maison de Tet Decor Hanoi vintage interiors - retro midi dress',
+         'Hanoi Station old terminal building - vintage travel dress',
+         'Dalat Palace Heritage hotel lawn - romantic vintage gown',
+         'Van Phuc Silk Village Hanoi traditional street - silk traditional dress',
+         'Faifo Old House Hoi An heritage interior - vintage floral',
+         // === HIỆN ĐẠI / TRENDY (20 địa điểm) ===
+         'Landmark 81 Saigon lobby grand entrance marble - power bodycon dress',
+         'Nguyen Hue Walking Street night LED fountain - party mini dress',
+         'The Reverie Saigon lobby luxury chandeliers - luxury cocktail dress',
+         'Empire City Saigon piazza modern architecture - minimalist dress',
+         'Saigon Skydeck rooftop bar night city lights - slit evening gown',
+         'Thao Dien Pearl pathway modern luxury - casual chic sundress',
+         'Vincom Center Dong Khoi shopping hall - contemporary midi',
+         'Diamond Island Saigon promenade waterfront - slip satin dress',
+         'Bitexco Financial Tower plaza modern glass - structured dress',
+         'Thu Thiem Bridge Saigon sunset view - flowing modern gown',
+         'Crescent Mall Phu My Hung exterior - shopping day dress',
+         'Vinhomes Central Park boulevard - modern everyday dress',
+         'Masteri Thao Dien sky garden - rooftop party dress',
+         'The Metropole Thao Dien pool area - resort dress',
+         'Ecopark Hanoi modern residential - contemporary casual dress',
+         'Lotte Center Hanoi observation deck - city view evening dress',
+         'Times City Hanoi shopping boulevard - trendy mini dress',
+         'Sun Plaza Danang modern entrance - coastal modern dress',
+         'Cocobay Danang beachfront modern - beach party dress',
+         'Vinpearl Nha Trang cable car station - resort evening',
+         // === ROMANTIC / DREAMY (15 địa điểm) ===
+         'Dalat Flower Garden trails sunrise - floral maxi chiffon',
+         'Tao Dan Park Saigon golden hour tree canopy - romantic midi',
+         'Thu Le Zoo Hanoi botanical garden path - pastel lace dress',
+         'Thanh Da Island Saigon riverside sunset - flowing romantic gown',
+         'Bach Thao Park Hanoi pavilion - dreamy vintage dress',
+         'Gia Long Park Saigon old trees - soft romantic dress',
+         'Dalat Pine Forest road - ethereal maxi dress',
+         'Mui Ne Sand Dunes golden hour - bohemian maxi',
+         'Bao Loc Tea Hills morning mist - countryside romantic dress',
+         'Tam Dao Mountain resort path - highland romantic gown',
+         'Sapa terraces morning fog - dreamy traditional dress',
+         'Hoan Kiem Lake Hanoi promenade sunset - elegant romantic',
+         'West Lake Hanoi lotus area - soft flowing dress',
+         'Binh Quoi Village Saigon riverside - rustic romantic',
+         'Can Gio Mangrove forest bridge - nature romantic dress',
+         // === DỰ TIỆC / EVENING (10 địa điểm) ===
+         'Park Hyatt Saigon main entrance evening - gala evening gown',
+         'JW Marriott Phu Quoc marina sunset - resort formal dress',
+         'InterContinental Danang Sun Peninsula - luxury beach gown',
+         'The Myst Dong Khoi rooftop bar night - cocktail luxury dress',
+         'Caravelle Hotel Saigon signature terrace - rooftop party dress',
+         'Fusion Suites Danang rooftop pool night - night glam dress',
+         'New World Saigon ballroom entrance - formal evening gown',
+         'Sheraton Saigon grand lobby - elegant cocktail dress',
+         'Pullman Hanoi grand staircase - formal black-tie gown',
+         'Melia Hanoi ballroom foyer - classic evening dress'
+      ]
    },
    // === PRODUCT-SPECIFIC LOCATIONS (REAL PLACES) ===
    {
@@ -1072,6 +1480,110 @@ export const LOCATION_REGIONS = [
          'Designer boutique District 1 - clean white dressing area',
          'High-end fashion store - editorial lighting fitting room modern',
          'Concept store Thao Dien - minimalist dressing area natural light'
+      ]
+   },
+   {
+      value: 'for_walkin',
+      label: '👗 Cho Walk-In Fashion',
+      emoji: '🌳',
+      desc: 'Outdoor cinematic walkways - Golden Hour → Blue Hour → Night City',
+      productMatch: ['dress', 'bodycon', 'mini_dress', 'maxi_dress', 'cocktail', 'evening_gown', 'party_dress'],
+      locations: [
+         // ═══════════════════════════════════════════════════════════════
+         // 🌅 GOLDEN HOUR (5-7 PM) - Warm sunset backlight, rim glow
+         // ═══════════════════════════════════════════════════════════════
+
+         // Park Paths - Golden Hour
+         'Tao Dan Park tree-lined path - golden hour sunset through canopy warm rim light on shoulders',
+         'Vinhomes Central Park riverside walk - sunset over lake golden backlight hair glow',
+         '23/9 Park main avenue - warm afternoon sun filtering through tropical trees',
+         'Thao Dien villa street - colonial trees sunset backlight silhouette',
+         'Gia Dinh Park walking path - golden hour dappled light through bamboo',
+
+         // Lakeside Promenades - Golden Hour  
+         'Hoan Kiem Lake promenade Hanoi - golden sunset reflection on water rim light',
+         'West Lake cycling path Hanoi - sunset over lake romantic golden hour glow',
+         'Xuan Huong Lake Dalat - pine tree sunset soft warm mountain light',
+         'Truc Bach Lake bank Hanoi - golden hour water reflection willows',
+         'Ho Tay waterfront - sunset golden light warm skin tones',
+
+         // Garden Paths - Golden Hour
+         'Temple of Literature courtyard Hanoi - sunset through ancient frangipani trees',
+         'Dalat Flower Garden hydrangea paths - golden light soft petals',
+         'Hoi An ancient town sunset - yellow walls warm orange glow no tourists',
+         'Truc Lam Monastery garden Dalat - zen path sunset mountain backdrop',
+         'Botanical Garden Saigon - tropical trees golden hour filtered light',
+
+         // Beach Adjacent - Golden Hour
+         'An Bang Beach road Hoi An - coconut palm sunset silhouette ocean view',
+         'My Khe Beach promenade Danang - sunset ocean backdrop warm golden',
+         'Phu Quoc beach walkway - palm trees sunset ocean golden hour',
+
+         // ═══════════════════════════════════════════════════════════════
+         // 🌆 BLUE HOUR (7-8 PM) - Cool sky + warm city lights mix
+         // ═══════════════════════════════════════════════════════════════
+
+         // Urban Plazas - Blue Hour
+         'Nguyen Hue Walking Street - blue hour twilight warm street lamps fountain',
+         'Dong Khoi District Saigon - boutique lights beginning to glow dusk elegant',
+         'Saigon Opera House plaza - twilight blue sky warm facade lights classical',
+         'Hanoi Opera House front - blue hour French colonial architecture lights',
+         'Landmark 81 plaza - city lights starting blue hour modern towers',
+
+         // Modern Districts - Blue Hour
+         'District 2 Thao Dien - upscale street cafes blue hour warm glow',
+         'Phu My Hung crescent - modern architecture twilight balanced lighting',
+         'Keangnam Hanoi plaza - business district dusk blue cool tones',
+         'Empire City Thu Thiem - waterfront blue hour modern skyline',
+         'District 7 Starlight Bridge - twilight city lights reflection',
+
+         // Café Streets - Blue Hour
+         'Hai Ba Trung café row Saigon - twilight warm storefronts glow',
+         'Nha Tho Street Hanoi - blue hour cathedral warm café lights',
+         'Book Street Saigon evening - literary atmosphere warm lamps twilight',
+         'The Marq District 1 plaza - luxury twilight cool warm mix',
+         'Sala Thu Thiem promenade - blue hour modern waterfront lights',
+
+         // Shopping Streets - Blue Hour
+         'Vincom Center Dong Khoi exterior - dusk luxury shopping glow',
+         'Takashimaya Saigon entrance - Japanese elegance blue hour',
+         'Union Square Saigon - fashion district twilight warm windows',
+
+         // ═══════════════════════════════════════════════════════════════
+         // 🌃 NIGHT CITY (8 PM+) - Street lights, storefronts, luxury urban
+         // ═══════════════════════════════════════════════════════════════
+
+         // Luxury Nightlife Districts
+         'Dong Khoi Street night - luxury boutiques glowing storefronts elegant',
+         'Nguyen Hue at night - fountain lights pedestrian promenade vibrant',
+         'Hai Ba Trung night shopping - city lights reflection on pavement',
+         'Ta Hien Beer Street Hanoi night - neon warm bar lights energy',
+         'Bui Vien Walking Street night - neon glow entertainment district',
+
+         // Hotel Entrances - Night (Luxury Arrival)
+         'Park Hyatt Saigon entrance night - doorman luxury arrival warm brass',
+         'Caravelle Hotel entrance night - elegant colonial brass fixtures',
+         'Sofitel Legend Metropole Hanoi night - French colonial romantic lights',
+         'JW Marriott Hanoi entrance night - modern luxury warm glow',
+         'InterContinental Saigon entrance - contemporary luxury night',
+         'The Reverie Saigon entrance night - ultra luxury dramatic lighting',
+
+         // Shopping Streets - Night
+         'Vincom Center Dong Khoi night - premium shopping illuminated windows',
+         'Diamond Plaza entrance night - upscale retail warm glow',
+         'Saigon Centre night - modern mall luxury lighting',
+         'Trang Tien Plaza Hanoi night - elegant shopping warm interior',
+
+         // Modern Architecture - Night
+         'Bitexco Tower plaza night - modern iconic lighting',
+         'Landmark 81 base night - tallest building dramatic lights',
+         'Times Square Saigon night - entertainment district neon',
+         'Lotte Tower Hanoi night - observation deck lights city view',
+
+         // Restaurant/Bar Districts - Night
+         'Thao Dien restaurant row night - upscale dining warm atmosphere',
+         'Le Thanh Ton Japanese Town night - lanterns warm glow',
+         'Rooftop bars District 1 - city lights backdrop luxury urban'
       ]
    },
    {

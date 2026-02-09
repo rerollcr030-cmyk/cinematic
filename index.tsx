@@ -15,13 +15,17 @@ import {
    CINEMATIC_FASHION_SCENES,
    SPORTSWEAR_RULES,
    EMOTIONAL_ARC_GUIDE,
+   WALKIN_CINEMATIC_RULES,
    INITIAL_BRIEF,
    BODY_TEMPLATES,
    PRODUCT_TYPE_GROUPS,
    PRODUCT_TYPES,
    VIDEO_STYLES,
    LOCATION_REGIONS,
-   STUDIO_CATEGORIES
+   STUDIO_CATEGORIES,
+   WALKIN_TIME_OF_DAY,
+   WALKIN_AESTHETIC_VIBES,
+   WALKIN_PERSONALITIES
 } from './constants';
 
 // --- Components ---
@@ -70,6 +74,10 @@ const App = () => {
    // State
    const [step, setStep] = useState<'input' | 'director'>('input');
    const [appMode, setAppMode] = useState<'cinematic' | 'tiktok' | 'tiktok_shop'>('cinematic');
+   const [cinematicMode, setCinematicMode] = useState<'standard' | 'transform' | 'walkin'>('standard');
+   const [walkinTimeOfDay, setWalkinTimeOfDay] = useState<'auto' | 'golden_hour' | 'blue_hour' | 'night_city'>('auto');
+   const [walkinVibe, setWalkinVibe] = useState<'auto' | 'romantic' | 'power' | 'goddess' | 'minimal' | 'soft_allure'>('auto');
+   const [walkinPersonality, setWalkinPersonality] = useState<'auto' | 'casual' | 'shy' | 'confident' | 'playful'>('auto');
    const [activeTab, setActiveTab] = useState<'master' | 'keyframes' | 'scenes' | 'refined' | 'production'>('master');
 
    const [faceImage, setFaceImage] = useState<string | null>(null);
@@ -91,8 +99,8 @@ const App = () => {
    // Product type for TikTok Shop (default to auto-detect)
    const [productType, setProductType] = useState<string>('auto');
 
-   // Video style for TikTok Shop (including Beauty & Personal Care styles + Mirror OOTD + Handheld Voice + Viral Trending 2025-2026 + Áo Dài)
-   const [videoStyle, setVideoStyle] = useState<'body_real' | 'before_after' | 'before_after_fashion_show' | 'ao_dai_traditional' | 'ao_dai_transition' | 'ao_dai_catwalk' | 'ao_dai_modern' | 'fabric_focus' | 'sleepwear_cozy' | 'editorial_inner' | 'flatlay_inner' | 'handheld_inner' | 'handheld_voice' | 'mannequin_inner' | 'asmr_fabric' | 'floor_display' | 'beauty_demo' | 'device_review' | 'body_shaper_demo' | 'skincare_routine' | 'makeup_tutorial' | 'mirror_ootd' | 'ootd_novoice' | 'grwm' | 'outfit_change_viral' | 'ootd_grwm' | 'try_on_haul' | 'personal_branding' | 'fit_check' | 'style_challenge' | 'unbox_demo' | 'problem_solution' | 'feature_showcase' | 'before_after_home' | 'day_in_life' | 'comparison_test' | 'installation_guide' | 'smart_home_tour'>('body_real');
+   // Video style for TikTok Shop (including Beauty & Personal Care styles + Mirror OOTD + Handheld Voice + Viral Trending 2025-2026 + Áo Dài + Transformation + Fashion Walk-In)
+   const [videoStyle, setVideoStyle] = useState<'body_real' | 'before_after' | 'before_after_fashion_show' | 'ao_dai_traditional' | 'ao_dai_transition' | 'ao_dai_catwalk' | 'ao_dai_modern' | 'fabric_focus' | 'sleepwear_cozy' | 'editorial_inner' | 'flatlay_inner' | 'handheld_inner' | 'handheld_voice' | 'mannequin_inner' | 'asmr_fabric' | 'floor_display' | 'beauty_demo' | 'device_review' | 'body_shaper_demo' | 'skincare_routine' | 'makeup_tutorial' | 'mirror_ootd' | 'ootd_novoice' | 'grwm' | 'outfit_change_viral' | 'ootd_grwm' | 'try_on_haul' | 'personal_branding' | 'fit_check' | 'style_challenge' | 'unbox_demo' | 'problem_solution' | 'feature_showcase' | 'before_after_home' | 'day_in_life' | 'comparison_test' | 'installation_guide' | 'smart_home_tour' | 'transform_viral' | 'transform_glowup' | 'transform_day_night' | 'fashion_walkin' | 'fashion_walkin_beauty'>('body_real');
 
    // Product Details for TikTok Shop (user input)
    const [fabricMaterial, setFabricMaterial] = useState<string>('');
@@ -399,7 +407,7 @@ const App = () => {
    // 🎯 POSE DIRECTION VAULT (Video Mode Only)
    // ================================================
    // Tracks used camera angles to avoid pose direction repetition
-   type PoseDirection = 'front' | 'back' | '3/4-front' | '3/4-back' | 'side-left' | 'side-right';
+   type PoseDirection = 'front' | 'back' | '3/4-front-left' | '3/4-front-right' | '3/4-back-left' | '3/4-back-right' | 'side-left' | 'side-right';
 
    const [poseDirectionVault, setPoseDirectionVault] = useState<{
       id: string;
@@ -1314,7 +1322,222 @@ Các kiểu combo phổ biến:
             ? `\n\n🔥 SEXY_MODE: ON (SFW VOCABULARY - NANO BANANA PRO COMPATIBLE)\nChế độ riêng tư tạo nội dung gợi cảm - TỐI ƯU cho Nano Banana Pro và Veo 3.1.\n\n⛔ BLOCKLIST - TUYỆT ĐỐI KHÔNG DÙNG:\n🔴 HARD BLOCK: vagina, penis, nipples, nude, naked, topless, braless, sex, cum, bdsm, fetish, bondage, orgasm\n🟡 CONTEXT BLOCK: see-through, sheer, micro bikini, wet t-shirt, upskirt, spread legs, cleavage, bust, breast\n🟡 WORKAROUNDS BỊ BLOCK: nsfw, uncensored, r18, 18+, hentai, gravure, risqué\n\n✅ SFW ALTERNATIVES - DÙNG CÁC TỪ NÀY:\n- Cleavage → décolletage, neckline depth, V-neckline\n- Bust/Breast → upper body silhouette, bodice architecture, heart opening\n- Sexy → alluring, captivating, magnetic\n- Seductive → confident gaze, magnetic presence, self-assured\n- Sheer → lightweight fabric, flowing material\n- Wet look → glossy finish, reflective surface\n- Bedroom eyes → half-lidded gaze, confident gaze\n- Lingerie → lounge coordinates, loungewear set\n- Bikini → two-piece swimwear, swim set${wallpaperMode ? `\n\n📱 WALLPAPER + SEXY COMBINATION:\n- Tạo hình nền elegant nhưng TINH TẾ, phù hợp làm lock screen\n- Poses: elegant standing, confident lean, soft recline - KHÔNG provocative\n- Expression: half-lidded gaze, knowing smile - confident not intense\n- Background: dreamy gradient, bokeh lights - beautiful for wallpaper\n- Model 90% frame như Wallpaper Mode yêu cầu` : ''}\n\n⚠️ QUY TẮC ÁO DÀI:\n- Áo dài VẪN PHẢI tuân thủ: KHÔNG XẺ TÀ, VẠT LIỀN MẠCH\n- Gợi cảm qua: form-fitting silhouette, thin silk fabric, deep back scoop, wind-blown panels\n- KHÔNG: sheer fabric, high side slit trên vạt\n- EN: "ao dai INTACT panels, elegant via fitted silhouette and flowing fabric, NO panel slits"\n\n💃 BODY VOCABULARY (SFW):\n- Graceful silhouette, elegant figure, hourglass silhouette\n- Generous figure, elegant curves, slender waist\n- Smooth radiant skin, long elegant legs\n\n👗 OUTFIT VOCABULARY (SFW):\n- Form-fitting dress, bodycon, deep V-neckline, backless\n- High slit, lightweight fabric, lace overlay, strapless\n- Loungewear set, silk robe, two-piece swimwear\n- ⚠️ NGOẠI TRỪ ÁO DÀI: chỉ form-fitting, thin silk, NO slits on panels\n\n🧘 YOGA POSES CHO TƯ THẾ KHÓ/DỄ FLAG:\n| Pose | Yoga Sanskrit | Dùng Khi |\n|------|--------------|----------|\n| Xoạc ngang 180° | Samakonasana (Straight Angle) | Thay "180° splits" |\n| Xoạc cúi trước | Upavistha Konasana (Wide-Angle Forward Bend) | Thay "spread legs bend forward" |\n| Nằm mở hông | Supta Baddha Konasana (Reclined Bound Angle) | Thay "lying with open legs" |\n| Cong lưng sâu | Bhujangasana/Ustrasana (Cobra/Camel) | Thay "deep backbend" |\n\n🎭 ELEGANT POSES:${wallpaperMode ? `\n- Elegant standing with hip tilt, confident lean\n- Graceful back arch, hand on hip, over-shoulder glance\n- Hair toss, subtle fabric touch - tinh tế cho wallpaper` : `\n- Graceful back arch, hip tilt, leaning forward\n- Wall lean, confident arch, styled poses\n- Elegant recline, relaxed poses, dynamic movement\n- Hair styling, fabric draping, strap adjusting`}\n\n📸 CAMERA:\n- Low angle looking up, bird's eye view\n- Slow pan up body, circling orbit, push-in close\n\n💡 LIGHTING:\n- Warm amber key light, strong rim/backlight glow\n- Single spotlight, candle flicker, neon glow\n- Pattern shadows, dramatic chiaroscuro${lookbookMode ? '' : `\n\n🎬 SCENE FLOW (VIDEO ONLY):\n- Scene 1: Introduction - elegant silhouette emerging\n- Scene 2: Reveal - full body spotlight showcase\n- Scene 3: Highlight - peak captivating moment\n- Scene 4: Finale - confident elegant close, smile`}`
             : '';
 
+         // Transformation Mode flag (Biến Hình - 32s viral outfit morph)
+         const transformationModeText = cinematicMode === 'transform' && appMode === 'cinematic'
+            ? `\n\n🪄 TRANSFORMATION_MODE: ON (32s Biến Hình - Viral Outfit Morph)
+AI sẽ tạo VIDEO 32s với BIẾN HÌNH từ Scene 1
+
+📋 32-SECOND SCENE STRUCTURE (TRANSFORM FROM SCENE 1):
+| Scene | Time | Nội dung |
+|-------|------|----------|
+| Scene 1 | 0s-8s | BEFORE + BẮT ĐẦU TRANSFORM - Model trong casual outfit, sparkle bắt đầu xuất hiện |
+| Scene 2 | 8s-16s | TRANSFORM ĐỈNH ĐIỂM - Particles wrapping, outfit morphing |
+| Scene 3 | 16s-24s | AFTER REVEAL - Outfit mới hoàn toàn |
+| Scene 4 | 24s-32s | SHOWCASE - Full showcase outfit user upload |
+
+🤖 AI "BEFORE" OUTFIT GENERATION:
+- Evening dress → Pyjamas/loungewear
+- Office dress → Morning sleepwear
+- Party dress → Casual home clothes
+- Blazer → Baggy hoodie
+- Áo dài → Modern casual Vietnamese
+
+📝 SCENE PROMPTS:
+Scene 1 (0s-8s): "Model in [casual outfit], relaxed pose, SPARKLES BEGIN appearing from outfit edges at 4s mark, magical particles start swirling gently, transformation begins"
+Scene 2 (8s-16s): "FULL TRANSFORMATION - particles intensify, body wrapped in magical light, outfit morphing visible, silhouette changes, sparkles peak at 12s"
+Scene 3 (16s-24s): "Model REVEALED in [user uploaded outfit], transformation complete, confident posture, styled hair/makeup, sparkle dust settling"
+Scene 4 (24s-32s): "Full showcase - elegant poses, slow turn, fabric flow, aspirational finale"
+
+⚠️ KEY: Transformation STARTS at Scene 1 (từ giây 4), không đợi Scene 2!`
+            : '';
+
+         // Walk-In Mode flag (Fashion Walk-In - Body Dress TikTok Style for Cinematic)
+         // Now includes Time of Day lighting selection
+         const timeOfDayLighting = walkinTimeOfDay === 'golden_hour'
+            ? `🌅 GOLDEN HOUR LIGHTING (5-7 PM):
+- "soft sunset backlight creating rim glow around hair and shoulders"
+- "warm golden light from low sun angle"
+- "gentle highlight roll-off on shoulders, collarbone, chest, waist, hips"
+- "natural warm skin tones with soft radiance"
+- "hair backlighting with soft golden halo effect"
+- "dappled sunset light through tree canopy"`
+            : walkinTimeOfDay === 'blue_hour'
+               ? `🌆 BLUE HOUR LIGHTING (7-8 PM):
+- "cool ambient twilight sky with warm city lights beginning"
+- "balanced cool-warm color temperature mix"
+- "soft transitional lighting on face and body"
+- "subtle blue fill from ambient sky, warm key from storefronts"
+- "elegant dusk atmosphere luxury urban"
+- "boutique window lights starting to glow"`
+               : walkinTimeOfDay === 'night_city'
+                  ? `🌃 NIGHT CITY LIGHTING (8 PM+):
+- "street lights creating warm pools of light on walkway"
+- "storefront glow illuminating sidewalk and model"
+- "decorative architectural lighting on surrounding buildings"
+- "luxury urban atmosphere with mixed light sources"
+- "warm key light from shop windows, cool fill from night sky"
+- "elegant hotel entrance brass fixtures warm glow"`
+                  : `🤖 AI AUTO-SELECT LIGHTING:
+AI sẽ chọn thời gian phù hợp với outfit vibe:
+- Party/Cocktail → Night City (luxury urban)
+- Romantic/Flowing → Golden Hour (warm sunset)
+- Modern/Bodycon → Blue Hour (twilight elegance)`;
+
+         const walkinModeText = cinematicMode === 'walkin' && appMode === 'cinematic'
+            ? `\n\n👗 FASHION_WALKIN_MODE: ON - VIBE "NÀNG THƠ HIỆN ĐẠI"
+Time of Day: ${walkinTimeOfDay.toUpperCase()}
+Aesthetic Vibe: ${walkinVibe.toUpperCase()}
+
+${timeOfDayLighting}
+
+🌸 MOVEMENT PHILOSOPHY: NÀNG THƠ HIỆN ĐẠI
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ KHÔNG PHẢI:                    ✅ MÀ LÀ:
+- Catwalk thuần                   - Đi bộ thoải mái
+- Pose cứng, giữ lâu              - Ngẫu hứng tạo dáng
+- "Diễn thời trang"               - "Sống với váy đẹp"
+- Model runway chuyên nghiệp      - Cô gái đẹp đang dạo phố
+- Camera đi theo model            - Camera tình cờ bắt gặp
+
+CORE FEELING:
+"Mặc váy đẹp → tự nhiên bước đi → tiện tay tạo dáng → dừng lại ngắm mình → xoay người → lại đi tiếp"
+
+🎬 32s TIMELINE - NATURAL VIBE:
+Scene 1 (0-8s): Đang đi dạo → phát hiện mình đẹp trong kính/mặt nước
+Scene 2 (8-16s): Tiện tay chạm váy → ngắm nếp vải  
+Scene 3 (16-24s): Dừng lại → xoay nhẹ → xem váy bay
+Scene 4 (24-32s): Hài lòng → tiếp tục dạo bước → fade out
+
+🌿 MICRO-MOMENTS BẮT BUỘC (mỗi scene 1 moment):
+- Tóc bay → tiện tay vén | Váy gió → nắm nhẹ
+- Thấy mình đẹp → mỉm cười | Bất chợt quay → gặp camera
+
+🎨 AESTHETIC VIBE: ${walkinVibe === 'auto' ? 'AI AUTO-DETECT from outfit' : walkinVibe.toUpperCase()}
+
+${walkinVibe === 'romantic' ? `💕 ROMANTIC VIBE - DẠO BƯỚC MƠ MÀNG:
+- Movement: Dạo bước nhẹ nhàng, tiện tay vén tóc, dừng ngắm cảnh đẹp
+- Camera: Tình cờ bắt gặp, theo dõi nhẹ nhàng, ánh sáng mềm
+- Fabric: Váy bay theo gió tự nhiên, nếp vải mềm mại
+- Expression: Mơ màng nhìn xa → Phát hiện mình đẹp → Mỉm cười hài lòng → Bye nhẹ nhàng` :
+               walkinVibe === 'power' ? `💪 POWER VIBE - TỰ TIN VÌ BIẾT MÌNH ĐẸP:
+- Movement: Bước đi tự tin không vội, dừng check mình trong kính, gật đầu hài lòng
+- Camera: Theo dõi ổn định, medium shot tự tin
+- Fabric: Váy structured rơi đẹp, không bay quá nhiều
+- Expression: Cool nhìn môi trường → Mỉm cười mãn nguyện → Self-assured → Done và đẹp` :
+                  walkinVibe === 'goddess' ? `✨ GODDESS VIBE - BAY BỔNG NHƯNG ĐỜI THẬT:
+- Movement: Bước chậm như dreaming, xoay nhẹ xem váy bay, interact với ánh sáng
+- Camera: Góc đẹp như MV, backlight đẹp, slow motion feeling
+- Fabric: Satin chảy như nước, silk bay như mây
+- Expression: Peaceful awakening → Ngắm mình trong kính → Hài lòng divine → Bye ethereal` :
+                     walkinVibe === 'minimal' ? `◻️ MINIMAL VIBE - ĐẸP VÌ ĐƠN GIẢN:
+- Movement: Bước đi clean không flourish, dừng tự nhiên, quay đi tiếp
+- Camera: Framing gọn gàng, không drama, editorial
+- Fabric: Váy rơi thẳng, không bay quá nhiều, clean lines
+- Expression: Neutral thoải mái → Nhận ra camera → Subtle smile → Đi tiếp` :
+                        walkinVibe === 'soft_allure' ? `🌙 SOFT ALLURE VIBE - TỰ NHIÊN QUYẾN RŨ:
+- Movement: Đi tự nhiên có rhythm, tiện tay chạm váy, turning nhẹ nhàng
+- Camera: Intimate distance, theo dõi nhẹ, warm lighting
+- Fabric: Váy ôm body tự nhiên, satin catch light đẹp
+- Expression: Thoải mái tự tin → Phát hiện được ngắm → Mỉm cười tự nhiên → Bye warm` :
+                           `🤖 AI AUTO-DETECT VIBE from outfit:
+- Chiffon/Lace/Floral → Romantic (dạo bước mơ màng)
+- Blazer/Structured → Power (tự tin vì biết mình đẹp)
+- Satin/Silk/Gown → Goddess (bay bổng đời thật)
+- Minimal/Solid → Minimal (đẹp vì đơn giản)
+- Slip/Bodycon → Soft Allure (tự nhiên quyến rũ)`}
+
+👤 MODEL PERSONALITY: ${walkinPersonality === 'auto' ? 'AI AUTO-DETECT from outfit' : walkinPersonality.toUpperCase()}
+${walkinPersonality === 'casual' ? `🌸 CASUAL PERSONALITY:
+- Energy: Relaxed, everyday, effortless - đi dạo bình thường
+- Walk: Natural easy pace, no deliberate sway
+- Hands: Relaxed, in pockets, holding phone/bag
+- Expression: Easy smile, comfortable in own skin
+- Eye contact: Casual glances, not seeking attention
+- Best for: Summer dress, casual midi, everyday wear` :
+               walkinPersonality === 'shy' ? `🌷 SHY PERSONALITY:
+- Energy: Soft, demure, endearing - hơi ngại ngùng khi nhận ra mình đẹp
+- Walk: Smaller steps, slightly turned inward
+- Hands: Near body, touching collar, holding own arm
+- Expression: Gentle smile, looking down then up
+- Eye contact: Brief, then looks away with smile
+- Best for: Romantic dress, soft fabrics, pastel colors` :
+                  walkinPersonality === 'confident' ? `💎 CONFIDENT PERSONALITY:
+- Energy: Self-assured, powerful, commanding - biết mình đẹp
+- Walk: Strong even strides, shoulders back
+- Hands: On hip, decisive gestures, controlled
+- Expression: Knowing smile, "I know I look good" energy
+- Eye contact: Direct, unwavering, engaging
+- Best for: Bodycon, structured dress, evening gown` :
+                     walkinPersonality === 'playful' ? `✨ PLAYFUL PERSONALITY:
+- Energy: Fun, teasing, spirited - party energy
+- Walk: Light bouncy steps, hip pop moments
+- Hands: Tossing hair, spinning dress, animated
+- Expression: Bright smile, mischievous eyes
+- Eye contact: Flirty glances, winks, playful looks
+- Best for: Party dress, cocktail, fun prints` :
+                        `🤖 AI AUTO-DETECT PERSONALITY from outfit:
+- Summer/Casual → Casual (thoải mái everyday)
+- Romantic/Soft → Shy (e thẹn dễ thương)
+- Structured/Formal → Confident (tự tin boss)
+- Party/Fun → Playful (vui vẻ tinh nghịch)`}
+
+
+⚠️ VARIATION ENFORCEMENT (CRITICAL - CHỐNG LẶP VIDEO):
+Khi input image đã có pose/environment từ lần trước:
+
+🚫 BACKGROUND PHẢI KHÁC HOÀN TOÀN:
+- KHÔNG dùng lại bất kỳ element nào từ background input
+- KHÔNG cùng loại địa điểm (park → park = SAI)
+- PHẢI chọn category khác: Park → Urban Plaza → Hotel → Shopping Street
+- PHẢI thay đổi time of day nếu cùng location type
+- Background mới = 100% khác biệt về: kiến trúc, cây cối, ánh sáng, màu sắc
+
+🔄 SCENE ROTATION (BẮT BUỘC):
+| Scene | Location Type | Time | Example |
+|-------|---------------|------|---------|
+| 1 | Park/Garden | Golden Hour | Tao Dan Park sunset |
+| 2 | Urban Plaza | Blue Hour | Nguyen Hue twilight |
+| 3 | Hotel Entrance | Night | Park Hyatt entrance |
+| 4 | Shopping Street | Night | Dong Khoi boutiques |
+
+📷 POSE/FRAMING PHẢI KHÁC:
+- Pose: Walk forward → 3/4 turn → Side glance → Over shoulder
+- Hand: On hair → On hip → Touching dress → On collarbone
+- Expression: Mysterious → Confident → Warm smile → Direct gaze
+
+✅ GIỮ NGUYÊN: Face identity, outfit, body type
+❌ THAY ĐỔI: Background, pose, hand, expression, lighting, framing
+
+🎬 32s TIMELINE (4 SCENES x 8s):
+| Scene | Time | Action | Mục tiêu |
+|-------|------|--------|----------|
+| 1 | 0-8s | Walk Forward: đi về camera, váy bay, tóc rung | Hook attention |
+| 2 | 8-16s | Side Track: đi ngang, camera song song, nổi đường cong | Khoe dáng eo-hông |
+| 3 | 16-24s | Mid-body: crop ngực→đùi, thấy texture, eo rõ | Bán hàng + chi tiết |
+| 4 | 24-32s | Stop+Turn: chậm lại, xoay vai, giữ váy, mỉm cười | Kết cảm xúc + CTA |
+
+🎯 CORE LOGIC (TOÀN VIDEO):
+- Model LUÔN đi bộ hoặc chuyển động - ❌ KHÔNG ĐỨNG YÊN quá 1s
+- Bước NGẮN, nhẹ - KHÔNG bước dài kiểu catwalk
+- Hông mềm, sway tự nhiên theo bước
+- Full body chiếm 75-85% frame height
+- Khoe dáng BẰNG CHUYỂN ĐỘNG, không bằng pose
+
+👐 HANDS: 1 tay giữ váy + 1 tay tóc/thả, ❌ KHÔNG cứng
+👗 DRESS: Váy LUÔN có flow, hem bay theo bước
+📷 CAMERA: Slow tracking/static, ❌ NO ZOOM, ❌ NO LOW ANGLE
+😊 EXPRESSION: Mềm mại, ❌ KHÔNG cười rộng
+
+🚫 AUTO REJECT: đứng yên, zoom, low angle, catwalk, tay cứng, dress static, loop background
+
+✅ BEST FOR: Bodycon, satin slip, cocktail, party dress, evening gown
+❌ NOT FOR: Áo dài, sportswear, loose tops, pants standalone`
+            : '';
+
+
          // Studio Mode flag - Professional themed backgrounds with random studio suggestions
+
          // 🎨 COLOR CONTRAST: Pass productColor to filter out studios with same color as product
          const studioSuggestions = studioMode ? getRandomStudios(studioCategory, 5, productColor || undefined) : [];
          const studioModeText = studioMode
@@ -1438,7 +1661,8 @@ AI PHẢI output định dạng JSON để tối ưu workflow Image-to-Video.`;
 → Use DEFAULT DOUYIN/DOLL STYLE FACE (see instructions for full description)`;
 
          const parts = [
-            { text: `Mode: ${appMode.toUpperCase()}\nGender: ${gender}\n${bodyDataString}${shopModelInfo}${userAdditionalDescText}\n\nTarget Duration: ${finalDuration}s (${scenes} scenes).\nAspect Ratio: ${aspectRatio}${keyframeCountText}${realWorldPhotoText}${locationPreferenceText}${editorialModeText}${wallpaperModeText}${lookbookModeText}${seductiveModeText}${sexyModeText}${studioModeText}${aspectRatioText}${poseBlocklistText}\n\nPREVIOUSLY USED LOCATIONS (COLLISION AVOIDANCE ACTIVATED):\n${historyBlocklist}${scriptBlocklist}\n\n🎯 OUTPUT FORMAT: JSON (Nano Banana Pro & Veo 3.1 optimized)\nCreative Brief:\n${brief}${faceReferenceText}` },
+            { text: `Mode: ${appMode.toUpperCase()}${cinematicMode === 'transform' ? ' (TRANSFORMATION/BIẾN HÌNH)' : cinematicMode === 'walkin' ? ' (FASHION WALK-IN)' : ''}\nGender: ${gender}\n${bodyDataString}${shopModelInfo}${userAdditionalDescText}\n\nTarget Duration: ${cinematicMode === 'transform' ? '32' : cinematicMode === 'walkin' ? '32' : finalDuration}s (${cinematicMode === 'transform' ? '4' : cinematicMode === 'walkin' ? '4' : scenes} scenes).\nAspect Ratio: ${aspectRatio}${keyframeCountText}${realWorldPhotoText}${locationPreferenceText}${editorialModeText}${wallpaperModeText}${lookbookModeText}${seductiveModeText}${sexyModeText}${transformationModeText}${walkinModeText}${studioModeText}${aspectRatioText}${poseBlocklistText}\n\nPREVIOUSLY USED LOCATIONS (COLLISION AVOIDANCE ACTIVATED):\n${historyBlocklist}${scriptBlocklist}\n\n🎯 OUTPUT FORMAT: JSON (Nano Banana Pro & Veo 3.1 optimized)\nCreative Brief:\n${brief}${faceReferenceText}` },
+
 
             // Face Reference image FIRST (with label)
             ...(faceImage ? [{ text: '\n\n📸 IMAGE 1 - FACE REFERENCE (Use this face):' }, { inlineData: { mimeType: faceData.mimeType, data: faceData.data } }] : []),
@@ -1468,6 +1692,11 @@ AI PHẢI output định dạng JSON để tối ưu workflow Image-to-Video.`;
          // Append Cinematic Fashion Scenes for non-lookbook cinematic videos
          if (appMode === 'cinematic' && !lookbookMode) {
             systemInstruction = systemInstruction + '\n\n' + CINEMATIC_FASHION_SCENES;
+         }
+
+         // Append Walk-In Cinematic Rules for Walk-In mode
+         if (cinematicMode === 'walkin' && appMode === 'cinematic') {
+            systemInstruction = systemInstruction + '\n\n' + WALKIN_CINEMATIC_RULES;
          }
 
          if (appMode === 'tiktok' || appMode === 'tiktok_shop') {
@@ -1807,7 +2036,161 @@ AI PHẢI output định dạng JSON để tối ưu workflow Image-to-Video.`;
                      </button>
                   </div>
 
+                  {/* Cinematic Sub-Mode: Standard vs Biến Hình vs Walk-In (only show when cinematic mode) */}
+                  {appMode === 'cinematic' && (
+                     <div className="space-y-2">
+                        <label className="text-[10px] uppercase tracking-wider font-semibold text-zinc-500">
+                           ✨ Cinematic Style
+                        </label>
+                        <div className="grid grid-cols-3 gap-2">
+                           <button
+                              onClick={() => setCinematicMode('standard')}
+                              className={`py-2.5 px-3 rounded-lg text-[10px] font-medium border transition-all text-left
+                                 ${cinematicMode === 'standard'
+                                    ? 'bg-purple-500/20 border-purple-500 text-purple-200'
+                                    : 'bg-zinc-900/50 border-zinc-700 text-zinc-400 hover:border-zinc-500'}`}
+                           >
+                              <div className="font-bold">🎬 Standard</div>
+                              <div className="text-[8px] text-zinc-500 mt-0.5">Fashion editorial cinematic</div>
+                           </button>
+                           <button
+                              onClick={() => setCinematicMode('transform')}
+                              className={`py-2.5 px-3 rounded-lg text-[10px] font-medium border transition-all text-left
+                                 ${cinematicMode === 'transform'
+                                    ? 'bg-gradient-to-r from-yellow-500/20 to-pink-500/20 border-yellow-500 text-yellow-200'
+                                    : 'bg-zinc-900/50 border-zinc-700 text-zinc-400 hover:border-zinc-500'}`}
+                           >
+                              <div className="font-bold">✨ Biến Hình</div>
+                              <div className="text-[8px] text-zinc-500 mt-0.5">AI morph outfit - 32s viral</div>
+                           </button>
+                           <button
+                              onClick={() => setCinematicMode('walkin')}
+                              className={`py-2.5 px-3 rounded-lg text-[10px] font-medium border transition-all text-left
+                                 ${cinematicMode === 'walkin'
+                                    ? 'bg-gradient-to-r from-pink-500/20 to-rose-500/20 border-pink-500 text-pink-200'
+                                    : 'bg-zinc-900/50 border-zinc-700 text-zinc-400 hover:border-zinc-500'}`}
+                           >
+                              <div className="font-bold">👗 Walk-In</div>
+                              <div className="text-[8px] text-zinc-500 mt-0.5">Body dress - soft daylight</div>
+                           </button>
+                        </div>
+                        {cinematicMode === 'transform' && (
+                           <p className="text-[9px] text-yellow-400/80">
+                              🪄 AI sẽ tạo outfit "trước" (casual/nhà) → biến hình → outfit bạn upload
+                           </p>
+                        )}
+                        {cinematicMode === 'walkin' && (
+                           <p className="text-[9px] text-pink-400/80">
+                              👗 Model bước về camera - Soft daylight - Medium shot - Quiet sexy vibe (váy body, đầm ôm)
+                           </p>
+                        )}
+                        {/* Walk-In Time of Day Selector */}
+                        {cinematicMode === 'walkin' && (
+                           <div className="mt-3 space-y-2">
+                              <label className="text-[9px] uppercase tracking-wider font-semibold text-zinc-500">
+                                 🌅 Thời Gian (Lighting)
+                              </label>
+                              <div className="grid grid-cols-4 gap-1.5">
+                                 {WALKIN_TIME_OF_DAY.map((tod) => (
+                                    <button
+                                       key={tod.value}
+                                       onClick={() => setWalkinTimeOfDay(tod.value as any)}
+                                       className={`py-2 px-2 rounded-lg text-[9px] font-medium border transition-all text-center
+                                          ${walkinTimeOfDay === tod.value
+                                             ? tod.value === 'golden_hour'
+                                                ? 'bg-amber-500/20 border-amber-500 text-amber-200'
+                                                : tod.value === 'blue_hour'
+                                                   ? 'bg-blue-500/20 border-blue-500 text-blue-200'
+                                                   : tod.value === 'night_city'
+                                                      ? 'bg-purple-500/20 border-purple-500 text-purple-200'
+                                                      : 'bg-zinc-600/20 border-zinc-500 text-zinc-200'
+                                             : 'bg-zinc-900/50 border-zinc-700 text-zinc-400 hover:border-zinc-500'}`}
+                                    >
+                                       <div className="font-bold">{tod.emoji}</div>
+                                       <div className="text-[7px] text-zinc-500 mt-0.5">{tod.label.replace(/.*\s/, '')}</div>
+                                    </button>
+                                 ))}
+                              </div>
+                              <p className="text-[8px] text-zinc-500">
+                                 {WALKIN_TIME_OF_DAY.find(t => t.value === walkinTimeOfDay)?.desc}
+                              </p>
+                           </div>
+                        )}
+                        {/* Walk-In Aesthetic Vibe Selector */}
+                        {cinematicMode === 'walkin' && (
+                           <div className="mt-3 space-y-2">
+                              <label className="text-[9px] uppercase tracking-wider font-semibold text-zinc-500">
+                                 🎨 Aesthetic Vibe
+                              </label>
+                              <div className="grid grid-cols-3 gap-1.5">
+                                 {WALKIN_AESTHETIC_VIBES.map((vibe) => (
+                                    <button
+                                       key={vibe.value}
+                                       onClick={() => setWalkinVibe(vibe.value as any)}
+                                       className={`py-2 px-2 rounded-lg text-[9px] font-medium border transition-all text-center
+                                          ${walkinVibe === vibe.value
+                                             ? vibe.value === 'romantic'
+                                                ? 'bg-pink-500/20 border-pink-500 text-pink-200'
+                                                : vibe.value === 'power'
+                                                   ? 'bg-red-500/20 border-red-500 text-red-200'
+                                                   : vibe.value === 'goddess'
+                                                      ? 'bg-amber-500/20 border-amber-500 text-amber-200'
+                                                      : vibe.value === 'minimal'
+                                                         ? 'bg-zinc-400/20 border-zinc-400 text-zinc-200'
+                                                         : vibe.value === 'soft_allure'
+                                                            ? 'bg-purple-500/20 border-purple-500 text-purple-200'
+                                                            : 'bg-cyan-500/20 border-cyan-500 text-cyan-200'
+                                             : 'bg-zinc-900/50 border-zinc-700 text-zinc-400 hover:border-zinc-500'}`}
+                                    >
+                                       <div className="font-bold">{vibe.emoji}</div>
+                                       <div className="text-[7px] text-zinc-500 mt-0.5">{vibe.label.replace(/.*\s/, '')}</div>
+                                    </button>
+                                 ))}
+                              </div>
+                              <p className="text-[8px] text-zinc-500">
+                                 {WALKIN_AESTHETIC_VIBES.find(v => v.value === walkinVibe)?.desc}
+                              </p>
+                           </div>
+                        )}
+                        {/* Walk-In Personality Switch Selector */}
+                        {cinematicMode === 'walkin' && (
+                           <div className="mt-3 space-y-2">
+                              <label className="text-[9px] uppercase tracking-wider font-semibold text-zinc-500">
+                                 👤 Model Personality
+                              </label>
+                              <div className="grid grid-cols-5 gap-1.5">
+                                 {WALKIN_PERSONALITIES.map((personality) => (
+                                    <button
+                                       key={personality.value}
+                                       onClick={() => setWalkinPersonality(personality.value as any)}
+                                       className={`py-2 px-2 rounded-lg text-[9px] font-medium border transition-all text-center
+                                          ${walkinPersonality === personality.value
+                                             ? personality.value === 'casual'
+                                                ? 'bg-green-500/20 border-green-500 text-green-200'
+                                                : personality.value === 'shy'
+                                                   ? 'bg-pink-500/20 border-pink-500 text-pink-200'
+                                                   : personality.value === 'confident'
+                                                      ? 'bg-amber-500/20 border-amber-500 text-amber-200'
+                                                      : personality.value === 'playful'
+                                                         ? 'bg-purple-500/20 border-purple-500 text-purple-200'
+                                                         : 'bg-cyan-500/20 border-cyan-500 text-cyan-200'
+                                             : 'bg-zinc-900/50 border-zinc-700 text-zinc-400 hover:border-zinc-500'}`}
+                                    >
+                                       <div className="font-bold">{personality.emoji}</div>
+                                       <div className="text-[7px] text-zinc-500 mt-0.5">{personality.label.replace(/.*\s/, '')}</div>
+                                    </button>
+                                 ))}
+                              </div>
+                              <p className="text-[8px] text-zinc-500">
+                                 {WALKIN_PERSONALITIES.find(p => p.value === walkinPersonality)?.desc}
+                              </p>
+                           </div>
+                        )}
+                     </div>
+                  )}
+
                   {/* Reference Images */}
+
                   <div className="grid grid-cols-2 gap-4">
                      {[
                         { label: "Face Reference", state: faceImage, setter: setFaceImage, ref: fileInputFaceRef, icon: Upload },

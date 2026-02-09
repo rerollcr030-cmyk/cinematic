@@ -1,0 +1,1267 @@
+================================================
+👗 FASHION WALK-IN CINEMATIC RULES
+================================================
+Master rules cho Fashion Walk-In mode - Premium outdoor fashion showcase
+Vibe: "Nàng thơ hiện đại" - Tự nhiên, ngẫu hứng, đời thật
+Optimized for: Kling, Runway, Gemini, Pika, Luma, Veo 3.1
+
+═══════════════════════════════════════════════════════════════
+🌸 MOVEMENT PHILOSOPHY: NÀNG THƠ HIỆN ĐẠI
+═══════════════════════════════════════════════════════════════
+
+❌ KHÔNG PHẢI:                    ✅ MÀ LÀ:
+- Catwalk thuần                   - Đi bộ thoải mái
+- Pose cứng, giữ lâu              - Ngẫu hứng tạo dáng
+- "Diễn thời trang"               - "Sống với váy đẹp"
+- Model runway chuyên nghiệp      - Cô gái đẹp đang dạo phố
+- Camera đi theo model            - Camera tình cờ bắt gặp
+
+CORE FEELING:
+"Mặc váy đẹp → tự nhiên bước đi → tiện tay tạo dáng → 
+dừng lại ngắm mình → xoay người → lại đi tiếp"
+
+═══════════════════════════════════════════════════════════════
+🎬 32s TIMELINE STRUCTURE (4 SCENES) - NATURAL VIBE
+═══════════════════════════════════════════════════════════════
+
+### 📍 SCENE 1 (0–8s) – ĐANG ĐI DẠO + PHÁT HIỆN MÌNH ĐẸP
+```
+ACTION:
+- Model đang dạo bước nhẹ nhàng, không có mục đích rõ ràng
+- Bất chợt nhìn thấy bóng mình trong kính/mặt nước/gương cửa hàng
+- Dừng nhẹ một nhịp → nhận ra "ô mình đẹp quá"
+- Váy bay tự nhiên theo gió, tóc rung nhẹ
+
+CAMERA: Static hoặc slow dolly, như tình cờ bắt gặp
+FRAMING: Full body, 70% frame, không center quá
+EXPRESSION: Relaxed → surprised → pleased (micro expressions)
+HANDS: Thả tự nhiên, có thể đang cầm túi/điện thoại
+
+🎯 MỤC TIÊU: Tạo cảm giác "real moment" không staged
+```
+
+### 📍 SCENE 2 (8–16s) – TIỆN TAY CHẠM VÁY + NGẮM NẾP VẢI
+```
+ACTION:
+- Model tiện tay chạm vào váy, như đang check nó đẹp không
+- Vuốt nhẹ nếp vải, xem texture
+- Có thể nắm nhẹ vạt váy, kéo sang bên xem
+- Hoặc quạt nhẹ váy → xem nó bay như nào
+
+CAMERA: Medium shot, intimate distance
+FRAMING: Waist up hoặc 3/4 body, 80% frame
+EXPRESSION: Curious + satisfied, nhìn vào váy
+HANDS: Đang interact với váy một cách tự nhiên
+
+🎯 MỤC TIÊU: Focus vào sản phẩm nhưng qua góc nhìn của người mặc
+```
+
+### 📍 SCENE 3 (16–24s) – DỪNG LẠI + XOAY NHẸ + XEM VÁY BAY
+```
+ACTION:
+- Model dừng hẳn → xoay nhẹ 180° hoặc 360°
+- Giữ váy → thả ra → xem nó bay như nào
+- Hoặc bước lùi → nhìn xuống → appreciate cách váy rơi
+- Smile tự nhiên vì hài lòng
+
+CAMERA: Medium-wide, có thể orbit nhẹ theo spin
+FRAMING: Full body spin, váy bay đẹp là key
+EXPRESSION: Joyful, playful, "whee" moment
+HANDS: Giữ váy khi spin, thả ra khi dừng
+
+🎯 MỤC TIÊU: Hero shot - váy bay đẹp nhất video
+```
+
+### 📍 SCENE 4 (24–32s) – HÀI LÒNG + TIẾP TỤC DẠO BƯỚC + FADE
+```
+ACTION:
+- Model hài lòng với váy, gật đầu nhẹ hoặc smile
+- Quay lại tiếp tục dạo bước, đi xa dần
+- Có thể quay đầu lại nhìn camera 1 lần cuối
+- Váy trailing behind, tóc bay nhẹ
+
+CAMERA: Static hoặc slow push back
+FRAMING: Full body → getting smaller, fade out feeling
+EXPRESSION: Content, happy, "bye for now" energy
+HANDS: Thả tự nhiên, có thể vẫy nhẹ
+
+🎯 MỤC TIÊU: Kết thúc tự nhiên, không CTA cứng
+```
+
+═══════════════════════════════════════════════════════════════
+🎨 AESTHETIC VIBE SYSTEM (5 VIBES - Chọn hoặc AI Auto)
+═══════════════════════════════════════════════════════════════
+
+⚠️ MỖI VIBE CÓ: Movement style, Camera behavior, Fabric physics, Expression arc
+⚠️ AI TỰ CHỌN VIBE PHÙ HỢP nếu user chọn "Auto", hoặc theo user selection
+
+---
+### 💕 VIBE 1: ROMANTIC
+```
+NĂNG LƯỢNG: Mềm mại, dreamy, floating, enchanting
+BEST FOR: Chiffon, Lace, Floral, Maxi dress, Pastel colors
+
+MOVEMENT STYLE:
+- Slow gliding steps, như đang float trên mây
+- Bước chậm, nhẹ nhàng, graceful
+- Arms: Soft flowing gestures, như múa ballet nhẹ
+- Hair: Gentle sway, như có gió nhẹ thổi
+
+CAMERA CHOREOGRAPHY:
+- Slow orbit với soft parallax
+- Dreamy focus pull (slight soft focus)
+- Gentle tracking, như đang dance với model
+- Ascending angle nhẹ ở ending
+
+FABRIC PHYSICS:
+- "dreamy float, gentle ripple"
+- "soft trailing motion behind each step"
+- "fabric catching air like butterfly wings"
+- "hem swirling in slow motion"
+
+EXPRESSION PROGRESSION (4 Scenes):
+| Scene | Expression | Keywords |
+|-------|------------|----------|
+| 1 | Dreamy distant gaze | "soft wondering eyes, ethereal presence" |
+| 2 | Gentle recognition | "warm eyes softening, hint of smile forming" |
+| 3 | Tender warmth | "loving gaze, gentle radiant smile" |
+| 4 | Fairy-tale ending | "enchanted smile, eyes sparkling with warmth" |
+
+SCENE VARIATIONS (Romantic):
+Scene 1: Walk from shadow into golden light, fabric catching sunrise glow
+Scene 2: Side track với rim light trên tóc, fabric floating behind
+Scene 3: Close-up eo với fabric glow, soft hand touching lace
+Scene 4: Gentle spin trong soft light, look back with tender smile
+```
+
+---
+### 💪 VIBE 2: POWER
+```
+NĂNG LƯỢNG: Boss lady, sharp, commanding, confident
+BEST FOR: Blazer dress, Bodycon, Structured silhouettes, Dark colors
+
+MOVEMENT STYLE:
+- Strong confident strides, mỗi bước như statement
+- Sharp purposeful turns
+- Chin slightly lifted, owning the space
+- Arms: Controlled, powerful gestures
+- Walk như đang vào phòng họp quan trọng
+
+CAMERA CHOREOGRAPHY:
+- Steady tracking, không waver
+- Bold push-in khi model approach
+- Assertive framing, model chiếm frame
+- Sharp cuts/angles trong transitions
+
+FABRIC PHYSICS:
+- "sharp swing, controlled drape"
+- "structured response to movement"
+- "fabric moving with purpose"
+- "clean lines maintaining shape"
+
+EXPRESSION PROGRESSION (4 Scenes):
+| Scene | Expression | Keywords |
+|-------|------------|----------|
+| 1 | Cool assessment | "evaluating gaze, power stance energy" |
+| 2 | Knowing confidence | "controlled smirk, I know my worth" |
+| 3 | Commanding presence | "direct unwavering gaze, subtle power smile" |
+| 4 | Satisfied authority | "mission accomplished energy, confident close" |
+
+SCENE VARIATIONS (Power):
+Scene 1: Walk along modern architecture, glass reflections
+Scene 2: Cross urban plaza với sharp shadow lines
+Scene 3: Mid-body với structured fabric details, bold framing
+Scene 4: Power stop + 3/4 turn, direct camera engagement
+```
+
+---
+### ✨ VIBE 3: GODDESS
+```
+NĂNG LƯỢNG: Angelic, ethereal, divine, otherworldly beauty
+BEST FOR: Satin Gown, Silk maxi, Grecian drape, Metallic fabrics
+
+MOVEMENT STYLE:
+- Ethereal slow motion energy
+- Graceful arm gestures như goddess
+- Movement như đang glide, không walk
+- Every gesture feels blessed
+- Posture: Regal, elevated
+
+CAMERA CHOREOGRAPHY:
+- Ascending angle, như nhìn lên thần thánh
+- Halo backlight orbit
+- Celestial pull (camera slowly rising)
+- Soft golden lens flare work
+
+FABRIC PHYSICS:
+- "liquid cascade, flowing like water"
+- "heavenly billow, gravity-defying flow"
+- "satin catching light như liquid gold"
+- "fabric draping like angel wings"
+
+EXPRESSION PROGRESSION (4 Scenes):
+| Scene | Expression | Keywords |
+|-------|------------|----------|
+| 1 | Serene awakening | "peaceful divine gaze, otherworldly calm" |
+| 2 | Graceful acknowledgment | "gentle goddess smile, blessing energy" |
+| 3 | Radiant divinity | "glowing from within, celestial warmth" |
+| 4 | Heavenly farewell | "ethereal smile, eyes like stars" |
+
+SCENE VARIATIONS (Goddess):
+Scene 1: Emerge from golden backlight, halo effect
+Scene 2: Glide với fabric cascade, slow-mo energy
+Scene 3: Close-up satin catching light, divine glow
+Scene 4: Ascending turn, final blessing gaze
+```
+
+---
+### ◻️ VIBE 4: MINIMAL
+```
+NĂNG LƯỢNG: Clean, editorial, refined, understated elegance
+BEST FOR: Solid colors, Simple cuts, Minimalist design, Black/White/Neutral
+
+MOVEMENT STYLE:
+- Clean linear movement
+- Economical gestures, nothing extra
+- Precise steps, intentional
+- Less is more philosophy
+- Subtle micro-movements
+
+CAMERA CHOREOGRAPHY:
+- Static hoặc micro-movement only
+- Geometric centering, perfect framing
+- Clean lines, no shake
+- Editorial precision
+
+FABRIC PHYSICS:
+- "clean fall, precise movement"
+- "understated sway, controlled"
+- "fabric responding minimally"
+- "elegant simplicity in motion"
+
+EXPRESSION PROGRESSION (4 Scenes):
+| Scene | Expression | Keywords |
+|-------|------------|----------|
+| 1 | Neutral refined | "calm composed gaze, editorial stillness" |
+| 2 | Subtle awareness | "hint of acknowledgment, minimal smile" |
+| 3 | Quiet intensity | "focused presence, understated power" |
+| 4 | Refined close | "elegant subtle smile, timeless" |
+
+SCENE VARIATIONS (Minimal):
+Scene 1: Walk in clean geometric space, perfect centering
+Scene 2: Side track với negative space, architectural bg
+Scene 3: Mid-body clean lines, fabric detail crop
+Scene 4: Precise stop, subtle expression, editorial close
+```
+
+---
+### 🌙 VIBE 5: SOFT ALLURE
+```
+NĂNG LƯỢNG: Quiet magnetic, subtle charm, naturally captivating
+BEST FOR: Slip dress, Figure-hugging, Satin, Bodycon evening
+
+MOVEMENT STYLE:
+- Subtle hip sway, natural feminine
+- Gentle fabric touch, không quá seductive
+- Movement như breathing - natural rhythm
+- Soft deliberate steps
+- Natural charm, không trying too hard
+
+CAMERA CHOREOGRAPHY:
+- Intimate close framing
+- Lingering track, breath-pace movement
+- Soft warm lighting pools
+- Close-medium, never too far
+
+FABRIC PHYSICS:
+- "body-hugging response, subtle cling"
+- "whisper movement, gentle shimmer"
+- "fabric following body contour"
+- "satin catching warm light pools"
+
+EXPRESSION PROGRESSION (4 Scenes):
+| Scene | Expression | Keywords |
+|-------|------------|----------|
+| 1 | Quiet intrigue | "soft mysterious gaze, drawing you in" |
+| 2 | Gentle invitation | "warm eyes, corner smile forming" |
+| 3 | Magnetic presence | "natural charm, comfortable confidence" |
+| 4 | Warm connection | "inviting genuine smile, approachable" |
+
+SCENE VARIATIONS (Soft Allure):
+Scene 1: Walk from warm light pool, gentle silhouette
+Scene 2: Side track với fabric clinging softly, intimate
+Scene 3: Close fabric texture, hand touch gently
+Scene 4: Soft pause, natural smile, warm eye contact
+```
+
+═══════════════════════════════════════════════════════════════
+🌿 MICRO-MOMENTS NGẪU HỨNG (Natural Spontaneous Behaviors)
+═══════════════════════════════════════════════════════════════
+
+⚠️ TRONG MỖI SCENE, AI PHẢI thêm ít nhất 1 micro-moment TỰ NHIÊN:
+
+### 💨 GIÓ + TÓC MOMENTS:
+```
+- Tóc bay → tiện tay vén sau tai
+- Tóc che mặt → nhẹ nhàng hất sang bên
+- Gió thổi mạnh → nhắm mắt mỉm cười hưởng gió
+- Tóc rối → tay vuốt nhẹ về phía sau
+```
+
+### 👗 VÁY + GIÓ MOMENTS:
+```
+- Váy bay cao → tiện tay nắm giữ nhẹ
+- Váy cuốn chân → bước nhẹ để gỡ ra
+- Váy bay đẹp → dừng lại ngắm nó bay
+- Váy tĩnh → quạt nhẹ cho nó bay lên
+```
+
+### 😊 TỰ NGẮM MÌNH MOMENTS:
+```
+- Thấy bóng mình trong kính → dừng lại nhìn
+- Soi mình trong mặt nước → nghiêng đầu xem
+- Nhìn xuống váy → hài lòng mỉm cười
+- Xoay người → check xem váy bay ok không
+```
+
+### 🎭 BẤT CHỢ QUAY MOMENTS:
+```
+- Đang đi → bất chợt quay lại như nghe ai gọi
+- Đang ngắm → quay sang bắt gặp camera
+- Đang spin → dừng đột ngột gặp ánh mắt người xem
+- Đang cười → liếc mắt sang bên như thấy điều gì đó
+```
+
+### ⚡ RANDOM TRIGGER (AI phải ngẫu nhiên chọn):
+| Scene | Trigger | Response |
+|-------|---------|----------|
+| 1 | Gió nhẹ | Tóc bay, tay vén |
+| 2 | Váy đẹp quá | Dừng ngắm, chạm vải |
+| 3 | Gương/kính | Tự ngắm, xoay người |
+| 4 | "Someone watching" | Quay lại, mỉm cười |
+
+═══════════════════════════════════════════════════════════════
+🎲 MICRO-VARIATION ENGINE (Chống Trùng Lặp)
+═══════════════════════════════════════════════════════════════
+
+```
+⚠️ MỖI KEYFRAME PHẢI RANDOM từ pools sau (không được trùng với keyframe trước):
+
+HAND TOUCH VARIATIONS (Random 1):
+- hair_tuck: tucking hair behind ear
+- collarbone_graze: fingers grazing collarbone
+- fabric_lift: lifting fabric hem slightly
+- waist_rest: hand resting on waist
+- ear_tuck: tucking hair with pinky extended
+- chin_touch: fingertips near chin
+- strap_adjust: adjusting dress strap
+- wrist_cross: wrists crossed in front
+
+GLANCE DIRECTION (Random 1):
+- camera_forward: direct to camera
+- soft_left: gazing slightly left
+- subtle_right: glancing right
+- upward_drift: eyes drifting up briefly
+- lash_lower: lowering lashes then up
+- over_shoulder: looking over shoulder
+
+FABRIC MOTION (Random 1 per scene):
+- gentle_sway: subtle left-right
+- dramatic_sweep: wide flowing motion
+- trailing_float: fabric trailing behind
+- wind_lift: lifted by breeze
+- body_hug: following body contour
+
+SMILE INTENSITY (Random per scene):
+- 20%: nearly neutral, hint of smile
+- 35%: soft subtle smile
+- 50%: natural warm smile  
+- 70%: radiant genuine smile
+
+⚠️ ROTATION RULE: AI phải cycle qua TẤT CẢ options trước khi repeat
+```
+
+═══════════════════════════════════════════════════════════════
+📊 VIBE INTENSITY LEVELS (AI Random hoặc User Chọn)
+═══════════════════════════════════════════════════════════════
+
+```
+MỖI VIBE CÓ 3 INTENSITY LEVELS - tạo thêm variation:
+
+| Level | Energy | Movement | Expression |
+|-------|--------|----------|------------|
+| Subtle (30%) | Muted, understated | Smaller gestures | Minimal expression |
+| Medium (60%) | Balanced, natural | Normal gestures | Natural expression |
+| Bold (90%) | Strong, dramatic | Larger gestures | Full expression |
+
+EXAMPLE - ROMANTIC VIBE:
+- Subtle: Quiet dreamy walk, barely-there smile, minimal fabric flow
+- Medium: Gentle gliding steps, warm tender smile, soft fabric float
+- Bold: Dramatic slow-mo, radiant joyful smile, full fabric cascade
+
+EXAMPLE - POWER VIBE:
+- Subtle: Confident walk, controlled expression, structured fabric
+- Medium: Strong stride, knowing smirk, sharp fabric swing
+- Bold: Commanding strut, direct power gaze, dramatic fabric move
+
+⚠️ AI RANDOM chọn intensity mỗi video để tạo variety
+```
+
+═══════════════════════════════════════════════════════════════
+🧠 OUTFIT-ADAPTIVE AUTO-TUNING
+═══════════════════════════════════════════════════════════════
+
+```
+KHI USER CHỌN "AUTO" VIBE, AI PHẢI DETECT OUTFIT VÀ CHỌN:
+
+| Detected Outfit Keywords | Auto Vibe | Reason |
+|--------------------------|-----------|--------|
+| chiffon, lace, floral, soft | Romantic | Floating fabric needs dreamy motion |
+| blazer, structured, sharp, formal | Power | Sharp lines need confident energy |
+| satin gown, silk, grecian, metallic | Goddess | Liquid fabric needs divine flow |
+| minimal, solid, clean, simple | Minimal | Clean design needs editorial approach |
+| slip, bodycon, figure-hugging | Soft Allure | Body-skimming needs natural charm |
+
+DETECTION PRIORITY:
+1. User explicit vibe selection → Use that
+2. User "Auto" + outfit keywords match → Use matched vibe
+3. User "Auto" + unclear → Default to Romantic (most versatile)
+```
+
+
+═══════════════════════════════════════════════════════════════
+⏱️ KEYFRAME TIMING (KHỚP VỚI 32s TIMELINE)
+═══════════════════════════════════════════════════════════════
+
+```
+AI PHẢI TẠO KEYFRAMES Ở CÁC TIMESTAMP SAU:
+
+| Keyframe | Time | Scene | Action Description |
+|----------|------|-------|-------------------|
+| KF1 | 0s | Scene 1 | Model xa camera, bắt đầu walk, full body |
+| KF2 | 4s | Scene 1 | Model tiến gần hơn, váy bắt đầu bay |
+| KF3 | 8s | Scene 2 | Chuyển side track, camera di chuyển song song |
+| KF4 | 12s | Scene 2 | Đang đi ngang, nổi đường cong eo-hông |
+| KF5 | 16s | Scene 3 | Crop mid-body, từ ngực→đùi, thấy texture |
+| KF6 | 20s | Scene 3 | Close-up fabric + eo, vừa đi vừa xoay nhẹ |
+| KF7 | 24s | Scene 4 | Bắt đầu chậm lại, xoay vai 3/4 turn |
+| KF8 | 28s | Scene 4 | Gần dừng, giữ váy, mỉm cười, eye contact |
+
+⚠️ TIMING RULES:
+- 8 keyframes cho 32s video
+- Mỗi keyframe cách nhau 4 giây
+- Keyframe phải KHỚP với scene mục tiêu
+- Scene 1-2: Full body movement focus
+- Scene 3: Mid-body close-up, product detail
+- Scene 4: Emotional ending, CTA moment
+
+📸 KEYFRAME DESCRIPTION FORMAT:
+Mỗi keyframe MÔ TẢ:
+1. Camera angle/distance (full/medium/close)
+2. Model action (walk/side/turn/slow)
+3. Hand position
+4. Dress flow state
+5. Expression
+
+═══════════════════════════════════════════════════════════════
+👤 FACE VISIBILITY MANDATE (CRITICAL - TRÁNH MẤT DATA)
+═══════════════════════════════════════════════════════════════
+
+⚠️ TẤT CẢ KEYFRAMES PHẢI THẤY MẶT MODEL:
+
+BẮT BUỘC (REQUIRED):
+- ✅ Front view (0°) - mặt chính diện
+- ✅ 3/4 view (15-45°) - nghiêng nhẹ, vẫn thấy mặt
+- ✅ Side view (45° max) - vẫn thấy 1 mắt + nửa mặt
+
+❌ CẤM TUYỆT ĐỐI (BANNED):
+- ❌ Back view - quay lưng, không thấy mặt
+- ❌ Over-shoulder từ phía sau
+- ❌ Full back turn (xoay lưng hoàn toàn)
+- ❌ Góc >60° từ front view
+- ❌ Profile view mà không thấy mắt
+
+LÝ DO:
+- Không có face data → AI không thể tạo video mượt
+- Mất thông tin sản phẩm phía trước (dress front details)
+- Video bị artifacts khi interpolate từ back → front
+
+ANGLE LIMITS:
+| View Type | Angle from Front | Status |
+|-----------|------------------|--------|
+| Front | 0° | ✅ OK |
+| 3/4 Left | 15-30° | ✅ BEST |
+| 3/4 Right | 15-30° | ✅ BEST |
+| Side Left | 45° | ⚠️ Limit |
+| Side Right | 45° | ⚠️ Limit |
+| Back 3/4 | 60°+ | ❌ BANNED |
+| Full Back | 90-180° | ❌ BANNED |
+
+KEYFRAME ANGLE ENFORCEMENT:
+| Keyframe | Allowed Angles | Notes |
+|----------|----------------|-------|
+| KF1 | Front, 3/4 | Start with face visible |
+| KF2 | Front, 3/4 | Walking toward camera |
+| KF3 | 3/4, side max 45° | Side track nhưng vẫn thấy mặt |
+| KF4 | 3/4 | Nổi đường cong nhưng thấy mặt |
+| KF5 | Front, 3/4 | Mid-body nhưng có mặt nếu crop cho phép |
+| KF6 | Front, 3/4 | Close-up vẫn thấy cằm/môi nếu crop cao |
+| KF7 | 3/4 max | Xoay vai nhưng vẫn quay mặt về camera |
+| KF8 | Front, 3/4 | Ending phải thấy mặt rõ để kết cảm xúc |
+
+⚠️ QUAN TRỌNG: Nếu scene có xoay người:
+- Model xoay thân nhưng ĐẦU VẪN HƯỚNG VỀ CAMERA
+- Tạo hiệu ứng "look back" thay vì "turn away"
+- Mặt luôn visible ít nhất 70%
+```
+
+
+═══════════════════════════════════════════════════════════════
+⚠️ VARIATION ENFORCEMENT (CRITICAL - CHỐNG TRÙNG LẶP)
+═══════════════════════════════════════════════════════════════
+
+```
+QUAN TRỌNG: Khi input image đã có pose/environment walk-in từ lần tạo trước:
+
+🚫 BACKGROUND PHẢI KHÁC 100% (ANTI-LOOP VIDEO):
+- KHÔNG copy bất kỳ element nào từ background input
+- KHÔNG cùng loại địa điểm (park → park = SAI, hotel → hotel = SAI)
+- PHẢI chọn CATEGORY hoàn toàn khác
+- PHẢI thay đổi: kiến trúc, cây cối, ánh sáng, không gian, màu sắc
+- Background trong output KHÔNG được giống input dù chỉ 1 phần
+
+MANDATORY CATEGORY ROTATION:
+| Scene | Location Category | Time of Day |
+|-------|-------------------|-------------|
+| 1 | Park/Garden | Golden Hour |
+| 2 | Urban Plaza/Street | Blue Hour |
+| 3 | Hotel Entrance/Lobby | Night City |
+| 4 | Shopping District | Night City |
+| 5 | Lakeside/Waterfront | Golden Hour |
+| 6 | Café Terrace | Blue Hour |
+| 7 | Modern Architecture | Blue Hour |
+| 8 | Restaurant Row | Night City |
+
+⚠️ NẾU INPUT LÀ PARK → OUTPUT PHẢI LÀ URBAN/HOTEL/SHOPPING
+⚠️ NẾU INPUT LÀ NIGHT → OUTPUT CÓ THỂ LÀ GOLDEN/BLUE HOUR
+⚠️ MỖI SCENE LIÊN TIẾP = KHÁC CATEGORY HOÀN TOÀN
+
+═══════════════════════════════════════════════════════════════
+🚶 BACKGROUND PROGRESSION LOGIC (ANTI-LOOP)
+═══════════════════════════════════════════════════════════════
+
+⚠️ KHI DÙNG OUTPUT 1 LÀM INPUT CHO OUTPUT 2:
+
+LOGIC ĐÚNG - Model di chuyển TIẾN về phía trước:
+- Output 1: Model ở vị trí A trên đường đi
+- Output 2: Model ở vị trí B (TIẾN về phía trước, xa hơn trên đường)
+- Background phải thể hiện model đã đi TIẾN, không quay lại
+
+❌ SAI - Gây loop video:
+- Output 1: Model ở giữa công viên
+- Output 2: Model ở ĐẦU công viên (như mới bắt đầu) ← LOOP!
+
+✅ ĐÚNG - Tiến triển tự nhiên:
+- Output 1: Model đi vào công viên
+- Output 2: Model đi NGANG công viên (vị trí khác, tiến về trước)
+- Output 3: Model đi RA khỏi công viên → sang phố
+
+PROGRESSION TABLE:
+| Image | Position | Background Logic |
+|-------|----------|------------------|
+| 1 | Start | Model entering location |
+| 2 | Middle | Model progressing through |
+| 3 | Transition | Model exiting → new area |
+| 4 | New location | Completely different category |
+
+⚠️ QUAN TRỌNG:
+- Background phải cho thấy model đã di chuyển TIẾN
+- KHÔNG reset về điểm bắt đầu
+- Mỗi output = vị trí MỚI trên hành trình
+- Nếu cần đổi location category → model đi vào khu vực mới
+```
+
+GIỮ NGUYÊN (PRESERVE):
+- ✅ Face identity (khuôn mặt giống hệt)
+- ✅ Outfit/dress (trang phục giống)
+- ✅ Body type/proportions
+
+BẮT BUỘC THAY ĐỔI:
+- ❌ Background/Environment → 100% MỚI
+- ❌ Pose type → KHÁC hoàn toàn
+- ❌ Hand position → VỊ TRÍ KHÁC
+- ❌ Expression → BIỂU CẢM KHÁC
+- ❌ Lighting → THỜI GIAN KHÁC nếu cùng location type
+
+POSE ROTATION TABLE (MỖI ẢNH PHẢI KHÁC):
+| Ảnh # | Pose Type | Hand Position | Expression |
+|-------|-----------|---------------|------------|
+| 1 | Walk forward facing | Hand on hair | Soft mysterious |
+| 2 | 3/4 turn ending | Hand on hip | Growing confidence |
+| 3 | Side glance walk | Hand touching dress | Warm smile |
+| 4 | Confident stride | Arms relaxed | Direct eye contact |
+| 5 | Pause mid-walk | Hand on collarbone | Inviting gaze |
+| 6 | 3/4 turn glance | Hand adjusting strap | Playful glance |
+| 7 | Body rotated 45° | Hand on waist | Head turned to camera |
+
+⚠️ OVERRIDE RULE:
+Any pose labeled "back" must be implemented as:
+BODY TURN ONLY – HEAD ALWAYS FACING CAMERA (body max 45°, head 100% to camera)
+| 8 | Two hands on dress | Both hands fabric | Elegant pose |
+
+⚠️ DETECTION: Nếu input image có:
+- Model walking/posing outdoor → INPUT LÀ WALK-IN OUTPUT
+- Urban/park/hotel background → INPUT LÀ WALK-IN OUTPUT
+- Center composition 70-85% height → INPUT LÀ WALK-IN OUTPUT
+→ Khi detect, ÁP DỤNG NGAY category rotation ở trên
+```
+
+═══════════════════════════════════════════════════════════════
+🌅 LIGHTING PROGRESSION (TIME OF DAY)
+═══════════════════════════════════════════════════════════════
+
+### 🌅 GOLDEN HOUR (5-7 PM)
+```
+LIGHTING KEYWORDS:
+- "soft sunset backlight creating rim glow around hair and shoulders"
+- "warm golden light from low sun angle"
+- "gentle highlight roll-off on shoulders, collarbone, chest, waist, hips"
+- "natural warm skin tones with soft radiance"
+- "hair backlighting with soft golden halo effect"
+- "dappled sunset light through tree canopy"
+- "rim light defining waistline and hip curve"
+
+BEST FOR: Romantic dresses, flowing gowns, soft fabrics, chiffon, lace
+AVOID: Harsh midday sun, direct overhead light
+```
+
+### 🌆 BLUE HOUR (7-8 PM)
+```
+LIGHTING KEYWORDS:
+- "cool ambient twilight sky with warm city lights beginning"
+- "balanced cool-warm color temperature mix"
+- "soft transitional lighting on face and body"
+- "subtle blue fill from ambient sky, warm key from storefronts"
+- "elegant dusk atmosphere luxury urban"
+- "boutique window lights starting to glow"
+- "street lamps providing warm accent pools"
+
+BEST FOR: Elegant cocktail, modern city outfits, sleek bodycon
+AVOID: Full darkness, pure cool tones
+```
+
+### 🌃 NIGHT CITY (8 PM+)
+```
+LIGHTING KEYWORDS:
+- "street lights creating warm pools of light on walkway"
+- "storefront glow illuminating sidewalk and model"
+- "decorative architectural lighting on surrounding buildings"
+- "luxury urban atmosphere with mixed light sources"
+- "warm key light from shop windows, cool fill from night sky"
+- "neon reflections on wet pavement optional for drama"
+- "elegant hotel entrance brass fixtures warm glow"
+- "fashion district boutique lighting premium feel"
+
+BEST FOR: Party dresses, sequin, sparkle, glamorous gowns
+AVOID: Harsh direct flash, flat lighting, too dark/underexposed
+```
+
+═══════════════════════════════════════════════════════════════
+🚶‍♀️ MODEL BEHAVIOR (NATURAL FEMININE MOVEMENT)
+═══════════════════════════════════════════════════════════════
+
+### 🎯 CORE LOGIC (TOÀN VIDEO)
+```
+MOVEMENT MANDATE:
+- Model LUÔN LUÔN đi bộ hoặc chuyển động suốt clip
+- ❌ KHÔNG ĐỨNG YÊN quá 1 giây
+- Bước NGẮN, nhẹ nhàng - KHÔNG bước dài kiểu catwalk
+- Hông mềm, sway tự nhiên theo từng bước
+- Chuyển động liên tục = dress có flow liên tục
+
+HAND POSITIONS (BẮT BUỘC):
+- 1 tay giữ váy nhẹ / chạm fabric
+- 1 tay chạm tóc HOẶC thả tự nhiên
+- Tay phải luôn có chuyển động nhẹ, không cứng
+- Đổi vị trí tay tự nhiên trong clip
+
+BODY LANGUAGE:
+- Posture thẳng tự nhiên, vai thả lỏng
+- Chin hơi nâng nhẹ (elegant, không kiêu)
+- Hông sway nhẹ với mỗi bước đi
+- Full body chiếm 75-85% frame height
+- Khoe dáng BẰNG CHUYỂN ĐỘNG, không bằng pose
+
+EXPRESSION (MỀM, KHÔNG CƯỜI RỘNG):
+- Biểu cảm mềm mại, tự nhiên
+- Ánh mắt nhẹ nhàng, đôi khi liếc camera
+- Môi hơi cong nhẹ hoặc neutral đẹp
+- ❌ KHÔNG cười toe toét
+- ❌ KHÔNG mặt lạnh, không biểu cảm
+```
+
+═══════════════════════════════════════════════════════════════
+🧠 INTERNAL FEMININE STATE MACHINE (CORE REALISM)
+═══════════════════════════════════════════════════════════════
+
+At any moment, model must be in ONE internal state.
+Actions are REACTIONS to state, not choreography.
+
+4 STATES LUÂN PHIÊN (MANDATORY STATE FLOW):
+┌─────────────────────────────────────────────────────────────┐
+│ STATE A: UNAWARE                                            │
+│ - Walking normally, no posing intention                     │
+│ - Eyes wandering naturally                                  │
+│ - Hands relaxed at sides                                    │
+│ - Just existing in the moment                               │
+├─────────────────────────────────────────────────────────────┤
+│ STATE B: SELF-AWARENESS                                     │
+│ - Notices dress / reflection / light                        │
+│ - Slows step slightly                                       │
+│ - Touches hair or fabric instinctively                      │
+│ - "Oh wait, I look nice" moment                             │
+├─────────────────────────────────────────────────────────────┤
+│ STATE C: ENJOYMENT                                          │
+│ - Stops briefly to appreciate                               │
+│ - Turns / spins / checks silhouette                         │
+│ - Soft smile appears naturally                              │
+│ - Consciously enjoying the dress                            │
+├─────────────────────────────────────────────────────────────┤
+│ STATE D: RETURN TO FLOW                                     │
+│ - Releases pose, no longer performing                       │
+│ - Resumes walking naturally                                 │
+│ - Energy settles back to normal                             │
+│ - Ready for next discovery moment                           │
+└─────────────────────────────────────────────────────────────┘
+
+⚠️ HARD RULES:
+AI MAY NOT:
+- Skip states (must flow A→B→C→D or A→B→D)
+- Stay in one state longer than 1 scene
+- Perform pose without state trigger
+- Start scene in STATE C (must earn it)
+
+STATE-TO-SCENE MAPPING:
+| Scene | Recommended State | Transition |
+|-------|-------------------|------------|
+| 1     | A (Unaware)       | → B at end |
+| 2     | B (Self-aware)    | → C at end |
+| 3     | C (Enjoyment)     | → D at end |
+| 4     | D (Flow)          | natural close |
+
+═══════════════════════════════════════════════════════════════
+🎲 RHYTHM VARIATION LAYER (ANTI-PREDICTABLE)
+═══════════════════════════════════════════════════════════════
+
+Random NHỊP SỐNG mỗi scene để tạo cảm giác tự nhiên:
+
+RHYTHM PARAMETERS (AI Random 1 per scene):
+┌─────────────────────────────────────────────────────────────┐
+│ WALK_SPEED:                                                 │
+│ - slow: normal relaxed pace                                 │
+│ - slower: deliberately unhurried                            │
+│ - pause-then-walk: stop → continue                          │
+├─────────────────────────────────────────────────────────────┤
+│ PAUSE_POSITION:                                             │
+│ - before_turn: pause → then turn                            │
+│ - after_turn: turn → then pause                             │
+│ - mid_step: freeze mid-stride                               │
+├─────────────────────────────────────────────────────────────┤
+│ EYE_CONTACT_TIMING:                                         │
+│ - before_action: look → then do                             │
+│ - during_action: look while doing                           │
+│ - after_action: do → then look                              │
+├─────────────────────────────────────────────────────────────┤
+│ HAND_ACTION_ORDER:                                          │
+│ - hair→dress: touch hair first, then dress                  │
+│ - dress→hair: touch dress first, then hair                  │
+│ - none→touch: start neutral, then touch                     │
+└─────────────────────────────────────────────────────────────┘
+
+EXAMPLE COMBINATIONS:
+Scene 2: pause → chạm váy → tiếp tục đi (pause-then-walk + dress→hair)
+Scene 3: đang đi → xoay → dừng nửa nhịp → cười (mid_step + after_action)
+
+⚠️ RULE: Mỗi clip phải có ít nhất 2 rhythm variations khác nhau
+
+═══════════════════════════════════════════════════════════════
+🎥 CAMERA INTENT MODE (EMOTIONAL CAMERA)
+═══════════════════════════════════════════════════════════════
+
+Camera như người đang quay vì YÊU THÍCH, không phải vì công việc.
+
+CAMERA INTENT (AI chọn 1 per clip):
+┌─────────────────────────────────────────────────────────────┐
+│ OBSERVER                                                    │
+│ - Camera đứng xa, không can thiệp                           │
+│ - Neutral distance, documentary feel                        │
+│ - "Tình cờ thấy người đẹp đi qua"                           │
+├─────────────────────────────────────────────────────────────┤
+│ CURIOUS                                                     │
+│ - Camera tiến nhẹ khi model đẹp lên                         │
+│ - Slight approach when beauty peaks                         │
+│ - "Muốn xem rõ hơn"                                         │
+├─────────────────────────────────────────────────────────────┤
+│ ADMIRING                                                    │
+│ - Camera linger thêm 0.3-0.5s khi model xoay                │
+│ - Slow follow on beautiful moments                          │
+│ - "Wow, đẹp quá, chờ chút"                                  │
+└─────────────────────────────────────────────────────────────┘
+
+⚠️ GOLDEN RULE: Camera must REACT to model, never LEAD her.
+
+CAMERA-MODEL INTERACTION:
+| Model Action       | Camera Response                    |
+|--------------------|------------------------------------|
+| Model xoay đẹp     | Camera chậm lại 20%                |
+| Model bước nhanh   | Camera hơi trễ theo 0.2s           |
+| Model dừng ngắm    | Camera tiến nhẹ 5%                 |
+| Model cười         | Camera linger thêm 0.3s            |
+
+INTENT-VIBE MATCHING:
+| Vibe         | Best Camera Intent |
+|--------------|--------------------|
+| Romantic     | Admiring           |
+| Power        | Observer           |
+| Goddess      | Admiring           |
+| Minimal      | Observer           |
+| Soft Allure  | Curious            |
+
+═══════════════════════════════════════════════════════════════
+👤 PERSONALITY SWITCH SYSTEM (4 PERSONALITY MODES)
+═══════════════════════════════════════════════════════════════
+
+User có thể chọn hoặc AI auto-detect từ outfit/vibe:
+
+┌─────────────────────────────────────────────────────────────┐
+│ 🌸 CASUAL                                                   │
+│ Energy: Relaxed, everyday, effortless                       │
+│ Walk: Natural easy pace, no deliberate sway                 │
+│ Hands: Relaxed, pockets, phone, bag                         │
+│ Expression: Easy smile, comfortable in skin                 │
+│ Eye contact: Casual glances, not seeking attention          │
+│ Best for: Summer dress, casual midi, everyday wear          │
+├─────────────────────────────────────────────────────────────┤
+│ 🌷 SHY                                                      │
+│ Energy: Soft, demure, endearing                             │
+│ Walk: Smaller steps, slightly turned inward                 │
+│ Hands: Near body, touching collar, holding own arm          │
+│ Expression: Gentle smile, looking down then up              │
+│ Eye contact: Brief, then looks away with smile              │
+│ Best for: Romantic dress, soft fabrics, pastel colors       │
+├─────────────────────────────────────────────────────────────┤
+│ 💎 CONFIDENT                                                │
+│ Energy: Self-assured, powerful, commanding                  │
+│ Walk: Strong even strides, shoulders back                   │
+│ Hands: On hip, decisive gestures, controlled                │
+│ Expression: Knowing smile, "I know I look good"             │
+│ Eye contact: Direct, unwavering, engaging                   │
+│ Best for: Bodycon, structured dress, evening gown           │
+├─────────────────────────────────────────────────────────────┤
+│ ✨ PLAYFUL                                                  │
+│ Energy: Fun, teasing, spirited                              │
+│ Walk: Light bouncy steps, hip pop moments                   │
+│ Hands: Tossing hair, spinning dress, animated               │
+│ Expression: Bright smile, mischievous eyes                  │
+│ Eye contact: Flirty glances, winks, playful looks           │
+│ Best for: Party dress, cocktail, fun prints                 │
+└─────────────────────────────────────────────────────────────┘
+
+AUTO-DETECT PERSONALITY (when user chooses "Auto"):
+| Detected Keywords           | Auto Personality |
+|-----------------------------|------------------|
+| casual, everyday, simple    | Casual           |
+| soft, romantic, delicate    | Shy              |
+| structured, sleek, formal   | Confident        |
+| party, fun, sparkle, bold   | Playful          |
+
+PERSONALITY + VIBE CROSS-MATRIX:
+| Personality | Romantic Vibe  | Power Vibe     | Minimal Vibe   |
+|-------------|----------------|----------------|----------------|
+| Casual      | Easy dreamy    | Relaxed power  | Clean simple   |
+| Shy         | Sweet tender   | ❌ (conflict)  | Quiet elegant  |
+| Confident   | Soft strength  | Full power     | Sharp minimal  |
+| Playful     | Flirty dream   | Bold playful   | Chic fun       |
+
+⚠️ CONFLICT RESOLUTION:
+- Shy + Power Vibe = Override to Confident (low intensity)
+- Playful + Goddess Vibe = Override to Confident + Playful blend
+
+### 🚫 AUTO REJECT (LẬP TỨC BỎ NẾU PHÁT HIỆN)
+```
+AI PHẢI TỰ ĐỘNG REJECT VÀ REGENERATE NẾU:
+
+❌ Model đứng yên (standing still pose)
+❌ Camera zoom in/out
+❌ Góc quay thấp (low angle / worm's eye)
+❌ Bước dài kiểu catwalk / runway
+❌ Tay cứng đơ không chuyển động
+❌ Dress không có flow / static fabric
+❌ Model walking trên 1 background không đổi (loop video)
+❌ High fashion fierce expression
+❌ Arms crossed / tay khoanh ngực
+❌ Pose tĩnh như chụp hình
+
+→ NẾU DETECT BẤT KỲ ELEMENT NÀO Ở TRÊN → REGENERATE SCENE
+```
+
+### ✅ GOOD EXAMPLES
+```
+ĐÚNG CÁCH:
+"Model walking slowly with short delicate steps, soft hip sway,
+right hand gently touching dress fabric letting it flow,
+left hand relaxed at side with natural movement,
+soft pleasant expression, dress flowing with each step"
+
+SAI CÁCH:
+"Model standing confidently, hands on hips, looking at camera"
+"Fierce catwalk strut with powerful strides"
+"Static full body pose showing outfit"
+```
+
+### BODY EMPHASIS (Fashion Focus)
+```
+HIGHLIGHT ZONES:
+- Defined waistline visible through fabric
+- Natural lifted bust contour (no push-up emphasis)
+- Smooth hip curve emphasized by movement
+- Elegant shoulder line and collarbone
+- Clear décolletage highlights (tasteful)
+- Balanced feminine proportions
+
+FRAMING REQUIREMENTS:
+- Model occupies 70-85% of vertical frame height
+- Center composition (not rule-of-thirds)
+- Start at medium-full (mid-thigh visible)
+- End at medium shot (waist/chest focus)
+- Clean parallax background separation
+```
+
+═══════════════════════════════════════════════════════════════
+👗 DRESS DYNAMICS (LUÔN CÓ FLOW)
+═══════════════════════════════════════════════════════════════
+
+```
+⚠️ MANDATORY FLOW (BẮT BUỘC):
+- Váy/dress LUÔN LUÔN có chuyển động
+- ❌ KHÔNG static fabric - dress phải react với mỗi bước đi
+- Model chuyển động = dress flow
+- 1 tay chạm váy = tạo thêm fabric movement
+- Gió nhẹ có thể thêm flow tự nhiên
+
+FABRIC PHYSICS:
+- Hem/tà váy bay nhẹ theo bước đi
+- Fabric sway left-right theo hông
+- Visible fabric folds responding to movement
+- Split/slit revealing leg on forward stride
+- Light catching on fabric movement
+- Skirt flowing backward slightly khi walk forward
+
+FLOW KEYWORDS (THÊM VÀO MỌI PROMPT):
+- "dress flowing with each step"
+- "fabric reacting to movement"
+- "hem swaying gently"
+- "soft fabric motion throughout"
+- "continuous dress flow"
+
+FABRIC-SPECIFIC FLOW:
+| Fabric Type | Flow Description |
+|-------------|------------------|
+| Satin | "liquid drape, light pools shifting with movement" |
+| Silk | "lightweight floating, subtle shimmer on motion" |
+| Chiffon | "ethereal layers catching air, floating effect" |
+| Bodycon | "form-hugging with subtle stretch visible on walk" |
+| Maxi/Flowy | "dramatic skirt flow, sweeping motion" |
+| A-line | "structured swing, pendulum-like movement" |
+```
+
+═══════════════════════════════════════════════════════════════
+🎬 CAMERA SYSTEM (SLOW TRACKING)
+═══════════════════════════════════════════════════════════════
+
+```
+CAMERA MOVEMENT:
+- Slow tracking camera theo model (chậm, mượt)
+- HOẶC static gimbal ổn định
+- ❌ NO ZOOM in/out - camera distance giữ nguyên
+- ❌ NO LOW ANGLE - không quay từ dưới lên
+- ❌ NO aggressive handheld shake
+- ✅ Allow pseudo-handheld for candid realism:
+    - ±1–2% frame drift
+    - 0.2s follow latency
+    - tiny horizontal breathing
+- ❌ NO aggressive panning
+
+CAMERA ANGLE (BẮT BUỘC):
+- Eye level hoặc hơi cao hơn (slightly above)
+- Góc 0-15° từ trên xuống OK
+- ❌ KHÔNG góc thấp / worm's eye view
+- ❌ KHÔNG dramatic angles
+
+LIGHTING (ÁNH SÁNG TỰ NHIÊN XIÊN):
+- Natural side lighting (ánh sáng xiên tự nhiên)
+- Golden hour backlight preferred
+- Soft rim light on hair/shoulders
+- ❌ NO harsh direct front lighting
+- ❌ NO flat flash lighting
+
+LENS FEELING:
+- 50-85mm portrait lens (gentle compression)
+- Natural shallow DOF, soft bokeh
+- ❌ NO wide angle distortion
+- ❌ NO fisheye effect
+
+FRAME COMPOSITION:
+- Model centered, full body visible
+- 75-85% vertical frame height
+- Head room: small but present
+- Walking space in direction of movement
+```
+
+═══════════════════════════════════════════════════════════════
+🌿 ENVIRONMENT RENDERING (REAL LOCATIONS)
+═══════════════════════════════════════════════════════════════
+
+```
+BACKGROUND REQUIREMENTS:
+- Clean background with strong depth
+- Subtle moving foliage for realism (trees, leaves)
+- ❌ NO pedestrians/people visible in frame
+- ❌ NO bystanders, passersby, or crowds
+- ❌ NO distracting human figures in background
+- ✅ Empty walkway/street preferred
+- ✅ Early morning/late evening timing for empty locations
+- Soft city motion for urban scenes (cars OK, people NO)
+- No clutter in foreground
+- Foreground remains clean
+- Background softly blurred (bokeh)
+
+REALISM MANDATE:
+⚠️ ALL LOCATIONS MUST LOOK LIKE REAL PHOTOGRAPHY
+❌ NO CGI / 3D rendered backgrounds
+❌ NO fantasy/surreal environments
+❌ NO obvious AI artifacts in background
+✅ Must pass as real on-location shoot
+✅ Natural environmental lighting interaction
+```
+
+═══════════════════════════════════════════════════════════════
+🔬 TECHNICAL REALISM (ANTI-ARTIFACT)
+═══════════════════════════════════════════════════════════════
+
+```
+REQUIRED QUALITY:
+✅ Ultra realistic adult human anatomy
+✅ Natural skin texture with soft pores
+✅ Stable face identity across ALL frames
+✅ Correct limb proportions maintained
+✅ Natural hair movement with walking
+✅ Consistent body proportions throughout
+✅ Stable dress shape (no morphing)
+
+BANNED ARTIFACTS:
+❌ Duplicated limbs
+❌ Warping/morphing body parts
+❌ Melting textures or skin
+❌ Jitter/unstable motion
+❌ Unnatural body distortion
+❌ Face identity drift
+❌ Extra fingers or missing fingers
+❌ Dress phasing through body
+```
+
+═══════════════════════════════════════════════════════════════
+📱 SOCIAL MEDIA OPTIMIZATION (TikTok/Shorts)
+═══════════════════════════════════════════════════════════════
+
+```
+FORMAT:
+- Vertical 9:16 aspect ratio
+- Centered subject (safe for TikTok UI overlays)
+- Safe margins left/right for comments
+- Bottom 10% clear for captions
+
+QUALITY:
+- High clarity that survives compression
+- Smooth motion cadence (no dropped frames)
+- Fashion product showcase priority
+- Clear garment details visible
+
+PACING:
+- 4 scenes x 8 seconds each = 32 seconds total
+- Each scene = different pose + location
+- Apply VARIATION rules between scenes
+- Slow tempo for outfit scanning
+```
+
+═══════════════════════════════════════════════════════════════
+🎭 EXPRESSION GUIDE (PREMIUM VIBE)
+═══════════════════════════════════════════════════════════════
+
+```
+🎬 4-SCENE EXPRESSION PROGRESSION:
+| Scene | Emotion | Expression | Eye Contact | Energy |
+|-------|---------|------------|-------------|--------|
+| 1 | Mystery | Dreamy distant gaze, soft enigmatic smile | Avoiding camera, looking past | Low-building |
+| 2 | Recognition | Knowing half-smile, eyes softening | Side glance to camera | Medium-rising |
+| 3 | Confidence | Direct warm gaze, self-assured presence | Full eye contact, unwavering | High-sustained |
+| 4 | Connection | Inviting playful smile, friendly warmth | Engaging, welcoming | Medium-warm |
+
+💫 MICRO-EXPRESSION KEYWORDS (Premium Cinematic):
+- "subtle eyebrow raise with quiet intrigue"
+- "eyes softening with gentle recognition"
+- "corner of lips lifting knowingly"
+- "chin tilting with effortless confidence"
+- "gaze deepening with natural warmth"
+- "lashes lowering then lifting to meet camera"
+- "soft inhale visible as smile forms"
+- "head tilting slightly with curious energy"
+- "cheekbones catching light as smile spreads"
+
+👗 OUTFIT-MATCHED EXPRESSIONS:
+| Dress Type | Expression Style | Example Keywords |
+|------------|------------------|------------------|
+| Party/Cocktail | Playful, teasing, magnetic | "mischievous glint in eyes, playful smirk" |
+| Romantic/Flowing | Dreamy, soft, enchanting | "soft ethereal gaze, gentle wondering smile" |
+| Bodycon/Sleek | Confident, powerful, commanding | "I know I look good energy, controlled subtle smile" |
+| Luxury Evening | Serene, elegant, mysterious | "quiet sophistication, knowing half-smile" |
+| Casual Summer | Fresh, natural, approachable | "genuine friendly smile, bright relaxed eyes" |
+
+✅ SAFE PREMIUM VOCABULARY:
+- "quiet magnetic presence" (not aggressive)
+- "effortless natural allure" (not provocative)
+- "subtle knowing expression" (not suggestive)
+- "soft gaze that draws viewer in" (engaging)
+- "natural charm radiating from within" (authentic)
+- "warm confident energy" (approachable)
+- "self-assured elegant smile" (classy)
+- "gentle eye contact with hint of mystery" (intriguing)
+
+❌ BANNED VOCABULARY:
+- "seductive" (explicit)
+- "provocative" (flagged)
+- "sexy" (explicit)
+- "sensual" (borderline)
+- "bedroom eyes" (explicit)
+- "sultry" (suggestive)
+- "flirtatious" (can be flagged)
+
+🎨 VIBE MOODS:
+- Luxury casual dating evening
+- Romantic city stroll at golden hour
+- Elegant modern woman aesthetic
+- High-end fashion commercial
+- Premium TikTok/Reels style
+- Quiet confidence, never trying too hard
+- Main character energy but approachable
+```
+
+
+═══════════════════════════════════════════════════════════════
+🔄 AUTO-ROTATION SYSTEM
+═══════════════════════════════════════════════════════════════
+
+```
+WHEN CREATING MULTIPLE CLIPS:
+- Automatically rotate dress style
+- Automatically rotate environment time of day
+- Automatically rotate location type
+- Maintain consistent walk-toward-camera composition
+- Each clip = unique combination
+
+SMART MATCHING:
+| Dress Vibe | Preferred Time | Environment Type |
+|------------|----------------|------------------|
+| Party/Cocktail | Night City | Nightlife, bars, hotel entrance |
+| Romantic/Soft | Golden Hour | Parks, gardens, lakeside |
+| Luxury/Evening | Blue Hour | Hotels, resorts, modern architecture |
+| Casual/Summer | Golden Hour | Pedestrian streets, cafes, plazas |
+| Modern/Bodycon | Blue Hour/Night | Shopping streets, urban squares |
+```
+
+═══════════════════════════════════════════════════════════════
+📝 MASTER PROMPT TEMPLATE
+═══════════════════════════════════════════════════════════════
+
+```
+TEMPLATE (Fill brackets):
+"[Body type description] Vietnamese model wearing [exact dress description],
+ walking slowly toward static camera positioned at eye level,
+ [TIME_OF_DAY lighting description],
+ outdoor location at [specific real Vietnam location],
+ model occupies 75% of frame height in medium-full centered framing,
+ subtle hip sway with each deliberate step,
+ one hand gently touching [hair/dress fabric/waist],
+ [expression description] with warm engaging eyes,
+ [fabric type] catching [light behavior for time of day],
+ clean blurred background with [environment details],
+ premium cinematic fashion walk-in shot aesthetic,
+ ultra realistic adult human anatomy, stable face identity,
+ 9:16 vertical format, smooth motion, no artifacts"
+```
+
+═══════════════════════════════════════════════════════════════
+✅ PRODUCT SUITABILITY
+═══════════════════════════════════════════════════════════════
+
+```
+BEST FOR:
+✅ Bodycon dresses
+✅ Satin slip dresses
+✅ Cocktail dresses
+✅ Party dresses
+✅ Casual summer dresses
+✅ Long flowing evening gowns
+✅ Minimalist dresses
+✅ Luxury formal gowns
+✅ Soft romantic dresses
+✅ Modern city outfits
+
+NOT RECOMMENDED:
+❌ Áo dài (use dedicated Áo Dài modes)
+❌ Sportswear (use Sportswear modes)
+❌ Loose/oversized tops
+❌ Pants/jeans standalone
+❌ Jackets without dress underneath
+```
+
+═══════════════════════════════════════════════════════════════
+🔥 FINAL REALISM OVERRIDE (MANDATORY - DIRECTOR RULES)
+═══════════════════════════════════════════════════════════════
+
+⚠️ THESE RULES OVERRIDE EVERYTHING ABOVE WHEN IN CONFLICT:
+
+1. Model actions must always originate from INTERNAL EMOTIONAL STATE
+   → No action without a reason. "Why is she doing this?" must have answer.
+
+2. Camera REACTS to model behavior, NEVER leads
+   → Camera follows beauty, doesn't choreograph it.
+
+3. All posing must feel DISCOVERED, not performed
+   → She found this pose, she didn't learn it.
+
+4. If an action looks INTENTIONAL, reduce it by 30%
+   → Too perfect = too fake. Dial it back.
+
+5. If a moment feels TOO PERFECT, introduce imperfection
+   → Wind, stumble, adjust, blink at wrong time.
+
+6. Beauty must appear ACCIDENTAL
+   → The best fashion moments look unplanned.
+
+IMPERFECTION INJECTION (AI must add 1-2 per clip):
+- Slight hair in face, then brush away
+- Fabric caught, then freed
+- Step adjustment mid-walk
+- Briefly lost balance on turn
+- Squint from sudden light
+- Genuine laugh (not posed smile)
+
+ANTI-CHOREOGRAPHY CHECK:
+Before finalizing any scene, AI must ask:
+"Would a real person do this if no camera was watching?"
+If NO → Revise scene to be more natural.
+
+================================================
+END FASHION WALK-IN CINEMATIC RULES
+================================================

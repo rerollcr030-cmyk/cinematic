@@ -11,6 +11,7 @@ import TRENDING_INTELLIGENCE from '../instructions/trending_intelligence.txt?raw
 import CINEMATIC_FASHION_SCENES from '../instructions/cinematic_fashion_scenes.txt?raw';
 import SPORTSWEAR_RULES from '../instructions/sportswear_rules.txt?raw';
 import EMOTIONAL_ARC_GUIDE from '../instructions/emotional_arc_guide.txt?raw';
+import WALKIN_CINEMATIC_RULES from '../instructions/walkin_cinematic_rules.txt?raw';
 
 // Export instructions
 export {
@@ -22,7 +23,8 @@ export {
   TRENDING_INTELLIGENCE,
   CINEMATIC_FASHION_SCENES,
   SPORTSWEAR_RULES,
-  EMOTIONAL_ARC_GUIDE
+  EMOTIONAL_ARC_GUIDE,
+  WALKIN_CINEMATIC_RULES
 };
 
 // Export data constants
@@ -33,6 +35,15 @@ export {
   PRODUCT_TYPES,
   VIDEO_STYLES,
   LOCATION_REGIONS,
-  STUDIO_CATEGORIES
+  STUDIO_CATEGORIES,
+  WALKIN_TIME_OF_DAY,
+  WALKIN_AESTHETIC_VIBES,
+  WALKIN_PERSONALITIES,
+  WALKIN_MICRO_VARIATIONS,
+  WALKIN_INTENSITY_LEVELS,
+  WALKIN_DRESS_VIBES,
+  WALKIN_EXPRESSION_VIBES,
+  WALKIN_OUTFIT_EXPRESSIONS
 } from './data';
+
 

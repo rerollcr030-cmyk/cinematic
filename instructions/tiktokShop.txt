@@ -7991,6 +7991,194 @@ Ngón trỏ tay phải chạm vào giọt serum, từ từ thoa tròn đều kh�
 ☐ Không có glitch/artifact?
 ☐ CTA visible và clear?
 
+================================================
+👗 FASHION WALK-IN MODE (TikTok Body Dress Style)
+================================================
+
+**⚠️ SPECIAL EXCEPTION:** Mode này cho phép model BƯỚC ĐI (walking) - ngược với Static Showcase Rules vì:
+- Camera CỐ ĐỊNH → Subject motion là safe
+- Chỉ áp dụng cho video styles: `fashion_walkin`, `fashion_walkin_beauty`
+
+---
+
+### 🎬 CAMERA SETUP (BẮT BUỘC)
+
+**Camera Behavior:**
+- ✅ Static camera on tripod or very light gimbal (không handheld rung)
+- ✅ Subject walks TOWARD camera (camera đứng yên)
+- ✅ Optional: 5% zoom-in cuối video (micro push-in)
+- ❌ NO camera walking/panning
+- ❌ NO handheld shake
+
+**Lens & Position:**
+- Focal length: 50mm-85mm portrait lens
+- Height: Eye level or slightly below
+- Distance: 3-4m (để có room cho walk-in)
+
+---
+
+### 📐 FRAME COMPOSITION (BẮT BUỘC)
+
+**Frame Height Rule - 70-85% (KHÁC VỚI 90%):**
+```
+┌─────────────────┐
+│   ~10% margin   │ ← Không cắt head
+│      👤         │
+│   MODEL 70-85%  │ ← Medium-full shot
+│   (từ đùi up)   │
+│      👠         │ ← Có thể cắt nhẹ dưới đầu gối
+│   ~10% margin   │
+└─────────────────┘
+```
+
+**Shot Type Progression:**
+- Start (0s): Medium-full (tới đùi)
+- End (8s): Medium shot (tới eo/ngực chiếm nhiều hơn)
+
+**Composition:**
+- ✅ Center composition (model chính giữa)
+- ❌ NO rule-of-thirds
+- ❌ NO off-center framing
+
+---
+
+### 🌤️ LIGHTING (MANDATORY)
+
+**Soft Daylight Fashion Lighting:**
+```
+"Soft natural daylight streaming through tree canopy, 
+ dappled golden light, gentle shadows on skin, 
+ fabric catching subtle sheen without harsh highlights,
+ premium fashion lookbook lighting"
+```
+
+**Keywords BẮT BUỘC:**
+- "soft daylight", "dappled light", "gentle shadows"
+- "no harsh highlights", "skin appears smooth"
+- "fabric sheen", "satin catching light"
+
+**❌ TRÁNH:**
+- "direct sunlight", "harsh shadows"
+- "studio lighting" (cho mode này)
+- "dramatic lighting", "high contrast"
+
+---
+
+### 🚶‍♀️ POSE & MOTION (Natural Sensual Walk)
+
+**Walking Style:**
+- ✅ Slow deliberate pace (1 step per 2-3 seconds)
+- ✅ Model walks TOWARD camera (camera stays fixed)
+- ✅ Subtle hip sway (very small, natural)
+- ✅ One hand lightly touching dress/hair
+- ✅ Confident but relaxed posture
+
+**Allowed Actions:**
+- Gentle hair brush behind ear
+- Light touch on dress fabric at hip
+- Subtle head turn while walking
+- Small smile forming as approaching
+
+**❌ BANNED:**
+- Fast walking/striding
+- Exaggerated hip sway (too sexy)
+- Stopping to pose (must keep walking)
+- Looking away from camera direction
+
+**Motion Timing for 8s Scene:**
+```
+0-2s: Model at distance, starts slow walk toward camera
+2-5s: Continues approach, hand rises to touch hair/dress
+5-8s: Closer to camera, expression warms, micro push-in effect
+```
+
+---
+
+### ⏱️ VIDEO STRUCTURE (Single Continuous Shot)
+
+**1-Scene Format (8-16s recommended):**
+```json
+{
+  "scenes": [
+    {
+      "id": 1,
+      "timeRange": "00s-16s",
+      "prompt": "Model in [dress description] walks slowly toward static camera, 
+                 starting from medium-full framing progressing to medium shot, 
+                 soft daylight filtering through trees creating dappled light, 
+                 hand gently touching hair then trailing to fabric at hip, 
+                 centered composition, subtle hip sway, confident warm expression forming",
+      "startPose": "Standing at 4m distance, facing camera, arms relaxed",
+      "endPose": "Standing at 1.5m from camera, hand on hip, gentle smile"
+    }
+  ]
+}
+```
+
+**❌ NO scene cuts** - single continuous shot only
+**✅ Slow tempo** - give viewers time to scan outfit
+
+---
+
+### 🎭 EXPRESSION GUIDE (Quiet Sexy)
+
+**Expression Progression:**
+- Start (0s): Neutral to soft mysterious smile
+- Mid (4-8s): Confidence growing, eyes engaging
+- End (8-16s): Warm inviting smile, direct eye contact
+
+**Keywords:**
+- "quiet confidence", "subtle allure"
+- "warm engaging gaze", "soft mysterious smile"
+- "elegant feminine energy", "understated sensuality"
+
+**❌ BANNED:**
+- "seductive", "provocative", "sexy" (explicit terms)
+- "pouty lips", "bedroom eyes"
+- Over-the-top flirty expressions
+
+---
+
+### 👗 PRODUCT SUITABILITY
+
+**✅ BEST FOR:**
+- Váy body/bodycon dress
+- Đầm satin, lụa, silk
+- Đầm cocktail, party dress
+- Váy cao cấp cần show form
+
+**❌ NOT RECOMMENDED:**
+- Áo rời (top only)
+- Quần (pants standalone)
+- Đồ thể thao (sportswear)
+- Áo dài (has own modes)
+
+---
+
+### 📝 PROMPT TEMPLATE
+
+**fashion_walkin Mode:**
+```
+"[Body type] Vietnamese model wearing [exact dress description from reference], 
+ walking slowly toward static camera positioned at eye level,
+ soft natural daylight filtering through tree canopy creating dappled golden light,
+ model occupies 75% of frame height in medium-full framing,
+ centered composition, subtle hip sway with each deliberate step,
+ one hand gently touching [hair/dress fabric],
+ quiet confident expression with warm engaging eyes,
+ satin fabric catching soft sheen from diffused sunlight,
+ premium fashion walk-in shot aesthetic"
+```
+
+**fashion_walkin_beauty Mode (kết hợp beauty focus):**
+```
+[Same as above] + 
+", final 3 seconds transitioning to medium close-up on face,
+ showcasing flawless skin in natural light,
+ dewy makeup catching golden hour glow,
+ beauty editorial quality finish"
+```
+
 Keep prompts clean, no markdown.
 `;
 

@@ -156,6 +156,33 @@ When generating CINEMATIC MODE videos (NOT lookbook), detect product category fr
 
 ---
 
+## 💪 ARM POSES BY PRODUCT TYPE (MANDATORY)
+
+⚠️ **NEVER use "arms at sides" or "hands hanging down" - ALWAYS specify arm action!**
+
+| Product Type | Recommended Arm Poses | Avoid |
+|--------------|----------------------|-------|
+| **Blouses** | Hand on collar, adjust sleeve, one hand on hip | Arms at sides |
+| **T-Shirts** | Hand on hip, arms crossed low, touch hair | Hands hanging |
+| **Sweaters** | Hands clasped front, hug self, touch sleeve | Arms down |
+| **Blazers** | Hold lapel, arms crossed confident, pocket pose | Idle arms |
+| **Jeans** | Thumbs in belt loops, hands in pockets, hip pose | Static arms |
+| **Skirts** | Touch hem, brush fabric, hand on waist | No action |
+| **Office Dresses** | Hands clasped front, adjust collar, professional pose | Droopy arms |
+| **Cocktail Dresses** | Touch neck, hold clutch, elegant waist touch | Boring stance |
+| **Denim Jackets** | Both pockets, pull jacket, street pose | Just standing |
+| **Coats** | Button up gesture, collar adjustment, pocket pose | Arms loose |
+| **Handbags** | Hold bag strap, hand on bag, pose with bag | Ignore accessory |
+| **Shoes** | Hand on hip while showing shoes, confident stance | Not engaged |
+| **Jewelry** | Touch earring, show bracelet, hand near necklace | Hide jewelry |
+| **Sunglasses** | Push up glasses, touch frame, hair behind ear | Static pose |
+
+**Quick Reference for Each Scene:**
+- Scene 1 (Hook): Hand on hip OR touching hair/face
+- Scene 2 (Detail): Hand interacting with product/fabric
+- Scene 3 (Context): Confident pose - arms crossed OR hands in pockets
+- Scene 4 (Finale): Power pose - hands on hips OR elegant touch
+
 ## 🎨 LIGHTING & VIBE BY CATEGORY
 
 **Professional (Office wear, Blazers, Dress Pants):**
@@ -345,4 +372,140 @@ Y2K Revival:
 | Quiet Luxury Flex | Premium quality, no-logo items | Budget finds |
 | Pack With Me | Mix items, capsule pieces | Single accessories |
 
-Last Updated: January 2026
+---
+
+## 🎬 CINEMATIC OOTD CAMERA ANGLES BY FASHION CATEGORY
+
+Bổ sung góc quay điện ảnh chuyên biệt theo nhóm trang phục, tối ưu cho CapCut editing.
+
+⚠️ **MỤC ĐÍCH:** Tạo video có nhiều góc máy đa dạng, dễ cut/edit trong CapCut để tạo content viral.
+
+---
+
+### 🌸 NHÓM 1: TRANG PHỤC TRUYỀN THỐNG (Áo Dài, Nhật Bình, Hanbok-style)
+
+**Phong cách:** Chậm rãi, hoài cổ, tôn vinh văn hóa
+**Duration:** 32s (4 shots x 8s)
+
+| Thời gian | Góc quay | EN Prompt | CapCut Tip |
+|-----------|----------|-----------|------------|
+| 0-8s | **Wide Shot** | Full body wide shot, model standing in traditional palace/temple/lotus pond backdrop, ao dai panels flowing gently in breeze | Slow-mo 0.5x, Vintage Film filter |
+| 8-16s | **Medium Shot** | Medium shot focusing on hands delicately clasped or holding paper fan/flower branch, panel fabric visible | Zoom transition, Warm Golden grade |
+| 16-24s | **Slow-mo Detail** | Macro slow-motion focus on embroidery details, silk fabric drape, pattern texture, Nhat Binh folding | Super slow-mo 0.25x, detail enhance |
+| 24-32s | **Exit Shot** | Model gracefully walking away, turning head with soft smile, panels floating in wind, mystery exit | Fade out, cherry blossom overlay |
+
+**Camera Motion:** `Extremely slow dolly out, smooth continuous movement, NO sudden jerks`
+**Lighting:** `Golden hour warm glow, soft diffused natural light`
+**Audio Sync:** `Traditional melody, dan tranh/dan bau, 60-80 BPM`
+
+---
+
+### 💼 NHÓM 2: CÔNG SỞ THANH LỊCH (Vest, Sơ Mi, Quần Tây, Đầm Công Sở)
+
+**Phong cách:** Chuyên nghiệp, sắc sảo, tối giản, Office Siren energy
+**Duration:** 32s (4 shots x 8s)
+
+| Thời gian | Góc quay | EN Prompt | CapCut Tip |
+|-----------|----------|-----------|------------|
+| 0-8s | **Eye-level Entry** | Eye-level shot, model confidently striding out from luxury office lobby or upscale cafe, professional walking stride | Beat sync với bước chân |
+| 8-16s | **Close-up Details** | Close-up on crisp shirt collar, vest button details, premium fabric texture, cufflink shine | Macro zoom, Neutral Cool grade |
+| 16-24s | **Side Profile** | Side angle shot, model seated working or holding coffee cup, showcasing tailored pants silhouette, laptop visible | Split screen potential |
+| 24-32s | **Power Finale** | Quick cuts: checking watch, adjusting handbag, "nữ tổng tài" boss energy, confident power poses | Fast cuts 0.5s each, beat sync |
+
+**Camera Motion:** `Smooth tracking, professional steadicam movement, corporate elegance`
+**Lighting:** `Clean bright natural window light, sharp professional`
+**Audio Sync:** `Modern corporate beat, confident tempo, 100-120 BPM`
+
+---
+
+### 🛹 NHÓM 3: STREETWEAR & GIỚI TRẺ (Hoodie, Cargo, Teelab-style, Jogger)
+
+**Phong cách:** Năng động, giật dằn (fast-paced), cá tính Gen Z
+**Duration:** 32s (4 shots x 8s)
+
+| Thời gian | Góc quay | EN Prompt | CapCut Tip |
+|-----------|----------|-----------|------------|
+| 0-8s | **Low Angle (Sát đất)** | Extreme low angle camera at ground level looking up, model walking powerfully in Cargo/Jogger, legs elongated, urban backdrop | Beat drop sync, shake effect |
+| 8-16s | **POV/Handheld** | Handheld POV shot with slight natural shake, model flipping Hoodie hood, street vibe, casual authentic feel | Handheld shake effect, raw style |
+| 16-24s | **High Angle (Từ trên)** | High angle looking down, model squatting or striking creative pose, A-line skirt with sneakers, artistic composition | Overhead drone look, flat lay feel |
+| 24-32s | **Transition Cuts** | Rapid outfit transitions: model jumping/spinning, outfit colors changing continuously, fast beat sync | Flash transition, color switch FX |
+
+**Camera Motion:** `Fast-paced, intentional shake, dynamic energy, giật dằn vibe`
+**Lighting:** `Urban daylight, neon accents, street photography style`
+**Audio Sync:** `Hip-hop/EDM drop, high energy, 120-140 BPM`
+
+---
+
+### ✨ NHÓM 4: ĐẦM DỰ TIỆC & ĐẦM REN (Evening, Cocktail, Bodycon)
+
+**Phong cách:** Lộng lẫy, Cinematic, Hollywood glamour
+**Duration:** 32s (4 shots x 8s)
+
+| Thời gian | Góc quay | EN Prompt | CapCut Tip |
+|-----------|----------|-----------|------------|
+| 0-8s | **Orbit Shot (Xoay 180°)** | Camera orbiting 180 degrees around model standing center frame, dramatic flash lighting, chandelier backdrop | Smooth orbit, dramatic music sync |
+| 8-16s | **Macro Extreme** | Extreme macro zoom into double-layer mesh lining, sequin sparkle details, lace texture close-up | Super close-up, sparkle overlay |
+| 16-24s | **Back Shot** | Camera following from behind, model walking, showcasing bodycon curves, backless detail revealed, elegant stride | Slow tracking, rim lighting FX |
+| 24-32s | **Glamour Finale** | Model raising wine glass or posing under chandelier, ending with seductive eye contact, luxury atmosphere | Slow zoom face, lens flare |
+
+**Camera Motion:** `Cinematic orbit, lộng lẫy, ánh sáng mạnh theatrical`
+**Lighting:** `Dramatic rim lighting, crystal chandelier reflection, flash photography feel`
+**Audio Sync:** `Orchestral dramatic, cinematic score, 90-110 BPM`
+
+---
+
+### 🌻 NHÓM 5: PHONG CÁCH TỰ DO (Bohemian, Maxi, Floral, Resort wear)
+
+**Phong cách:** Bay bổng, ánh sáng tự nhiên (Golden Hour), tự do phóng khoáng
+**Duration:** 32s (4 shots x 8s)
+
+| Thời gian | Góc quay | EN Prompt | CapCut Tip |
+|-----------|----------|-----------|------------|
+| 0-8s | **Ultra-wide Landscape** | Ultra-wide landscape shot, model running through open field/beach, Maxi dress flowing dramatically, dramatic sky | Wide lens, golden hour filter |
+| 8-16s | **Detail Focus** | Macro focus on ethnic accessories, tassels, fringe details, floral patterns, bohemian jewelry | Texture focus, warm saturation |
+| 16-24s | **Tracking Shot (Lướt theo)** | Camera tracking horizontally alongside model's barefoot walk on sand/grass, free spirit movement | Smooth dolly, nature sounds |
+| 24-32s | **Spin Freedom** | Model spinning freely in golden hour sunlight, dress flying dramatically, complete freedom expression | Slow-mo spin, sun flare, dreamy |
+
+**Camera Motion:** `Natural flowing dolly, bay bổng, chuyển động nhẹ nhàng như gió`
+**Lighting:** `Golden hour mandatory, warm orange tones, sun flare welcome`
+**Audio Sync:** `Indie folk/acoustic, dreamy, 80-100 BPM`
+
+---
+
+## 📐 CAMERA ANGLES REFERENCE TABLE
+
+Bảng tổng hợp tất cả góc quay để AI tra cứu nhanh:
+
+| Góc quay | Tiếng Việt | EN Technical Description | Best For |
+|----------|------------|--------------------------|----------|
+| Wide Shot | Góc toàn cảnh | Full body + environment visible, camera distance 5-10m | Áo dài, Maxi, Establishing shot |
+| Medium Shot | Góc trung | Head to hip visible, camera distance 2-4m | Most outfits, balanced |
+| Close-up | Cận cảnh | Head and shoulders only, camera distance 1-2m | Facial expression, fabric detail |
+| Macro | Cận cực đại | Only small details visible (buttons, lace, sequins) | Luxury fabric, Evening wear |
+| Low Angle | Góc thấp | Camera at ground level tilting up, heroic effect | Streetwear, Power poses |
+| High Angle | Góc cao | Camera above subject tilting down, creative perspective | Streetwear, Artistic |
+| Eye-level | Ngang tầm mắt | Camera at subject's eye height, natural perspective | Professional, Office |
+| Side Profile | Góc nghiêng | Camera at 90° side angle, silhouette visible | Tailored, Structured fits |
+| Back Shot | Góc sau lưng | Camera behind subject, back/spine visible | Evening, Backless, Áo dài |
+| Orbit Shot | Quay vòng tròn | Camera circles subject 180-360°, 3D showcase | Evening, Hero shot |
+| Tracking Shot | Lướt theo | Camera moves parallel to walking subject | Maxi, Walking scenes |
+| POV/Handheld | Góc chủ quan | First-person perspective, slight natural shake | Streetwear, Casual, Authentic |
+| Dutch Angle | Góc nghiêng | Camera tilted 15-30°, artistic tension | Editorial, Creative |
+| Dolly In/Out | Zoom vào/ra | Camera physically moves toward/away from subject | Reveal, Ending, Dramatic |
+
+---
+
+## 🎨 CAPCUT QUICK EFFECTS BY CATEGORY
+
+| Nhóm | Recommended Effects | Filter/Grade | Transition |
+|------|---------------------|--------------|------------|
+| Truyền Thống | Slow-mo 0.5x, Vintage Film | Warm Golden, Film Grain | Fade, Dissolve |
+| Công Sở | Split Screen, Beat Sync | Neutral Cool, Clean | Cut, Slide |
+| Streetwear | Shake, Flash | Urban, High Contrast | Flash, Glitch |
+| Đầm Dự Tiệc | Sparkle Overlay, Lens Flare | Cinematic, Dramatic | Spin, Zoom |
+| Bohemian | Sun Flare, Dreamy Blur | Golden Hour, Warm | Fade, Flow |
+
+---
+
+Last Updated: February 2026
+
